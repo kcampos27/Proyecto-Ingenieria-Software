@@ -14,7 +14,7 @@ public class TableroController {
         this.modelo = modelo;
         this.vista = vista;
     }
-    
+  
     //METODOS
     
 }
