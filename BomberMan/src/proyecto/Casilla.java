@@ -9,13 +9,13 @@ public class Casilla {
    //ATRIBUTOS
     private int x;
     private int y;
-    private String contenido; 
+    private Contenido contenido; 
 
     // CONSTRUCTORA
     public Casilla(int x, int y) {
         this.x = x;
         this.y = y;
-        this.contenido = "libre";  
+        this.contenido = null;  
     }
 
     // METODOS
@@ -27,12 +27,9 @@ public class Casilla {
         return y;
     }
 
-    public String getEstado() {
-        return contenido;
-    }
-
-    public void setEstado(String estado) {
-        this.contenido = estado;
+    public void setContent(Contenido newContent) {
+    	contenido = newContent;	
     }
 }
+
 

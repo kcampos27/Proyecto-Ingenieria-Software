@@ -29,6 +29,7 @@ public class TableroView extends JPanel {
                 lbl.setHorizontalAlignment(JLabel.CENTER);
                 lbl.setForeground(new Color(0, 0, 0, 0));
                 add(lbl);
+                
             }
         }
     }
