@@ -15,7 +15,7 @@ public class TableroModel {
                 tablero[i][j] = new Casilla(i, j);
                 if(i==0&&j==0)
                 {//Bomberman
-                	tablero[i][j].setContent(Bomberman.getBomberman());
+                	tablero[i][j].setContent(BomberMan.getBomberman());
                 }
                 if(i%2!=0 && j%2!=0) 
                 {//Bloques duros
