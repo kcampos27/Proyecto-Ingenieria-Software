@@ -19,7 +19,7 @@ public class TableroModel {
                 }
                 if(i%2!=0 && j%2!=0) 
                 {//Bloques duros
-                tablero[i][j].setContent(new Bloque(false,i,j));
+                tablero[i][j].setContent(new BloqueDuro(i,j));
                 }
                 else {
                 	
