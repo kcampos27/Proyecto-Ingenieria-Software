@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 public class Main {
 	
     public static void main(String[] args) {
-        TableroModel modelo = new TableroModel();
+        TableroModel modelo = TableroModel.getMiTablero();
         TableroView vista = new TableroView(modelo);
         TableroController controlador = new TableroController(modelo, vista);
 

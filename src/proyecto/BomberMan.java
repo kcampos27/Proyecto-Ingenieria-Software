@@ -19,6 +19,10 @@ public class BomberMan extends Contenido{
     public int getY() { return y; }
 	public static BomberMan getBomberman()
 	{
+		if (miBomberman==null)
+		{
+			miBomberman = new BomberMan(0,0);
+		}
 		return miBomberman;
 	}
 	public void mover(int dx, int dy, int maxCols, int maxRows) {
