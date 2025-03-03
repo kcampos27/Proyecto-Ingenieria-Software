@@ -10,4 +10,8 @@ public class Bloque{
 		esBlando = pDureza;
 	}
 
+	public void destruir()
+	{
+		
+	}
 }

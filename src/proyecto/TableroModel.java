@@ -5,10 +5,11 @@ import java.util.ArrayList;
 public class TableroModel {
 	
 	//ATRIBUTOS
-    private Casilla[][] tablero;
+    private static TableroModel miTablero;
+	private Casilla[][] tablero;
 
     // CONSTRUCTORA
-    public TableroModel() {
+    private TableroModel() {
         tablero = new Casilla[11][17];
         for (int i = 0; i < 11; i++) {
             for (int j = 0; j < 17; j++) {
@@ -20,6 +21,7 @@ public class TableroModel {
                 if(i%2!=0 && j%2!=0) 
                 {//Bloques duros
                 tablero[i][j].setContent("");
+
                 }
                 else {
                 	
@@ -29,6 +31,16 @@ public class TableroModel {
     }
 
     // METODOS
+    public static TableroModel getMiTablero()
+    {
+    	if (miTablero==null)
+    	{
+    		miTablero= new TableroModel();
+    	}
+    	return miTablero;
+    }
+    
+    
     public Casilla getCasilla(int x, int y) {
         return tablero[x][y];
     }
