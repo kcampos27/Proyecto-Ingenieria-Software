@@ -8,21 +8,22 @@ public class BomberMan{
 	private String nombre;
 	
 	//CONSTRUCTORA
-	private BomberMan(int startX, int startY)
+	private BomberMan(int startX, int startY, String pnombre)
 	{
-		
 		x = startX;
 		y= startY;
+		nombre = pnombre;
 	}
 	
 	//METODOS
 	public int getX() { return x; }
     public int getY() { return y; }
+    public String getName() {return nombre;}
 	public static BomberMan getBomberman()
 	{
 		if (miBomberman==null)
 		{
-			miBomberman = new BomberMan(0,0);
+			miBomberman = new BomberMan(0,0,"bomberman.W");
 		}
 		return miBomberman;
 	}

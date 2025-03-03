@@ -1,12 +1,14 @@
 package proyecto;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class TableroModel {
 	
 	//ATRIBUTOS
     private static TableroModel miTablero;
 	private Casilla[][] tablero;
+    private Random random;
 
     // CONSTRUCTORA
     private TableroModel() {
@@ -14,18 +16,7 @@ public class TableroModel {
         for (int i = 0; i < 11; i++) {
             for (int j = 0; j < 17; j++) {
                 tablero[i][j] = new Casilla(i, j);
-                if(i==0&&j==0)
-                {//Bomberman
-                	tablero[i][j].setContent("");
-                }
-                if(i%2!=0 && j%2!=0) 
-                {//Bloques duros
-                tablero[i][j].setContent("");
-
-                }
-                else {
-                	
-                }
+                inicializarClassic(i,j);
             }
         }
     }
@@ -40,6 +31,32 @@ public class TableroModel {
     	return miTablero;
     }
     
+    public  void inicializarClassic(int pI, int pJ)
+    {
+    	random = new Random();
+    	int p = random.nextInt(100);
+    	
+    	if(pI==0&&pJ==0)
+        {//Bomberman
+        	tablero[pI][pJ].setContent(BomberMan.getBomberman().getName());
+        }
+        if(pI%2!=0 && pJ%2!=0) 
+        {//Bloques duros
+        tablero[pI][pJ].setContent(new BloqueDuro(pI,pJ).getName());
+
+        }
+        else {
+        	
+        	if (p < 33) { 
+                tablero[pI][pJ].setContent(new BloqueBlando(pI,pJ).getName()); 
+            } else if (p < 33) { 
+                tablero[pI][pJ].setContent(new Enemigo("enemigo",pI,pJ).getName());
+            } else {
+                tablero[pI][pJ].setContent("");
+            }
+        	
+        }
+    }
     
     public Casilla getCasilla(int x, int y) {
         return tablero[x][y];
