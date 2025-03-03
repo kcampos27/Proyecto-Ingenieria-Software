@@ -1,15 +1,16 @@
 package proyecto;
 
-public class BomberMan extends Contenido{
+public class BomberMan{
 	
 	//ATRIBUTOS
 	private static BomberMan miBomberman;
 	private int x, y; // Posicion en la cuadricula
+	private String nombre;
 	
 	//CONSTRUCTORA
 	private BomberMan(int startX, int startY)
 	{
-		super("bomberman");
+		
 		x = startX;
 		y= startY;
 	}

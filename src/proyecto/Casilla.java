@@ -9,7 +9,7 @@ public class Casilla {
    //ATRIBUTOS
     private int x;
     private int y;
-    private Contenido contenido; 
+    private String contenido; 
 
     // CONSTRUCTORA
     public Casilla(int x, int y) {
@@ -27,7 +27,7 @@ public class Casilla {
         return y;
     }
 
-    public void setContent(Contenido newContent) {
+    public void setContent(String newContent) {
     	contenido = newContent;	
     }
 }

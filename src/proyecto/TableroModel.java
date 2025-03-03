@@ -15,11 +15,11 @@ public class TableroModel {
                 tablero[i][j] = new Casilla(i, j);
                 if(i==0&&j==0)
                 {//Bomberman
-                	tablero[i][j].setContent(BomberMan.getBomberman());
+                	tablero[i][j].setContent("");
                 }
                 if(i%2!=0 && j%2!=0) 
                 {//Bloques duros
-                tablero[i][j].setContent(new Bloque(false,i,j));
+                tablero[i][j].setContent("");
                 }
                 else {
                 	
@@ -33,7 +33,7 @@ public class TableroModel {
         return tablero[x][y];
     }
 
-    public void cambiarContent(int x, int y, Contenido newContent) {
+    public void cambiarContent(int x, int y, String newContent) {
         tablero[x][y].setContent(newContent);
     }
 
