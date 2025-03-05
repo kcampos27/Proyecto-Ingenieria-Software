@@ -6,6 +6,6 @@ public class BombaUltra extends Bombas {
 		super(x,y,20);
 	}
 	public void explotar(TableroModel tablero) {
-		Explosion.explotar(tablero, getX(), getY(), getRango());
+		Explosion.explosionUltra(tablero, getX(), getY(), getRango());
 	}
 }

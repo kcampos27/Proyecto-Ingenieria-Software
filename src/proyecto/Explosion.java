@@ -40,7 +40,7 @@ public class Explosion {
                 for (int dy = -rango; dy <= rango; dy++) {
                     int newX = x + dx;
                     int newY = y + dy;
-if (newX >= 0 && newY >= 0 && newX < board.length && newY < board[0].length) {
+                    if (newX >= 0 && newY >= 0 && newX < board.length && newY < board[0].length) {
                         if (board[newX][newY] == '*') {
                             board[newX][newY] = ' '; // Limpia la celda.
                         }
