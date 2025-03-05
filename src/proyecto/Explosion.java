@@ -1,28 +1,36 @@
-package codigoBombas;
+package proyecto;
 
 public class Explosion {
 
-	//Meter cuando tablero hecho
-	//public static void meterExpl(Tablero tablero, int x, int y, int rango){
-	//char[][]tabla =tablero.getTablero(); //da el tablero actual
-	//for(int i=-rango; i<=rango; i++){ //recorre las celdas dentro del rango x
-	//for(int j=-rango; j<=rango; j++){ //recorre las celdas dentro del rango y
-	//int nX = i +nX; //calcula la nueva posicion de x dentro del tablero
-	//int nY = j + nY; //Calcula la nueva pos de y dentro del tablero
-	//if(nX>0 && nY>0 && nX<tabla.length() && nY<tabla[0].length()){
-	//if(tabla [nX][nY]! = 'X'){ PREGUNTAR (si detecta que no es duro)
-	//tabla[nX][nY] = '.' } PREGUNTAR (echa fuego ya que seria bloque blando)
-	
-	
-	//public static void limpiarBom(Tablero tablero, int x, int y, int rango){
-	//char[][]tabla =tablero.getTablero(); //da el tablero actual
-	//for(int i=-rango; i<=rango; i++){ //recorre las celdas dentro del rango x
-	//for(int j=-rango; j<=rango; j++){ //recorre las celdas dentro del rango y
-	//int nX = i +nX; //calcula la nueva posicion de x dentro del tablero
-	//int nY = j + nY; //Calcula la nueva pos de y dentro del tablero
-	//if(nX=>0 && nY=>0 && nX<=tabla.length() && nY<=tabla[0].length()){
-	//if(tabla [nX][nY]! = '.'){ PREGUNTAR (si detecta que tiene fuego)
-	//tabla[nX][nY] = ' ' } PREGUNTAR (borraria lo que tiene)
-	
-	
+	public static void explotar(TableroModel tablero, int x, int y, int rango) {
+        char[][] board = TableroModel.getMiTablero();
+        for (int dx = -rango; dx <= rango; dx++) { // Mueve en el eje X.
+            for (int dy = -rango; dy <= rango; dy++) { // Mueve en el eje Y.
+                int newX = x + dx; // Nueva posición en X.
+                int newY = y + dy; // Nueva posición en Y.
+
+                if (newX >= 0 && newY >= 0 && newX < board.length && newY < board[0].length) {
+                    if (board[newX][newY] != 'X') { // Asegura que no afecta bloques duros.
+                        board[newX][newY] = '*'; // Marca la celda con fuego.
+                    }
+                }
+            }
+        }
+	}
+   
+	public static void limpiarExplo(TableroModel tablero, int x, int y, int rango) {
+            char[][] board = TableroModel.getMiTablero();
+            for (int dx = -rango; dx <= rango; dx++) {
+                for (int dy = -rango; dy <= rango; dy++) {
+                    int newX = x + dx;
+                    int newY = y + dy;
+
+                    if (newX >= 0 && newY >= 0 && newX < board.length && newY < board[0].length) {
+                        if (board[newX][newY] == '*') {
+                            board[newX][newY] = ' '; // Limpia la celda.
+                        }
+                    }
+                }
+            }
+	}
 }
