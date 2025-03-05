@@ -31,7 +31,9 @@ public class Explosion {
 				}	
 			}	
 		}	
+	
 	}	
+	
 	
 	
 	public static void limpiarExplo(TableroModel tablero, int x, int y, int rango) {
