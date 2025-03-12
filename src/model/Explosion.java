@@ -8,10 +8,10 @@ public class Explosion {
             for (int dy = -rango; dy <= rango; dy++) { // Da el fuego en el -Y y +Y segun el rango
                 int newX = x + dx; // Nueva posición en X.
                 int newY = y + dy; // Nueva posición en Y.
-
+				Casilla unaCasilla = board.getCasilla(newX, newY);
                 if (newX >= 0 && newY >= 0 && newX < board.getAncho() && newY < board.getAlto()) {
-                    if ([newX][newY] != 'X') { // PREGUNTAR Asegura que no afecta bloques duros.
-                        board[newX][newY] = '*'; // Marca la celda con fuego.
+                    if (unaCasilla.getContent()!="BloqueD") { // PREGUNTAR Asegura que no afecta bloques duros.
+                        unaCasilla.setContent("*"); // Marca la celda con fuego.
                     }
                 }
             }
@@ -43,9 +43,10 @@ public class Explosion {
                 for (int dy = -rango; dy <= rango; dy++) {
                     int newX = x + dx;
                     int newY = y + dy;
-                    if (newX >= 0 && newY >= 0 && newX < board.length && newY < board[0].length) {
-                        if (board[newX][newY] == '*') {
-                            board[newX][newY] = ' '; // Limpia la celda.
+    				Casilla unaCasilla = board.getCasilla(newX, newY);
+                    if (newX >= 0 && newY >= 0 && newX < board.getAncho() && newY < board.getAlto()) {
+                        if (unaCasilla.getContent() == "*") {
+                            unaCasilla.setContent("") ; // Limpia la celda.
                         }
                     }
                 }

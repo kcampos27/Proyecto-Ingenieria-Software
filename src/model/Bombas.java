@@ -35,16 +35,16 @@ public abstract class Bombas {
 		this.haExplo = true;
 		
 	}
-	public void update(TableroModel tablero) {
+	public void update(TableroModel  ) {
 	    if (timer > 0) {
 	        timer--; // Reduce el temporizador hasta que explote.
 	    } else if (!haExplo) {
 	        explotada(); // Marca la bomba como explotada.
-	        explotar(tablero); // Aplica la explosión al tablero.
+	        explotar(tablero); // Aplica la explosión al tablero
 	    } else if (duracionExplo > 0) {
 	        duracionExplo--; // Reduce la duración del fuego.
 	    } else {
-	        Explosion.limpiarExplo(tablero, x, y, rango); // Limpia el fuego.
+	        Explosion.limpiarExplo(x, y, rango); // Limpia el fuego.
 	    }
 	}
 	// hay que poner este metodo cuando este el tablero hecho
