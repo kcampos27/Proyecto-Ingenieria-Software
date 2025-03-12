@@ -1,14 +1,17 @@
-package proyecto;
+package main;
 
 import javax.swing.JFrame;
+
+import model.TableroModel;
+import vista.TableroView;
 
 public class Main {
 	
     public static void main(String[] args) {
-        TableroModel modelo = TableroModel.getMiTablero();
-        TableroView vista = new TableroView(modelo);
-        TableroController controlador = new TableroController(modelo, vista);
-
+        
+    	TableroView vista = new TableroView();
+    	TableroModel modelo= TableroModel.getMiTablero();
+    	modelo.inicializar();
         JFrame frame = new JFrame("Tablero");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 400);

@@ -1,4 +1,4 @@
-package proyecto;
+package model;
 import java.awt.Dimension;
 
 import javax.swing.JLabel;
@@ -9,7 +9,7 @@ public class Casilla {
    //ATRIBUTOS
     private int x;
     private int y;
-    private String contenido;
+    private String contenido; 
 
     // CONSTRUCTORA
     public Casilla(int x, int y) {
@@ -26,12 +26,14 @@ public class Casilla {
     public int getY() {
         return y;
     }
-
+    
+    public String getContent()
+    {
+    	return contenido;
+    }
     public void setContent(String newContent) {
     	contenido = newContent;	
     }
-    
- 
 }
 
 
