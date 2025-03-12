@@ -1,6 +1,6 @@
 package model;
 
-public abstract class Bombas {
+public  class Bombas {
 	private int x; //Coordenadas de x de la bomba
 	private int y; //Coordenadas de y de la bomba
 	private int rango; //Rango de la bomba
@@ -35,18 +35,34 @@ public abstract class Bombas {
 		this.haExplo = true;
 		
 	}
-	public void update(TableroModel  ) {
+	
+	public  void explotar() {
+        TableroModel board = TableroModel.getMiTablero();
+        for (int dx = -rango; dx <= rango; dx++) { //Da el fuego en el -X y +X segun el rango
+            for (int dy = -rango; dy <= rango; dy++) { // Da el fuego en el -Y y +Y segun el rango
+                int newX = x + dx; // Nueva posición en X.
+                int newY = y + dy; // Nueva posición en Y.
+				Casilla unaCasilla = board.getCasilla(newX, newY);
+                if (newX >= 0 && newY >= 0 && newX < board.getAncho() && newY < board.getAlto()) {
+                    if (unaCasilla.getContent()!="BloqueD") { // PREGUNTAR Asegura que no afecta bloques duros.
+                        unaCasilla.setContent("*"); // Marca la celda con fuego.
+                    }
+                }
+            }
+        }
+	}
+
+	public void update() {
 	    if (timer > 0) {
 	        timer--; // Reduce el temporizador hasta que explote.
 	    } else if (!haExplo) {
 	        explotada(); // Marca la bomba como explotada.
-	        explotar(tablero); // Aplica la explosión al tablero
+	        explotar(); // Aplica la explosión al tablero
 	    } else if (duracionExplo > 0) {
 	        duracionExplo--; // Reduce la duración del fuego.
 	    } else {
 	        Explosion.limpiarExplo(x, y, rango); // Limpia el fuego.
 	    }
 	}
-	// hay que poner este metodo cuando este el tablero hecho
-	 public abstract void explotar(TableroModel tablero);
+	
 }
