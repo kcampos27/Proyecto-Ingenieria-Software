@@ -2,12 +2,6 @@ package model;
 
 public class Explosion {
 
-	   
-	
-	}	
-	
-	
-	
 	public static void limpiarExplo(int x, int y, int rango) {
 		TableroModel board = TableroModel.getMiTablero();
             for (int dx = -rango; dx <= rango; dx++) {
