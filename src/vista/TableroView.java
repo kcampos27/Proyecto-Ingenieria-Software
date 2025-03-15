@@ -6,10 +6,13 @@ import java.awt.event.KeyListener;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
+import java.util.Set;
+import java.util.TreeSet;
 import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
 
+import model.BomberMan;
 import model.TableroModel;
 
 @SuppressWarnings("deprecation")
@@ -19,6 +22,7 @@ public class TableroView extends JPanel implements Observer{
     private int ancho = 17;
     private int alto = 11;
     private JLabel[][] labels;
+    private TableroController controlador;
 
     // CONSTRUCTORA
     public TableroView() {
@@ -27,6 +31,9 @@ public class TableroView extends JPanel implements Observer{
         this.setBackground(Color.blue);
         inicializarVista();
         TableroModel.getMiTablero().addObserver(this);
+        //se aniade el controlador al tablero
+        addKeyListener(this.getTController());
+        setFocusable(true); 
     }
 
     // METODOS
@@ -130,23 +137,48 @@ public class TableroView extends JPanel implements Observer{
         	
         }
     }
-    
+    //INSTANCIA
+    private TableroController getTController()
+    {
+    	if (controlador==null)
+    	{
+    		controlador= new TableroController();
+    	}
+    	return controlador;
+    }
     //CONTROLADOR 
     private class TableroController implements KeyListener
     {
+    	Set<Integer> pressedKeys = new TreeSet<Integer>();
+    	
     	@Override
         public void keyPressed(KeyEvent e) {
-            int key = e.getKeyCode();
-            if (key == KeyEvent.VK_UP) modelo.moverBomberman(-1, 0);
-            if (key == KeyEvent.VK_DOWN) modelo.moverBomberman(1, 0);
-            if (key == KeyEvent.VK_LEFT) modelo.moverBomberman(0, -1);
-            if (key == KeyEvent.VK_RIGHT) modelo.moverBomberman(0, 1);
+    		int key = e.getKeyCode();
+    		Integer val = Integer.valueOf(key);
+            BomberMan bomberman = BomberMan.getMiBomberMan();
+            if (pressedKeys.contains(val)) 
+            {
+        	    return;
+        	}
+            else 
+            {
+            	pressedKeys.add(val);
+            	if (key == KeyEvent.VK_UP) bomberman.mover(0, -1);
+                if (key == KeyEvent.VK_DOWN) bomberman.mover(0, 1);
+                if (key == KeyEvent.VK_LEFT) bomberman.mover(-1, 0);
+                if (key == KeyEvent.VK_RIGHT) bomberman.mover(1, 0);
+                if (key == KeyEvent.VK_X) bomberman.soltarBomba();
+        	}
         }
 
         @Override
-        public void keyReleased(KeyEvent e) {}
+        public void keyReleased(KeyEvent e) {
+        	pressedKeys.remove(e.getKeyCode());
+        }
 
         @Override
-        public void keyTyped(KeyEvent e) {}
+        public void keyTyped(KeyEvent e) {
+        }
+        
     }
 }

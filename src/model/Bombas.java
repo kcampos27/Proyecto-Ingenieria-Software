@@ -51,7 +51,21 @@ public  class Bombas {
             }
         }
 	}
-
+	public void limpiarExplo(int x, int y, int rango) {
+		TableroModel board = TableroModel.getMiTablero();
+            for (int dx = -rango; dx <= rango; dx++) {
+                for (int dy = -rango; dy <= rango; dy++) {
+                    int newX = x + dx;
+                    int newY = y + dy;
+    				Casilla unaCasilla = board.getCasilla(newX, newY);
+                    if (newX >= 0 && newY >= 0 && newX < board.getAncho() && newY < board.getAlto()) {
+                        if (unaCasilla.getContent() == "*") {
+                            unaCasilla.setContent("") ; // Limpia la celda.
+                        }
+                    }
+                }
+            }
+	    }  
 	public void update() {
 	    if (timer > 0) {
 	        timer--; // Reduce el temporizador hasta que explote.
@@ -61,7 +75,7 @@ public  class Bombas {
 	    } else if (duracionExplo > 0) {
 	        duracionExplo--; // Reduce la duración del fuego.
 	    } else {
-	        Explosion.limpiarExplo(x, y, rango); // Limpia el fuego.
+	        limpiarExplo(x, y, rango); // Limpia el fuego.
 	    }
 	}
 	

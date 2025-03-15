@@ -1,6 +1,6 @@
 package model;
 
-public class Bloque{
+public class Bloque extends Elemento{
 	
 	private String  nombre;
 	private int x;
