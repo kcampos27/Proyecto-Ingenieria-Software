@@ -27,14 +27,16 @@ public class BomberMan extends Elemento {
     	nombre = pTipo;
     }
 
-    public void mover(int pMX, int pMY) {
+	public void mover(int pMX, int pMY) {
     	TableroModel tablero = TableroModel.getMiTablero();
+    	int xPrev=x;
+    	int yPrev=y;
         if (x+pMX>=0 && y+pMY>=0 &&
         	x+pMX<=17 && y+pMY<=11)
         {
-	    	if (tablero.getCasilla(y+pMY,x+pMX).getContent()=="")
+	    	if (tablero.getCasilla(x+pMX,y+pMY).getContent()=="")
 	    	{
-	    		tablero.getCasilla(y,x).setContent("");
+	    		tablero.getCasilla(x,y).setContent("");
 	    		x = x+pMX;
 		        y = y+pMY;
 		        System.out.println(x+","+y);
@@ -48,7 +50,11 @@ public class BomberMan extends Elemento {
         {
         	System.out.println("mov erroneo");
         }
-    	
+        int xPos=x;
+        int yPos=y;
+    	setChanged();
+    	int[] dato=new int[] {xPrev,yPrev,xPos,yPos};
+    	notifyObservers(dato);
     }
     
     public void soltarBomba()

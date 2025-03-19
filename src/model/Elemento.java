@@ -1,6 +1,8 @@
 package model;
 
-public abstract class Elemento {
+import java.util.Observable;
+
+public abstract class Elemento extends Observable {
 	
 	String nombre;
 	

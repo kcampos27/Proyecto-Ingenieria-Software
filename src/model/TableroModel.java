@@ -25,11 +25,11 @@ public class TableroModel extends Observable {
     // METODOS
     public void inicializar()
     {
-        tablero = new Casilla[alto][ancho];
+        tablero = new Casilla[ancho][alto];
         for (int i = 0; i < alto; i++) {
             for (int j = 0; j < ancho; j++) {
-                tablero[i][j] = new Casilla(i, j);
-                inicializarClassic(i,j);
+                tablero[j][i] = new Casilla(j, i);
+                inicializarClassic(j,i);
             }
         }
     }
@@ -73,18 +73,14 @@ public class TableroModel extends Observable {
         	{ 
                 tablero[pI][pJ].setContent("enemigo");
             } 
-        	
+        	else 
+            {
+                tablero[pI][pJ].setContent("");
+            }
         }
-    	
-    	String content = "";
-    	if(tablero[pI][pJ] != null)
-    	{
-    		content = tablero[pI][pJ].getContent();
-    	}
-    			
     	setChanged();
-        notifyObservers(new Object[] {pI,pJ,content});
-        System.out.println(content);
+        notifyObservers(new Object[] {pI,pJ,tablero[pI][pJ].getContent()});
+        System.out.println(tablero[pI][pJ].getContent());
     }
     
     public Casilla getCasilla(int x, int y) {

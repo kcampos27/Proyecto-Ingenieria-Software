@@ -28,10 +28,11 @@ public class TableroView extends JPanel implements Observer{
     // CONSTRUCTORA
     public TableroView() {
     	setLayout(new GridLayout(alto, ancho, 1, 1));
-        labels = new JLabel[alto][ancho];
+        labels = new JLabel[ancho][alto];
         this.setBackground(Color.blue);
         inicializarVista();
         TableroModel.getMiTablero().addObserver(this);
+        BomberMan.getMiBomberMan().addObserver(this);
         //se aniade el controlador al tablero
         addKeyListener(this.getTController());
         setFocusable(true); 
@@ -41,47 +42,12 @@ public class TableroView extends JPanel implements Observer{
     private void inicializarVista() {
         for (int i = 0; i < alto; i++) {
             for (int j = 0; j < ancho; j++) {
-            visualizarCasilla(i,j);
+            visualizarCasilla(j,i);
                 
             }
         }
     }
-    
-   /* private JLabel moverBomberman()
-    {
-    	JLabel bomberman = buscarBomberman();
-    	if(bomberman.getKeyListeners() == null)
-    	{
-    		bomberman.addKeyListener(TableroModel.getMiTablero());
-    	}
-    	return bomberman;
-    }
- 
-    
-    private JLabel buscarBomberman()
-    {
-    	int i = 0, j= 0;
-    	boolean enc = false;
-    	JLabel res = null;
-    	while(i  < alto)
-    	{
-    		while( j < ancho)
-    		{
-    			if(labels[i][j].getBackground() == Color.BLUE)
-    			{
-    				enc = true;
-    			}
-    			j++;
-    		}
-    		i++;
-    	}
-    	if(enc)
-    	{
-    		res = labels[i][j];
-    	}
-    	return res;
-    }
-    */
+   
     private void visualizarCasilla(int pI, int pJ)
     {        
         if (labels[pI][pJ] == null) {
@@ -107,24 +73,24 @@ public class TableroView extends JPanel implements Observer{
         g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
     }
     
-    private void verificarCasilla(String pCont,int pI, int pJ)
+    private void verificarCasilla(String pCont,int pJ, int pI)
     {
     	if (pCont.equals("bomberman.W.")) {
     		String iconBmW= "whitefront1.png"; 
-        	labels[pI][pJ].setIcon(new ImageIcon(this.getClass().getResource(iconBmW)));
+        	labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
         } else if (pCont.equals("bloqueD")) {
         	String iconBloqD= "hard5.png"; 
-        	labels[pI][pJ].setIcon(new ImageIcon(this.getClass().getResource(iconBloqD)));
+        	labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBloqD)));
         } else if (pCont.equals("bloqueB")) {
             String iconBloqB= "soft1.png"; 
-        	labels[pI][pJ].setIcon(new ImageIcon(this.getClass().getResource(iconBloqB)));
+        	labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBloqB)));
         } else if (pCont.equals("enemigo.")) {
         	String iconEnemigo= "baloon1.png"; 
-        	labels[pI][pJ].setIcon(new ImageIcon(this.getClass().getResource(iconEnemigo)));
-        } 
+        	labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconEnemigo)));
+        } else if(pCont.equals("")){ 
+        	labels[pJ][pI].setIcon(null);
+        }
     }
-    
-    
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof TableroModel)
@@ -133,10 +99,20 @@ public class TableroView extends JPanel implements Observer{
         	int pX= (int)res[0];
         	int pY= (int)res[1];
         	String pCont= (String)res[2];
-        	verificarCasilla(pCont,pX,pY);
-        	
+        	verificarCasilla(pCont,pX,pY);	
+        }
+        else if (o instanceof BomberMan)
+        {
+        	int[] res = (int[])arg;
+        	int pX0= (int)res[0];
+        	int pY0= (int)res[1];
+        	int pX1= (int)res[2];
+        	int pY1= (int)res[3];
+        	verificarCasilla("",pX0,pY0);
+        	verificarCasilla("bomberman.W.",pX1,pY1);	
         }
     }
+
     //INSTANCIA
     private TableroController getTController()
     {
