@@ -1,6 +1,10 @@
 package model;
 
-public class Explosion {
+public class Explosion extends Elemento {
+
+	protected Explosion(String pNombre) {
+		super(pNombre);
+	}
 
 	public static void limpiarExplo(int x, int y, int rango) {
 		TableroModel board = TableroModel.getMiTablero();

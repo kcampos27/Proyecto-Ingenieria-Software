@@ -17,7 +17,6 @@ public class Main {
         frame.setSize(600, 400);
         frame.add(vista);
         frame.setVisible(true);
-        
        
     }
 }

@@ -44,7 +44,7 @@ public  class Bombas {
                 int newY = y + dy; // Nueva posición en Y.
 				Casilla unaCasilla = board.getCasilla(newX, newY);
                 if (newX >= 0 && newY >= 0 && newX < board.getAncho() && newY < board.getAlto()) {
-                    if (unaCasilla.getContent()!="BloqueD") { // PREGUNTAR Asegura que no afecta bloques duros.
+                    if (!(unaCasilla.getContent() == "bloqueD")) { // PREGUNTAR Asegura que no afecta bloques duros.
                         unaCasilla.setContent("*"); // Marca la celda con fuego.
                     }
                 }

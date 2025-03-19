@@ -13,6 +13,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 
 import model.BomberMan;
+import model.Elemento;
 import model.TableroModel;
 
 @SuppressWarnings("deprecation")
@@ -120,8 +121,7 @@ public class TableroView extends JPanel implements Observer{
         } else if (pCont.equals("enemigo.")) {
         	String iconEnemigo= "baloon1.png"; 
         	labels[pI][pJ].setIcon(new ImageIcon(this.getClass().getResource(iconEnemigo)));
-        } else if(pCont.equals("")){ 
-        }
+        } 
     }
     
     

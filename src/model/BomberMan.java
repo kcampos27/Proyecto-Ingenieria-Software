@@ -4,7 +4,9 @@ public class BomberMan extends Elemento {
     private static BomberMan miBomberMan;
 	private int x, y;
 	private Bombas bomba;
-    private BomberMan() {
+    private BomberMan(String pNombre) {
+    	
+    	super(pNombre);
         this.x = 0;
         this.y = 0;
     }
@@ -13,12 +15,17 @@ public class BomberMan extends Elemento {
     {
     	if (miBomberMan==null)
     	{
-    		miBomberMan= new BomberMan();
+    		miBomberMan= new BomberMan("bomberman.W.");
     	}
     	return miBomberMan;
     }
     public int getX() { return x; }
     public int getY() { return y; }
+    
+    public void cambiarTipo(String pTipo)
+    {
+    	nombre = pTipo;
+    }
 
     public void mover(int pMX, int pMY) {
     	TableroModel tablero = TableroModel.getMiTablero();

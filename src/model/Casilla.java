@@ -9,7 +9,7 @@ public class Casilla {
    //ATRIBUTOS
     private int x;
     private int y;
-    private String contenido; 
+    private Elemento contenido; 
 
     // CONSTRUCTORA
     public Casilla(int x, int y) {
@@ -29,10 +29,16 @@ public class Casilla {
     
     public String getContent()
     {
-    	return contenido;
+    	String content = "";
+    	if (contenido != null)
+    	{
+    		content = contenido.getNombre() ;
+    	}
+    	return content;
     }
     public void setContent(String newContent) {
-    	contenido = newContent;	
+    	
+    	contenido = Elemento.escogerTipoElemento(x,y,newContent);	
     }
 }
 

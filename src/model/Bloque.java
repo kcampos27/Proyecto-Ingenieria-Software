@@ -1,24 +1,15 @@
 package model;
 
-public class Bloque extends Elemento{
+public abstract class Bloque extends Elemento{
 	
-	private String  nombre;
 	private int x;
 	private int y;
 	
-	public Bloque(String pnombre,int px, int py)
+	public Bloque(int px, int py, String pNombre)
 	{
+		super(pNombre);
 		x = px;
 		y = py;
-		nombre = pnombre;
-	}
-	public String getName()
-	{
-		return nombre;
 	}
 
-	public void destruir()
-	{
-		
-	}
 }
