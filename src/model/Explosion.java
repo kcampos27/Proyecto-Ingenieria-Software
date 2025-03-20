@@ -14,7 +14,7 @@ public class Explosion extends Elemento {
                     int newY = y + dy;
                     if (newX >= 0 && newY >= 0 && newX < board.getAncho() && newY < board.getAlto()) {
                         if (board.getContent(newX, newY).equals("*")) {
-                            board.setContent(newX, newY, ""); // Limpia la celda.
+                            board.cambiarContent(newX, newY, ""); // Limpia la celda.
                         }
                     }
                 }

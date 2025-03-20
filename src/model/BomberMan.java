@@ -36,10 +36,10 @@ public class BomberMan extends Elemento {
         {
 	    	if (tablero.getContent(x+pMX,y+pMY).equals(""))
 	    	{
-	    		tablero.setContent(x,y,"");
+	    		tablero.cambiarContent(x,y,"");
 	    		x = x+pMX;
 		        y = y+pMY;
-		        tablero.setContent(x,y,"bombermanW");
+		        tablero.cambiarBomber(x,y);
 		        System.out.println(x+","+y);
 	    	}
 	    	else
@@ -53,7 +53,7 @@ public class BomberMan extends Elemento {
         }
         int xPos=x;
         int yPos=y;
-    	setChanged();
+        setChanged();
     	int[] dato=new int[] {xPrev,yPrev,xPos,yPos};
     	notifyObservers(dato);
     }

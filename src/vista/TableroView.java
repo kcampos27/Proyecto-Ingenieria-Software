@@ -123,7 +123,6 @@ public class TableroView extends JPanel implements Observer{
         	int pY0= (int)res[1];
         	int pX1= (int)res[2];
         	int pY1= (int)res[3];
-        	verificarCasilla("",pX0,pY0);
         	verificarCasilla("bombermanW",pX1,pY1);	
         }
     }

@@ -88,7 +88,7 @@ public class TableroModel extends Observable {
     public void cambiarContent(int x, int y, String newContent) {
         tablero[x][y].setContent(newContent);
         setChanged();
-        notifyObservers();
+        notifyObservers(new Object[] {x,y,tablero[x][y].getContent()});
     }
     public int getAncho()
     {
@@ -108,8 +108,7 @@ public class TableroModel extends Observable {
     {
     	return tablero[pX][pY].getContent();
     }
-    public void setContent(int pX, int pY, String pCont)
-    {
-    	tablero[pX][pY].setContent(pCont);
+    public void cambiarBomber(int x, int y) {
+        tablero[x][y].setContent("bombermanW");
     }
 }

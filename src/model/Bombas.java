@@ -3,15 +3,16 @@ package model;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Bombas {
+public abstract class Bombas extends Elemento {
     private int x;
     private int y;
     private int rango;
     private boolean haExplo;
     private Timer timer;
 
-    public Bombas(int x, int y, int rango) {
-        this.x = x;
+    public Bombas(int x, int y, int rango, String pTipo) {
+        super(pTipo);
+    	this.x = x;
         this.y = y;
         this.rango = rango;
         this.haExplo = false;
@@ -48,7 +49,7 @@ public class Bombas {
                 int newY = y + dy;
                 if (newX >= 0 && newY >= 0 && newX < board.getAncho() && newY < board.getAlto()) {
                     if (!(board.getContent(newX, newY).equals("bloqueD"))) {
-                        board.setContent(newX, newY, "*");
+                        board.cambiarContent(newX, newY, "*");
                     }
                 }
             }
@@ -63,7 +64,7 @@ public class Bombas {
                 int newY = y + dy;
                 if (newX >= 0 && newY >= 0 && newX < board.getAncho() && newY < board.getAlto()) {
                     if (board.getContent(newX, newY).equals("*")) {
-                        board.setContent(newX, newY, "");
+                        board.cambiarContent(newX, newY, "");
                     }
                 }
             }
