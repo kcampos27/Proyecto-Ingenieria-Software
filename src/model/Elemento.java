@@ -29,6 +29,9 @@ public abstract class Elemento extends Observable {
 		else if(ptipo == "bombermanW")
 		{elem = BomberMan.getMiBomberMan();}
 		
+		else if(ptipo == "*")
+		{elem = new Explosion("*");}
+		
 		return elem;
 	}
 	

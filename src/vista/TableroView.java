@@ -92,17 +92,10 @@ public class TableroView extends JPanel implements Observer{
         	labels[pJ][pI].setIcon(null);
         }else if(pCont.equals("bomba.S.")) {
         	String iconBombaS = "bomb1.png";
-        	labels[pJ][pI].setIcon(new ImageIcon(this.getClass().getResource(iconBombaS))); 
-        }else if(pCont.equals("explosion.S.")) {
+        	labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBombaS))); 
+        }else if(pCont.equals("*")) {
         	String iconExploS= "blast.gif";
-        	for(int i= pI-1; i<= pI+1;i++) {
-        		for(int j= pJ-1; j<=pJ+1;j++) {
-        			 if (j >= 0 && j < labels.length && i >= 0 && i < labels[j].length) {  
-             	        labels[j][i].setIcon(new ImageIcon(this.getClass().getResource(iconExploS)));
-
-        			 }
-                 }
-              }
+        	labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconExploS)));
         }
     }
 

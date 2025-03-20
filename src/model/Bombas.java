@@ -41,16 +41,30 @@ public abstract class Bombas extends Elemento {
     }
 
     public void explotar() {
-    	System.out.println("PUM");
-        TableroModel board = TableroModel.getMiTablero();
-        for (int dx = -rango; dx <= rango; dx++) {
-            for (int dy = -rango; dy <= rango; dy++) {
-                int newX = x + dx;
-                int newY = y + dy;
-                if (newX >= 0 && newY >= 0 && newX < board.getAncho() && newY < board.getAlto()) {
-                    if (!(board.getContent(newX, newY).equals("bloqueD"))) {
-                        board.cambiarContent(newX, newY, "*");
-                    }
+        if (!haExplo) {
+            System.out.println("PUM");
+            TableroModel board = TableroModel.getMiTablero();
+            
+            // Explosión central (la posición de la bomba)
+            board.cambiarContent(x, y, "*");
+
+            // Explosión en las cuatro direcciones (arriba, abajo, izquierda, derecha)
+            for (int i = 1; i <= rango; i++) {
+                // Explosión hacia la derecha
+                if (x + i < board.getAncho() && !board.getContent(x + i, y).equals("bloqueD")) {
+                    board.cambiarContent(x + i, y, "*");
+                }
+                // Explosión hacia la izquierda
+                if (x - i >= 0 && !board.getContent(x - i, y).equals("bloqueD")) {
+                    board.cambiarContent(x - i, y, "*");
+                }
+                // Explosión hacia abajo
+                if (y + i < board.getAlto() && !board.getContent(x, y + i).equals("bloqueD")) {
+                    board.cambiarContent(x, y + i, "*");
+                }
+                // Explosión hacia arriba
+                if (y - i >= 0 && !board.getContent(x, y - i).equals("bloqueD")) {
+                    board.cambiarContent(x, y - i, "*");
                 }
             }
         }
@@ -58,15 +72,27 @@ public abstract class Bombas extends Elemento {
 
     public void limpiarExplo(int x, int y, int rango) {
         TableroModel board = TableroModel.getMiTablero();
-        for (int dx = -rango; dx <= rango; dx++) {
-            for (int dy = -rango; dy <= rango; dy++) {
-                int newX = x + dx;
-                int newY = y + dy;
-                if (newX >= 0 && newY >= 0 && newX < board.getAncho() && newY < board.getAlto()) {
-                    if (board.getContent(newX, newY).equals("*")) {
-                        board.cambiarContent(newX, newY, "");
-                    }
-                }
+        
+        // Limpiar explosión central
+        board.cambiarContent(x, y, "");
+
+        // Limpiar explosión en las cuatro direcciones
+        for (int i = 1; i <= rango; i++) {
+            // Limpiar hacia la derecha
+            if (x + i < board.getAncho() && board.getContent(x + i, y).equals("*")) {
+                board.cambiarContent(x + i, y, "");
+            }
+            // Limpiar hacia la izquierda
+            if (x - i >= 0 && board.getContent(x - i, y).equals("*")) {
+                board.cambiarContent(x - i, y, "");
+            }
+            // Limpiar hacia abajo
+            if (y + i < board.getAlto() && board.getContent(x, y + i).equals("*")) {
+                board.cambiarContent(x, y + i, "");
+            }
+            // Limpiar hacia arriba
+            if (y - i >= 0 && board.getContent(x, y - i).equals("*")) {
+                board.cambiarContent(x, y - i, "");
             }
         }
     }
