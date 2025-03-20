@@ -160,10 +160,7 @@ public class TableroView extends JPanel implements Observer{
                 if (key == KeyEvent.VK_RIGHT) bomberman.mover(1, 0);
                  if (key == KeyEvent.VK_X) {
                 	BombaSuper nuevaBomba= new BombaSuper(bomberman.getX(),bomberman.getY());
-                    nuevaBomba.update();
-                	
-               		 }
-        	
+                 }
         	}
         }
 

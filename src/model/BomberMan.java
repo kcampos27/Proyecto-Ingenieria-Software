@@ -15,7 +15,7 @@ public class BomberMan extends Elemento {
     {
     	if (miBomberMan==null)
     	{
-    		miBomberMan= new BomberMan("bomberman.W.");
+    		miBomberMan= new BomberMan("bombermanW");
     	}
     	return miBomberMan;
     }

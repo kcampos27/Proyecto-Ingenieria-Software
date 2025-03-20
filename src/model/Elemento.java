@@ -26,7 +26,7 @@ public abstract class Elemento extends Observable {
 		else if(ptipo == "bloqueD")
 		{elem = new BloqueDuro(px,py,ptipo);}
 		
-		else if(ptipo == "bomberman.W.")
+		else if(ptipo == "bombermanW")
 		{elem = BomberMan.getMiBomberMan();}
 		
 		return elem;
