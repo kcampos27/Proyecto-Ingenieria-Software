@@ -73,24 +73,37 @@ public class TableroView extends JPanel implements Observer{
         g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
     }
     
-    private void verificarCasilla(String pCont,int pJ, int pI)
+    private void verificarCasilla(String pCont,int pI, int pJ)
     {
     	if (pCont.equals("bomberman.W.")) {
     		String iconBmW= "whitefront1.png"; 
-        	labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
+        	labels[pI][pJ].setIcon(new ImageIcon(this.getClass().getResource(iconBmW)));
         } else if (pCont.equals("bloqueD")) {
         	String iconBloqD= "hard5.png"; 
-        	labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBloqD)));
+        	labels[pI][pJ].setIcon(new ImageIcon(this.getClass().getResource(iconBloqD)));
         } else if (pCont.equals("bloqueB")) {
             String iconBloqB= "soft1.png"; 
-        	labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBloqB)));
+        	labels[pI][pJ].setIcon(new ImageIcon(this.getClass().getResource(iconBloqB)));
         } else if (pCont.equals("enemigo.")) {
         	String iconEnemigo= "baloon1.png"; 
-        	labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconEnemigo)));
-        } else if(pCont.equals("")){ 
-        	labels[pJ][pI].setIcon(null);
+        	labels[pI][pJ].setIcon(new ImageIcon(this.getClass().getResource(iconEnemigo)));
+        }else if(pCont.equals("bomba.S.")) {
+        	String iconBombaS = "bomb1.png";
+        	labels[pI][pJ].setIcon(new ImageIcon(this.getClass().getResource(iconBombaS))); 
+        }else if(pCont.equals("")) {
+        }else if(pCont.equals("explosion.S.")) {
+        	String iconExploS= "blast.gif";
+        	for(int i= pI-1; i<= pI+1;i++) {
+        		for(int j= pJ-1; j<=pJ+1;j++) {
+        			 if (i >= 0 && i < labels.length && j >= 0 && j < labels[i].length) {  
+             	        labels[i][j].setIcon(new ImageIcon(this.getClass().getResource(iconExploS)));
+
+        			 }
+                 }
+              }
         }
     }
+
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof TableroModel)
@@ -143,7 +156,12 @@ public class TableroView extends JPanel implements Observer{
                 if (key == KeyEvent.VK_DOWN) bomberman.mover(0, 1);
                 if (key == KeyEvent.VK_LEFT) bomberman.mover(-1, 0);
                 if (key == KeyEvent.VK_RIGHT) bomberman.mover(1, 0);
-                if (key == KeyEvent.VK_X) bomberman.soltarBomba();
+                 if (key == KeyEvent.VK_X) {
+                	BombaSuper nuevaBomba= new BombaSuper(bomberman.getX(),bomberman.getY());
+                    nuevaBomba.update();
+                	
+               		 }
+        	
         	}
         }
 
