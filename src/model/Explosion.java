@@ -12,14 +12,13 @@ public class Explosion extends Elemento {
                 for (int dy = -rango; dy <= rango; dy++) {
                     int newX = x + dx;
                     int newY = y + dy;
-    				Casilla unaCasilla = board.getCasilla(newX, newY);
                     if (newX >= 0 && newY >= 0 && newX < board.getAncho() && newY < board.getAlto()) {
-                        if (unaCasilla.getContent() == "*") {
-                            unaCasilla.setContent("") ; // Limpia la celda.
+                        if (board.getContent(newX, newY).equals("*")) {
+                            board.setContent(newX, newY, ""); // Limpia la celda.
                         }
                     }
                 }
             }
 	    }  
-
 }
+

@@ -10,12 +10,14 @@ public class Casilla {
     private int x;
     private int y;
     private Elemento contenido; 
+    private boolean hurt;
 
     // CONSTRUCTORA
     public Casilla(int x, int y) {
         this.x = x;
         this.y = y;
         this.contenido = null;  
+        this.hurt=false;
     }
 
     // METODOS
@@ -39,6 +41,10 @@ public class Casilla {
     public void setContent(String newContent) {
     	
     	contenido = Elemento.escogerTipoElemento(x,y,newContent);	
+    }
+    public boolean getHurt()
+    {
+    	return this.hurt;
     }
 }
 

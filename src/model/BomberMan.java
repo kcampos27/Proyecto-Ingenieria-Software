@@ -27,23 +27,24 @@ public class BomberMan extends Elemento {
     	nombre = pTipo;
     }
 
-	public void mover(int pMX, int pMY) {
+    public void mover(int pMX, int pMY) {
     	TableroModel tablero = TableroModel.getMiTablero();
     	int xPrev=x;
     	int yPrev=y;
         if (x+pMX>=0 && y+pMY>=0 &&
         	x+pMX<=17 && y+pMY<=11)
         {
-	    	if (tablero.getCasilla(x+pMX,y+pMY).getContent()=="")
+	    	if (tablero.getContent(x+pMX,y+pMY).equals(""))
 	    	{
-	    		tablero.getCasilla(x,y).setContent("");
+	    		tablero.setContent(x,y,"");
 	    		x = x+pMX;
 		        y = y+pMY;
+		        tablero.setContent(x,y,"bombermanW");
 		        System.out.println(x+","+y);
 	    	}
 	    	else
 	    	{
-	    		System.out.println("bloqueado por caja");
+	    		System.out.println("bloqueado por "+tablero.getContent(x+pMX, y+pMY));
 	    	}
         }
         else

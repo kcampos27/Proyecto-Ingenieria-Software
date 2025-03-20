@@ -42,49 +42,47 @@ public class TableroModel extends Observable {
     	return miTablero;
     }
     
-    public  void inicializarClassic(int pI, int pJ)
+    public  void inicializarClassic(int pJ, int pI)
     {
     	random = new Random();
     	int p = random.nextInt(100);
     	
     	if(pI==0&&pJ==0)
         {//Bomberman
-        	tablero[pI][pJ].setContent("bomberman.W.");
+        	System.out.println("BOMBERMAN");
+        	tablero[pJ][pI].setContent("bombermanW");
+        	
+        	System.out.println(tablero[pJ][pI].getContent());
         }
     	else if(pI%2!=0 && pJ%2!=0) 
         {//Bloques duros
-        tablero[pI][pJ].setContent("bloqueD");
+        tablero[pJ][pI].setContent("bloqueD");
         }
         else if( (pI == 1 && pJ == 1) 
     			|| (pI == 1 && pJ == 0) || (pI == 0 && pJ == 1)){
-        tablero[pI][pJ].setContent("");
+        tablero[pJ][pI].setContent("");
         }
         else if((pI==0 && pJ == 2) || (pI==2 && pJ==0))
         {
-        	tablero[pI][pJ].setContent("bloqueB");
+        	tablero[pJ][pI].setContent("bloqueB");
         }
-        else {
-        	
+        else 
+        {
         	if (p <= 33)  
         	{ 
-                tablero[pI][pJ].setContent("bloqueB"); 
+                tablero[pJ][pI].setContent("bloqueB"); 
             } 
         	else if (p > 33 && p<=44) 
         	{ 
-                tablero[pI][pJ].setContent("enemigo");
+                tablero[pJ][pI].setContent("enemigo");
             } 
         	else 
             {
-                tablero[pI][pJ].setContent("");
+                tablero[pJ][pI].setContent("");
             }
         }
     	setChanged();
-        notifyObservers(new Object[] {pI,pJ,tablero[pI][pJ].getContent()});
-        System.out.println(tablero[pI][pJ].getContent());
-    }
-    
-    public Casilla getCasilla(int x, int y) {
-        return tablero[x][y];
+        notifyObservers(new Object[] {pJ,pI,tablero[pJ][pI].getContent()});
     }
 
     public void cambiarContent(int x, int y, String newContent) {
@@ -100,5 +98,18 @@ public class TableroModel extends Observable {
     public int getAlto()
     {
     	return this.alto;
+    }
+    public boolean doesHurt(int pX, int pY)
+    {
+    	return tablero[pX][pY].getHurt();
+    }
+    
+    public String getContent(int pX, int pY)
+    {
+    	return tablero[pX][pY].getContent();
+    }
+    public void setContent(int pX, int pY, String pCont)
+    {
+    	tablero[pX][pY].setContent(pCont);
     }
 }

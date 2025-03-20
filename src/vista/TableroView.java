@@ -12,6 +12,7 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
 
+import model.BombaSuper;
 import model.BomberMan;
 import model.Elemento;
 import model.TableroModel;
@@ -73,30 +74,31 @@ public class TableroView extends JPanel implements Observer{
         g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
     }
     
-    private void verificarCasilla(String pCont,int pI, int pJ)
+    private void verificarCasilla(String pCont,int pJ, int pI)
     {
-    	if (pCont.equals("bomberman.W.")) {
+    	if (pCont.equals("bombermanW")) {
     		String iconBmW= "whitefront1.png"; 
-        	labels[pI][pJ].setIcon(new ImageIcon(this.getClass().getResource(iconBmW)));
+        	labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
         } else if (pCont.equals("bloqueD")) {
         	String iconBloqD= "hard5.png"; 
-        	labels[pI][pJ].setIcon(new ImageIcon(this.getClass().getResource(iconBloqD)));
+        	labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBloqD)));
         } else if (pCont.equals("bloqueB")) {
             String iconBloqB= "soft1.png"; 
-        	labels[pI][pJ].setIcon(new ImageIcon(this.getClass().getResource(iconBloqB)));
+        	labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBloqB)));
         } else if (pCont.equals("enemigo.")) {
         	String iconEnemigo= "baloon1.png"; 
-        	labels[pI][pJ].setIcon(new ImageIcon(this.getClass().getResource(iconEnemigo)));
+        	labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconEnemigo)));
+        } else if(pCont.equals("")){ 
+        	labels[pJ][pI].setIcon(null);
         }else if(pCont.equals("bomba.S.")) {
         	String iconBombaS = "bomb1.png";
-        	labels[pI][pJ].setIcon(new ImageIcon(this.getClass().getResource(iconBombaS))); 
-        }else if(pCont.equals("")) {
+        	labels[pJ][pI].setIcon(new ImageIcon(this.getClass().getResource(iconBombaS))); 
         }else if(pCont.equals("explosion.S.")) {
         	String iconExploS= "blast.gif";
         	for(int i= pI-1; i<= pI+1;i++) {
         		for(int j= pJ-1; j<=pJ+1;j++) {
-        			 if (i >= 0 && i < labels.length && j >= 0 && j < labels[i].length) {  
-             	        labels[i][j].setIcon(new ImageIcon(this.getClass().getResource(iconExploS)));
+        			 if (j >= 0 && j < labels.length && i >= 0 && i < labels[j].length) {  
+             	        labels[j][i].setIcon(new ImageIcon(this.getClass().getResource(iconExploS)));
 
         			 }
                  }
@@ -122,7 +124,7 @@ public class TableroView extends JPanel implements Observer{
         	int pX1= (int)res[2];
         	int pY1= (int)res[3];
         	verificarCasilla("",pX0,pY0);
-        	verificarCasilla("bomberman.W.",pX1,pY1);	
+        	verificarCasilla("bombermanW",pX1,pY1);	
         }
     }
 
