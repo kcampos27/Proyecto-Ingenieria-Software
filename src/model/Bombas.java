@@ -10,10 +10,11 @@ public abstract class Bombas extends Elemento {
     private boolean haExplo;
     private Timer timer;
 
-    public Bombas(int x, int y, int rango, String pTipo) {
+    @SuppressWarnings("deprecation")
+	public Bombas(int px, int py, int rango, String pTipo) {
         super(pTipo);
-    	this.x = x;
-        this.y = y;
+    	this.x = px;
+        this.y = py;
         this.rango = rango;
         this.haExplo = false;
         this.timer = new Timer();
@@ -21,23 +22,23 @@ public abstract class Bombas extends Elemento {
     }
 
     private void iniciarTemporizador() {
-        // Temporizador para explotar después de 3 segundos
+        // Temporizador para explotar 
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 explotar();
                 haExplo = true;
 
-                // Después de 2 segundos limpia el fuego
+                //limpia el fuego
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
                         limpiarExplo(x, y, rango);
                         timer.cancel();
                     }
-                }, 2000); // 2000ms = 2 segundos
+                }, 1000); // 1000ms = 1 segundo
             }
-        }, 3000); // 3000ms = 3 segundos
+        }, 1000); 
     }
 
     public void explotar() {

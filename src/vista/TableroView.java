@@ -13,11 +13,12 @@ import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 
 import model.BombaSuper;
+import model.Bombas;
 import model.BomberMan;
 import model.Elemento;
 import model.TableroModel;
 
-@SuppressWarnings("deprecation")
+@SuppressWarnings({ "deprecation", "serial" })
 public class TableroView extends JPanel implements Observer{
 	
 	//ATRIBUTOS
@@ -34,6 +35,7 @@ public class TableroView extends JPanel implements Observer{
         inicializarVista();
         TableroModel.getMiTablero().addObserver(this);
         BomberMan.getMiBomberMan().addObserver(this);
+        
         //se aniade el controlador al tablero
         addKeyListener(this.getTController());
         setFocusable(true); 
@@ -90,7 +92,7 @@ public class TableroView extends JPanel implements Observer{
         	labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconEnemigo)));
         } else if(pCont.equals("")){ 
         	labels[pJ][pI].setIcon(null);
-        }else if(pCont.equals("bomba.S.")) {
+        }else if(pCont.equals("bombaS")) {
         	String iconBombaS = "bomb1.png";
         	labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBombaS))); 
         }else if(pCont.equals("*")) {
@@ -101,23 +103,12 @@ public class TableroView extends JPanel implements Observer{
 
     @Override
     public void update(Observable o, Object arg) {
-        if (o instanceof TableroModel)
-        {
-        	Object[] res = (Object[])arg;
-        	int pX= (int)res[0];
-        	int pY= (int)res[1];
-        	String pCont= (String)res[2];
-        	verificarCasilla(pCont,pX,pY);	
-        }
-        else if (o instanceof BomberMan)
-        {
-        	int[] res = (int[])arg;
-        	int pX0= (int)res[0];
-        	int pY0= (int)res[1];
-        	int pX1= (int)res[2];
-        	int pY1= (int)res[3];
-        	verificarCasilla("bombermanW",pX1,pY1);	
-        }
+    	
+    	Object[] res = (Object[])arg;
+        int pX= (int)res[0];
+        int pY= (int)res[1];
+        String pCont= (String)res[2];
+        verificarCasilla(pCont,pX,pY);	
     }
 
     //INSTANCIA
@@ -138,7 +129,7 @@ public class TableroView extends JPanel implements Observer{
         public void keyPressed(KeyEvent e) {
     		int key = e.getKeyCode();
     		Integer val = Integer.valueOf(key);
-            BomberMan bomberman = BomberMan.getMiBomberMan();
+            TableroModel tablero = TableroModel.getMiTablero();
             if (pressedKeys.contains(val)) 
             {
         	    return;
@@ -146,12 +137,12 @@ public class TableroView extends JPanel implements Observer{
             else 
             {
             	pressedKeys.add(val);
-            	if (key == KeyEvent.VK_UP) bomberman.mover(0, -1);
-                if (key == KeyEvent.VK_DOWN) bomberman.mover(0, 1);
-                if (key == KeyEvent.VK_LEFT) bomberman.mover(-1, 0);
-                if (key == KeyEvent.VK_RIGHT) bomberman.mover(1, 0);
-                 if (key == KeyEvent.VK_X) {
-                	BombaSuper nuevaBomba= new BombaSuper(bomberman.getX(),bomberman.getY());
+            	if (key == KeyEvent.VK_UP) tablero.moverBomberman(0, -1);
+                if (key == KeyEvent.VK_DOWN) tablero.moverBomberman(0, 1);
+                if (key == KeyEvent.VK_LEFT) tablero.moverBomberman(-1, 0);
+                if (key == KeyEvent.VK_RIGHT) tablero.moverBomberman(1, 0);
+                if (key == KeyEvent.VK_X) {
+                	tablero.crearBomba();
                  }
         	}
         }

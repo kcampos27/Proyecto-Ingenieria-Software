@@ -3,7 +3,6 @@ package model;
 public class BomberMan extends Elemento {
     private static BomberMan miBomberMan;
 	private int x, y;
-	private Bombas bomba;
     private BomberMan(String pNombre) {
     	
     	super(pNombre);
@@ -21,43 +20,13 @@ public class BomberMan extends Elemento {
     }
     public int getX() { return x; }
     public int getY() { return y; }
+    public void setX(int pX) { x = pX; }
+    public void setY(int pY) { y = pY; }
     
     public void cambiarTipo(String pTipo)
     {
     	nombre = pTipo;
     }
-
-    public void mover(int pMX, int pMY) {
-    	TableroModel tablero = TableroModel.getMiTablero();
-    	int xPrev=x;
-    	int yPrev=y;
-        if (x+pMX>=0 && y+pMY>=0 &&
-        	x+pMX<=17 && y+pMY<=11)
-        {
-	    	if (tablero.getContent(x+pMX,y+pMY).equals(""))
-	    	{
-	    		tablero.cambiarContent(x,y,"");
-	    		x = x+pMX;
-		        y = y+pMY;
-		        tablero.cambiarBomber(x,y);
-		        System.out.println(x+","+y);
-	    	}
-	    	else
-	    	{
-	    		System.out.println("bloqueado por "+tablero.getContent(x+pMX, y+pMY));
-	    	}
-        }
-        else
-        {
-        	System.out.println("mov erroneo");
-        }
-        int xPos=x;
-        int yPos=y;
-        setChanged();
-    	int[] dato=new int[] {xPrev,yPrev,xPos,yPos};
-    	notifyObservers(dato);
-    }
-    
     public void soltarBomba()
     {
     	System.out.println("BOMBA");

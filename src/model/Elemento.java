@@ -20,17 +20,20 @@ public abstract class Elemento extends Observable {
 	{
 		Elemento elem = null;
 		
-		if(ptipo == "bloqueB")
+		if(ptipo.equals("bloqueB"))
 		{elem = new BloqueBlando(px,py,ptipo);}
 		
-		else if(ptipo == "bloqueD")
+		else if(ptipo.equals("bloqueD"))
 		{elem = new BloqueDuro(px,py,ptipo);}
 		
-		else if(ptipo == "bombermanW")
+		else if(ptipo.equals("bombermanW") )
 		{elem = BomberMan.getMiBomberMan();}
 		
-		else if(ptipo == "*")
+		else if(ptipo.equals("*"))
 		{elem = new Explosion("*");}
+		
+		else if(ptipo.equals("bombaS"))
+		{elem = new BombaSuper(px,py);}
 		
 		return elem;
 	}

@@ -90,6 +90,51 @@ public class TableroModel extends Observable {
         setChanged();
         notifyObservers(new Object[] {x,y,tablero[x][y].getContent()});
     }
+    
+    public void crearBomba()
+    {
+    	int x = BomberMan.getMiBomberMan().getX();
+    	int y = BomberMan.getMiBomberMan().getY();
+    	if(tablero[x][y].getContent().equals("") || tablero[x][y].getContent().equals("bombermanW") )
+    	{
+        	cambiarContent(x,y,"bombaS");
+    	}
+    }
+    
+    public void moverBomberman(int pX, int pY)
+    {
+    	int x = BomberMan.getMiBomberMan().getX();
+    	int y = BomberMan.getMiBomberMan().getY();
+    	
+    	if (x+pX>=0 && y+pY>=0 &&
+            	x+pX<=16 && y+pY<=10)
+        {
+    	    if (tablero[x+pX][y+pY].getContent().equals(""))
+    	    {
+    	    	if(!tablero[x][y].getContent().equals("bombaS")) {cambiarContent(x,y,"");}
+	    		x = x+pX;
+		        y = y+pY;
+		        BomberMan.getMiBomberMan().setX(x);
+		        BomberMan.getMiBomberMan().setY(y);
+    	    	cambiarContent(x,y,"bombermanW");
+    	    	System.out.println(x+","+y);
+    	    }
+    	    else
+    	    {
+    	    	System.out.println("bloqueado por "+tablero[x+pX][y+pY].getContent());
+    	    }
+    	    	
+        }
+        else
+        {
+        	System.out.println("mov erroneo");
+        }
+        int xPos=x;
+        int yPos=y;
+    	setChanged();
+    	notifyObservers(new Object[] {xPos,yPos,tablero[x][y].getContent()});
+    }
+    
     public int getAncho()
     {
     	return this.ancho;
@@ -98,7 +143,8 @@ public class TableroModel extends Observable {
     public int getAlto()
     {
     	return this.alto;
-    }
+    } 
+    
     public boolean doesHurt(int pX, int pY)
     {
     	return tablero[pX][pY].getHurt();
@@ -108,7 +154,5 @@ public class TableroModel extends Observable {
     {
     	return tablero[pX][pY].getContent();
     }
-    public void cambiarBomber(int x, int y) {
-        tablero[x][y].setContent("bombermanW");
-    }
+  
 }
