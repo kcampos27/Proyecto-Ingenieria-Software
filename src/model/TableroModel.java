@@ -2,6 +2,8 @@ package model;
 
 import java.util.Observable;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 @SuppressWarnings("deprecation")
 public class TableroModel extends Observable {
@@ -12,9 +14,11 @@ public class TableroModel extends Observable {
     private int alto = 11;
     private int ancho = 17;
     private static TableroModel miTablero;
+    private Timer timer = new Timer();
+    private boolean hayBomba = false;
     // CONSTRUCTORA
     private TableroModel() {
-       
+    	
     }
 
     // METODOS
@@ -90,7 +94,20 @@ public class TableroModel extends Observable {
     
     public void crearBomba()
     {
-    	BomberMan.getMiBomberMan().soltarBomba();
+    	if(!hayBomba)
+    	{
+    		BomberMan.getMiBomberMan().soltarBomba();
+    		hayBomba=true;
+    		timer.schedule(new TimerTask() 
+    		{
+    			@Override
+    			public void run()
+    			{
+    				hayBomba=false;
+    			}
+    		
+    		}, 2000);
+    	}
     }
     
     public void moverBomberman(int pX, int pY)
