@@ -1,8 +1,6 @@
 package model;
 
-import java.util.Observable;
-
-public abstract class Elemento extends Observable {
+public abstract class Elemento {
 	
 	String nombre;
 	
@@ -21,10 +19,10 @@ public abstract class Elemento extends Observable {
 		Elemento elem = null;
 		
 		if(ptipo.equals("bloqueB"))
-		{elem = new BloqueBlando(px,py,ptipo);}
+		{elem = new BloqueBlando(ptipo);}
 		
 		else if(ptipo.equals("bloqueD"))
-		{elem = new BloqueDuro(px,py,ptipo);}
+		{elem = new BloqueDuro(ptipo);}
 		
 		else if(ptipo.equals("bombermanW") )
 		{elem = BomberMan.getMiBomberMan();}

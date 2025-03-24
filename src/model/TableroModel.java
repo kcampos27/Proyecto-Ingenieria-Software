@@ -1,10 +1,5 @@
 package model;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Random;
 
@@ -50,39 +45,41 @@ public class TableroModel extends Observable {
     	if(pI==0&&pJ==0)
         {//Bomberman
         	System.out.println("BOMBERMAN");
-        	tablero[pJ][pI].setContent("bombermanW");
-        	
+        	cambiarContent(pJ,pI,"bombermanW");
         	System.out.println(tablero[pJ][pI].getContent());
         }
     	else if(pI%2!=0 && pJ%2!=0) 
         {//Bloques duros
-        tablero[pJ][pI].setContent("bloqueD");
+    		cambiarContent(pJ,pI,"bloqueD");
+        	System.out.println(tablero[pJ][pI].getContent());
         }
         else if( (pI == 1 && pJ == 1) 
     			|| (pI == 1 && pJ == 0) || (pI == 0 && pJ == 1)){
-        tablero[pJ][pI].setContent("");
+        cambiarContent(pJ,pI,"");
         }
         else if((pI==0 && pJ == 2) || (pI==2 && pJ==0))
         {
-        	tablero[pJ][pI].setContent("bloqueB");
+        	cambiarContent(pJ,pI,"bloqueB");
+        	System.out.println(tablero[pJ][pI].getContent());
         }
         else 
         {
         	if (p <= 33)  
         	{ 
-                tablero[pJ][pI].setContent("bloqueB"); 
+                cambiarContent(pJ,pI,"bloqueB");
+            	System.out.println(tablero[pJ][pI].getContent());
             } 
         	else if (p > 33 && p<=44) 
         	{ 
-                tablero[pJ][pI].setContent("enemigo");
+                cambiarContent(pJ,pI,"enemigo");
+            	System.out.println(tablero[pJ][pI].getContent());
             } 
         	else 
             {
-                tablero[pJ][pI].setContent("");
+                cambiarContent(pJ,pI,"");
+            	System.out.println(tablero[pJ][pI].getContent());
             }
         }
-    	setChanged();
-        notifyObservers(new Object[] {pJ,pI,tablero[pJ][pI].getContent()});
     }
 
     public void cambiarContent(int x, int y, String newContent) {
@@ -93,46 +90,12 @@ public class TableroModel extends Observable {
     
     public void crearBomba()
     {
-    	int x = BomberMan.getMiBomberMan().getX();
-    	int y = BomberMan.getMiBomberMan().getY();
-    	if(tablero[x][y].getContent().equals("") || tablero[x][y].getContent().equals("bombermanW") )
-    	{
-        	cambiarContent(x,y,"bombaS");
-    	}
+    	BomberMan.getMiBomberMan().soltarBomba();
     }
     
     public void moverBomberman(int pX, int pY)
     {
-    	int x = BomberMan.getMiBomberMan().getX();
-    	int y = BomberMan.getMiBomberMan().getY();
-    	
-    	if (x+pX>=0 && y+pY>=0 &&
-            	x+pX<=16 && y+pY<=10)
-        {
-    	    if (tablero[x+pX][y+pY].getContent().equals(""))
-    	    {
-    	    	if(!tablero[x][y].getContent().equals("bombaS")) {cambiarContent(x,y,"");}
-	    		x = x+pX;
-		        y = y+pY;
-		        BomberMan.getMiBomberMan().setX(x);
-		        BomberMan.getMiBomberMan().setY(y);
-    	    	cambiarContent(x,y,"bombermanW");
-    	    	System.out.println(x+","+y);
-    	    }
-    	    else
-    	    {
-    	    	System.out.println("bloqueado por "+tablero[x+pX][y+pY].getContent());
-    	    }
-    	    	
-        }
-        else
-        {
-        	System.out.println("mov erroneo");
-        }
-        int xPos=x;
-        int yPos=y;
-    	setChanged();
-    	notifyObservers(new Object[] {xPos,yPos,tablero[x][y].getContent()});
+    	BomberMan.getMiBomberMan().mover(pX, pY);
     }
     
     public int getAncho()
@@ -144,11 +107,6 @@ public class TableroModel extends Observable {
     {
     	return this.alto;
     } 
-    
-    public boolean doesHurt(int pX, int pY)
-    {
-    	return tablero[pX][pY].getHurt();
-    }
     
     public String getContent(int pX, int pY)
     {

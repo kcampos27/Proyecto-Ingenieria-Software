@@ -5,17 +5,12 @@ import java.awt.*;
 import java.awt.event.KeyListener;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
 import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
 
-import model.BombaSuper;
-import model.Bombas;
-import model.BomberMan;
-import model.Elemento;
 import model.TableroModel;
 
 @SuppressWarnings({ "deprecation", "serial" })
@@ -33,9 +28,7 @@ public class TableroView extends JPanel implements Observer{
         labels = new JLabel[ancho][alto];
         this.setBackground(Color.blue);
         inicializarVista();
-        TableroModel.getMiTablero().addObserver(this);
-        BomberMan.getMiBomberMan().addObserver(this);
-        
+        TableroModel.getMiTablero().addObserver(this);        
         //se aniade el controlador al tablero
         addKeyListener(this.getTController());
         setFocusable(true); 
@@ -123,7 +116,7 @@ public class TableroView extends JPanel implements Observer{
     //CONTROLADOR 
     private class TableroController implements KeyListener
     {
-    	Set<Integer> pressedKeys = new TreeSet<Integer>();
+    	private Set<Integer> pressedKeys = new TreeSet<Integer>();
     	
     	@Override
         public void keyPressed(KeyEvent e) {

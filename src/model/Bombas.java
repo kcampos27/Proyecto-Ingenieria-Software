@@ -10,7 +10,6 @@ public abstract class Bombas extends Elemento {
     private boolean haExplo;
     private Timer timer;
 
-    @SuppressWarnings("deprecation")
 	public Bombas(int px, int py, int rango, String pTipo) {
         super(pTipo);
     	this.x = px;

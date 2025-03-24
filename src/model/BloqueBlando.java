@@ -2,9 +2,9 @@ package model;
 
 public class BloqueBlando extends Bloque{
 
-	public BloqueBlando(int pX, int pY, String pNombre)
+	public BloqueBlando(String pNombre)
 	{
-		super(pX,pY,pNombre);
+		super(pNombre);
 	}
 	
 	public void destruir()

@@ -1,8 +1,4 @@
 package model;
-import java.awt.Dimension;
-
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 public class Casilla {
 	
@@ -10,14 +6,12 @@ public class Casilla {
     private int x;
     private int y;
     private Elemento contenido; 
-    private boolean hurt;
 
     // CONSTRUCTORA
     public Casilla(int x, int y) {
         this.x = x;
         this.y = y;
         this.contenido = null;  
-        this.hurt=false;
     }
 
     // METODOS
@@ -42,10 +36,7 @@ public class Casilla {
     	
     	contenido = Elemento.escogerTipoElemento(x,y,newContent);	
     }
-    public boolean getHurt()
-    {
-    	return this.hurt;
-    }
+  
 }
 
 
