@@ -33,9 +33,37 @@ public class BomberMan extends Elemento {
     	    if (tablero.getContent(nextX,nextY).equals(""))
     	    {
     	    	if(!tablero.getContent(x,y).equals("bombaS")) {tablero.cambiarContent(x,y,"");}
+    	    	else {tablero.cambiarContent(x, y, "bombaS");}
 	    		this.x = nextX;
 		        this.y = nextY;
-    	    	tablero.cambiarContent(x,y,"bombermanW");
+    	    	switch(pX) 
+    	    	{
+    	    		case 0:
+    	    			switch (pY)
+    	    			{
+    	    				case 0:
+    	    					break;
+    	    				case 1:
+    	    				{
+    	    					tablero.moverBomber(x, y, "down");
+    	    					break;
+    	    				}
+    	    				case -1:
+    	    				{
+    	    					tablero.moverBomber(x, y, "up");
+    	    					break;
+    	    				}
+    	    			}
+    	    			break;
+    	    		case 1:
+    	    			tablero.moverBomber(x, y, "right");
+    	    			break;
+    	    		case -1:
+    	    		{
+    	    			tablero.moverBomber(x, y, "left");
+    	    			break;
+    	    		}
+    	    	}
     	    	System.out.println(x+","+y);
     	    }
     	    else
@@ -58,7 +86,7 @@ public class BomberMan extends Elemento {
     	TableroModel tablero = TableroModel.getMiTablero();
     	if(tablero.getContent(x,y).equals("") || tablero.getContent(x,y).equals("bombermanW") )
     	{
-        	tablero.cambiarContent(x,y,"bombaS");
+        	tablero.cambiarContent(x,y,"bomberBomba");
     	}
     	System.out.println("BOMBA");
     }

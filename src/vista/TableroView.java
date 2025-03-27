@@ -73,8 +73,29 @@ public class TableroView extends JPanel implements Observer{
     {
     	if (pCont.equals("bombermanW")) {
     		String iconBmW= "whitefront1.png"; 
+        	labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));	
+        } 
+    	else if(pCont.equals("left")) {
+        	String iconBmW= "whiteleft.png";
         	labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
-        } else if (pCont.equals("bloqueD")) {
+        }
+    	else if(pCont.equals("right")) {
+        	String iconBmW= "whiteright.png";
+        	labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
+        }
+    	else if(pCont.equals("up")) {
+        	String iconBmW= "whiteup.png";
+        	labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
+        }
+    	else if(pCont.equals("down")) {
+        	String iconBmW= "whitedown.png";
+        	labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
+        }
+    	else if(pCont.equals("bomberBomba")) {
+        	String iconBmW= "whitewithbomb.png";
+        	labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
+        }
+    	else if (pCont.equals("bloqueD")) {
         	String iconBloqD= "hard5.png"; 
         	labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBloqD)));
         } else if (pCont.equals("bloqueB")) {

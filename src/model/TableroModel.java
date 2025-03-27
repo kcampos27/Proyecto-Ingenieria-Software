@@ -87,9 +87,29 @@ public class TableroModel extends Observable {
     }
 
     public void cambiarContent(int x, int y, String newContent) {
-        tablero[x][y].setContent(newContent);
+        if (newContent.equals("bomberBomba"))
+        {
+        	tablero[x][y].setContent("bombaS");
+        	setChanged();
+            notifyObservers(new Object[] {x,y,"bomberBomba"});
+        }
+        else if (newContent.equals("bombaS"))
+        {
+        	setChanged();
+            notifyObservers(new Object[] {x,y,"bombaS"});
+        }
+        else {
+        	tablero[x][y].setContent(newContent);
+        	setChanged();
+            notifyObservers(new Object[] {x,y,tablero[x][y].getContent()});
+        }
+        
+    }
+    
+    public void moverBomber(int x, int y, String orientacion) {
+        tablero[x][y].setContent("bombermanW");
         setChanged();
-        notifyObservers(new Object[] {x,y,tablero[x][y].getContent()});
+        notifyObservers(new Object[] {x,y,orientacion});
     }
     
     public void crearBomba()
