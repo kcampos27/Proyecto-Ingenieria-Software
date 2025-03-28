@@ -87,22 +87,22 @@ public class TableroModel extends Observable {
     }
 
     public void cambiarContent(int x, int y, String newContent) {
-        if (newContent.equals("bomberBomba"))
-        {
-        	tablero[x][y].setContent("bombaS");
-        	setChanged();
-            notifyObservers(new Object[] {x,y,"bomberBomba"});
-        }
-        else if (newContent.equals("bombaS"))
-        {
-        	setChanged();
-            notifyObservers(new Object[] {x,y,"bombaS"});
-        }
-        else {
-        	tablero[x][y].setContent(newContent);
-        	setChanged();
-            notifyObservers(new Object[] {x,y,tablero[x][y].getContent()});
-        }
+            switch (newContent) {
+                case "bomberBomba" -> {
+                    tablero[x][y].setContent("bombaS");
+                    setChanged();
+                    notifyObservers(new Object[] {x,y,"bomberBomba"});
+                }
+                case "bombaS" -> {
+                    setChanged();
+                    notifyObservers(new Object[] {x,y,"bombaS"});
+                }
+                default -> {
+                    tablero[x][y].setContent(newContent);
+                    setChanged();
+                    notifyObservers(new Object[] {x,y,tablero[x][y].getContent()});
+                }
+            }
         
     }
     

@@ -18,20 +18,14 @@ public abstract class Elemento {
 	{
 		Elemento elem = null;
 		
-		if(ptipo.equals("bloqueB"))
-		{elem = new BloqueBlando(ptipo);}
-		
-		else if(ptipo.equals("bloqueD"))
-		{elem = new BloqueDuro(ptipo);}
-		
-		else if(ptipo.equals("bombermanW") )
-		{elem = BomberMan.getMiBomberMan();}
-		
-		else if(ptipo.equals("*"))
-		{elem = new Explosion("*");}
-		
-		else if(ptipo.equals("bombaS"))
-		{elem = new BombaSuper(px,py);}
+            switch (ptipo) {
+                case "bloqueB" -> elem = new BloqueBlando(ptipo);
+                case "bloqueD" -> elem = new BloqueDuro(ptipo);
+                case "bombermanW" -> elem = BomberMan.getMiBomberMan();
+                case "*" -> elem = new Explosion("*");
+                case "bombaS" -> elem = new BombaSuper(px,py);
+                default -> {}
+            }
 		
 		return elem;
 	}
