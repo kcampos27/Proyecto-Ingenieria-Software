@@ -20,6 +20,8 @@ public class PantallaView extends JPanel {
 	private JLabel lbl2;
 	private JLabel titulo;
 	private PantallaController controlador;
+	private JLabel lblExploW;
+	private JLabel lblExploB;
 
 	/**
 	 * Create the panel.
@@ -31,6 +33,10 @@ public class PantallaView extends JPanel {
 		add(getLbl1());
 		add(getLbl2());
 		add(getTitulo());
+		add(getLblExploW());
+		add(getLblExploB());
+		getLblExploW().setVisible(false);
+		getLblExploB().setVisible(false);
 
 	}
 	private JLabel getLbl1() {
@@ -127,4 +133,22 @@ public class PantallaView extends JPanel {
 		}
     	
     }
+	private JLabel getLblExploW() {
+		if (lblExploW == null) {
+			lblExploW = new JLabel("");
+			springLayout.putConstraint(SpringLayout.NORTH, lblExploW, 70, SpringLayout.SOUTH, getTitulo());
+			springLayout.putConstraint(SpringLayout.WEST, lblExploW, -640, SpringLayout.EAST, this);
+			lblExploW.setIcon(new ImageIcon(PantallaView.class.getResource("/vista/blast.gif")));
+		}
+		return lblExploW;
+	}
+	private JLabel getLblExploB() {
+		if (lblExploB == null) {
+			lblExploB = new JLabel("");
+			springLayout.putConstraint(SpringLayout.NORTH, lblExploB, 203, SpringLayout.NORTH, this);
+			springLayout.putConstraint(SpringLayout.WEST, lblExploB, -265, SpringLayout.EAST, this);
+			lblExploB.setIcon(new ImageIcon(PantallaView.class.getResource("/vista/blast.gif")));
+		}
+		return lblExploB;
+	}
 }
