@@ -106,7 +106,7 @@ public class TableroModel extends Observable {
         
     }
     
-    public void moverBomber(int x, int y, String orientacion) {
+    public void orientarBomber(int x, int y, String orientacion) {
         tablero[x][y].setContent("bombermanW");
         setChanged();
         notifyObservers(new Object[] {x,y,orientacion});
@@ -126,7 +126,7 @@ public class TableroModel extends Observable {
     				hayBomba=false;
     			}
     		
-    		}, 2000);
+    		}, 1000);
     	}
     }
     

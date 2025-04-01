@@ -74,55 +74,101 @@ public class TableroView extends JPanel implements Observer{
     
     private void verificarCasilla(String pCont,int pJ, int pI)
     {
-        switch (pCont) {
-            case "bombermanW" ->                 {
-                    String iconBmW= "whitefront1.png";
-                    labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
-                }
-            case "left" ->                 {
-                    String iconBmW= "whiteleft.png";
-                    labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
-                }
-            case "right" ->                 {
-                    String iconBmW= "whiteright.png";
-                    labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
-                }
-            case "up" ->                 {
-                    String iconBmW= "whiteup.png";
-                    labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
-                }
-            case "down" ->                 {
-                    String iconBmW= "whitedown.png";
-                    labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
-                }
-            case "bomberBomba" ->                 {
-                    String iconBmW= "whitewithbomb.png";
-                    labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
-                }
-            case "bloqueD" -> {
-                String iconBloqD= "hard5.png";
-                labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBloqD)));
-            }
-            case "bloqueB" -> {
-                String iconBloqB= "soft1.png";
-                labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBloqB)));
-            }
-            case "enemigo." -> {
-                String iconEnemigo= "baloon1.png";
-                labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconEnemigo)));
-            }
-            case "" -> labels[pJ][pI].setIcon(null);
-            case "bombaS" -> {
-                String iconBombaS = "bomb1.png";
-                labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBombaS)));
-            }
-            case "*" -> {
-                String iconExploS= "blast.gif";
-                labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconExploS)));
-            }
-            default -> {
-            }
+    	if(pCont.equals("bombermanW")){
+            String iconBmW= "whitefront1.png";
+            labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
+    	}
+    	else if(pCont.equals("enllamas")){
+    		String iconBmW= "onFire2.png";
+    		labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
+    	}
+
+    	else if(pCont.equals("left")){
+            String iconBmW= "whiteleft.png";
+            labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
+    	}
+    	else if(pCont.equals("left4")){
+    		String iconBmW= "whiteleft4.png";
+    		labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
+    	}
+    	else if(pCont.equals("left3")){
+    		String iconBmW= "whiteleft3.png";
+    		labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
+    	}
+    	else if(pCont.equals("left5")){
+    		String iconBmW= "whiteleft5.png";
+    		labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
+    	}
+
+    	else if(pCont.equals("right")){
+            String iconBmW= "whiteright.png";
+            labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
         }
+    	else if(pCont.equals("right4")){
+    		String iconBmW= "whiteright4.png";
+    		labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
+    	}
+    	else if(pCont.equals("right3")){
+    		String iconBmW= "whiteright3.png";
+    		labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
+    	}
+    	else if(pCont.equals("right5")){
+    		String iconBmW= "whiteright5.png";
+    		labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
+    	}
+    	else if(pCont.equals("up")){
+            String iconBmW= "whiteup.png";
+            labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
+        }
+    	else if(pCont.equals("up3")){
+    		String iconBmW= "whiteup3.png";
+    		labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
+    	}
+    	else if(pCont.equals("up4")){
+    		String iconBmW= "whiteup4.png";
+    		labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
+    	}
+    	else if(pCont.equals("down")){
+    		String iconBmW= "whitedown.png";
+            labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
+        }
+    	else if(pCont.equals("down2")){
+    		String iconBmW= "whitedown2.png";
+    		labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
+    	}
+    	else if(pCont.equals("down3")){
+    		String iconBmW= "whitedown3.png";
+    		labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
+    	}
+    	else if(pCont.equals("down4")){
+    		String iconBmW= "whitedown4.png";
+    		labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
+    	}
+    	else if(pCont.equals("bomberBomba")){
+            String iconBmW= "whitewithbomb.png";
+            labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
+        }
+    	else if(pCont.equals("bloqueD")){
+    		String iconBloqD= "hard5.png";
+    		labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBloqD)));
+    	}	
+    	else if(pCont.equals("bloqueB")){
+    		String iconBloqB= "soft1.png";
+    		labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBloqB)));
+    	}
+    	else if(pCont.equals("enemigo.")){
+    		String iconEnemigo= "baloon1.png";
+    		labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconEnemigo)));
+    	}
+    	else if(pCont.equals("")) labels[pJ][pI].setIcon(null);
+    	else if(pCont.equals("bombaS")){
+    		String iconBombaS = "bomb1.png";
+    		labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBombaS)));
+    	}
+    	else if(pCont.equals("*")) {
+    		String iconExploS= "blast.gif";
+    		labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconExploS)));
+    	}
     }
 
     @Override
