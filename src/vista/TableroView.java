@@ -3,13 +3,12 @@ package vista;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyListener;
+import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
 import java.util.TreeSet;
 import java.awt.event.KeyEvent;
-
-import javax.swing.ImageIcon;
 
 import model.TableroModel;
 
@@ -17,18 +16,15 @@ import model.TableroModel;
 public class TableroView extends JPanel implements Observer{
 	
 	//ATRIBUTOS
-    @SuppressWarnings("FieldMayBeFinal")
     private int ancho = 17;
-    @SuppressWarnings("FieldMayBeFinal")
     private int alto = 11;
-    @SuppressWarnings("FieldMayBeFinal")
-    private JLabel[][] labels;
+    private JPanel[][] casillas;
     private TableroController controlador;
 
     // CONSTRUCTORA
     public TableroView() {
     	setLayout(new GridLayout(alto, ancho, 1, 1));
-        labels = new JLabel[ancho][alto];
+        casillas = new JPanel[ancho][alto];
         this.setBackground(Color.blue);
         inicializarVista();
         TableroModel.getMiTablero().addObserver(this);        
@@ -49,136 +45,200 @@ public class TableroView extends JPanel implements Observer{
    
     private void visualizarCasilla(int pI, int pJ)
     {        
-        if (labels[pI][pJ] == null) {
-            labels[pI][pJ] = new JLabel();
-            labels[pI][pJ].setOpaque(false);
-            labels[pI][pJ].setHorizontalAlignment(JLabel.CENTER);
-            labels[pI][pJ].setForeground(Color.BLACK);
-            add(labels[pI][pJ]);
+        if (casillas[pI][pJ] == null) {
+            casillas[pI][pJ] = new JPanel();
+            casillas[pI][pJ].setLayout(new BorderLayout());
+            casillas[pI][pJ].setOpaque(false);
+            casillas[pI][pJ].setForeground(Color.BLACK);
+            add(casillas[pI][pJ]);
         }
         else {
-        	labels[pI][pJ].revalidate();
-        	labels[pI][pJ].repaint();
+        	casillas[pI][pJ].revalidate();
+        	casillas[pI][pJ].repaint();
         }
         	
     }
     
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);  // Llamar al método de la superclase para asegurar un repintado correcto
+        super.paintComponent(g);  // Llamar al metodo de la superclase para asegurar un repintado correcto
 
         Image backgroundImage= new ImageIcon(getClass().getResource("stageBack1.png")).getImage();
 		// Dibujar la imagen de fondo, ajustándola al tamaño del panel
         g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
     }
     
-    private void verificarCasilla(String pCont,int pJ, int pI)
+    private void addImagen(int pJ, int pI, String nuevaImagen, int pCapa)
     {
-    	if(pCont.equals("bombermanW")){
-            String iconBmW= "whitefront1.png";
-            labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
-    	}
-    	else if(pCont.equals("enllamas")){
-    		String iconBmW= "onFire2.png";
-    		labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
-    	}
+    	// Verificar la ruta de la imagen asociada al contenido
+        String imagen = verificarCasilla(nuevaImagen);
+        String nombre = nuevaImagen;
+		if(esBomberman(nuevaImagen)) {nombre = "bombermanW";}//orientaciones bomberman
 
-    	else if(pCont.equals("left")){
-            String iconBmW= "whiteleft.png";
-            labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
-    	}
-    	else if(pCont.equals("left4")){
-    		String iconBmW= "whiteleft4.png";
-    		labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
-    	}
-    	else if(pCont.equals("left3")){
-    		String iconBmW= "whiteleft3.png";
-    		labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
-    	}
-    	else if(pCont.equals("left5")){
-    		String iconBmW= "whiteleft5.png";
-    		labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
-    	}
+        System.out.println("Aniadiendo imagen a [" + pJ + "][" + pI + "]: " + imagen);
+        
+        if (imagen != "") 
+        {	// No hacer nada si la imagen no existe o es vacia
 
-    	else if(pCont.equals("right")){
-            String iconBmW= "whiteright.png";
-            labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
+            // Crear JLabel con la imagen
+        	if(casillas[pJ][pI].getComponents().length < 3 && !esta(pJ,pI,nuevaImagen))
+            {
+        		JLabel labelImagen = new JLabel(new StretchIcon(this.getClass().getResource(imagen)));
+        		// Aniadir la imagen al panel
+        		casillas[pJ][pI].add(labelImagen, BorderLayout.CENTER);
+        		
+        		//Poner un nombre a la casilla
+        		labelImagen.setName(nombre);	
+        		System.out.println("Se ha aniadido la imagen a "+pJ+", "+pI+", "+labelImagen.getName()+", posicion: "+casillas[pJ][pI].getComponentCount());
+            }
+        	else
+        	{
+        		boolean added = false;
+        		for(Component c : casillas[pJ][pI].getComponents())
+        		{	
+        			if(c instanceof JLabel && !added && !esta(pJ,pI,nuevaImagen))
+        			{//Si hay un JLabel sin icono y no se ha aniadido
+        				if(((JLabel) c).getName().equals("null"))
+        				{
+        					// Aniadir la imagen al panel
+        					((JLabel) c).setIcon(new StretchIcon(this.getClass().getResource(imagen)));
+        					
+        					//Poner un nombre a la casilla
+        					((JLabel) c).setName(nombre);
+        					System.out.println("imagen aniadida a "+c.getName());
+        					added = true;
+        				}
+        			}
+        		}
+        		//if(!added) {System.out.println("Imagen "+imagen+" no aniadida, panel lleno");}
+        		
+        	}
+        	// Refrescar la casilla
+    		casillas[pJ][pI].revalidate();
+    		casillas[pJ][pI].repaint();
         }
-    	else if(pCont.equals("right4")){
-    		String iconBmW= "whiteright4.png";
-    		labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
+        else {System.out.println("Imagen no encontrada para: " + nuevaImagen);}
+        System.out.print("Componentes de "+pJ+", "+pI+" : {");
+		for(Component c : casillas[pJ][pI].getComponents())
+		{	
+			System.out.print(c.getName()+", ");
+		}
+		System.out.println("}");
+    }
+    
+    private void removeImagen(int pJ, int pI, String pImagen) 
+    {
+    	String imagen = verificarCasilla(pImagen);
+    	String nombre = pImagen;
+		if(esBomberman(pImagen)) {nombre = "bombermanW";}//orientancion bomberman
+		
+    	boolean removed = false;
+		for(Component c : casillas[pJ][pI].getComponents())
+		{
+			if(c instanceof JLabel && !removed)
+			{//Si hay un JLabel sin icono y no se ha aniadido
+				if(((JLabel) c).getName().equals(nombre))
+				{
+					// Aniadir la imagen al panel
+					((JLabel) c).setIcon(null);
+					((JLabel) c).setName("null");
+					System.out.println("imagen "+imagen+" eliminada");
+					//removed = true;
+				}
+			}
+		}
+		//if(!removed) {System.out.println("Imagen "+imagen+" no eliminada, no esta");}
+		casillas[pJ][pI].revalidate();
+		casillas[pJ][pI].repaint();
+    }
+    
+    private boolean esta(int pX, int pY, String pName)
+    {
+    	boolean esta = false;
+    	
+    	for (Component c : casillas[pX][pY].getComponents())
+    	{
+    		if(((JLabel)c).getName().equals(pName)) {esta = true;}
     	}
-    	else if(pCont.equals("right3")){
-    		String iconBmW= "whiteright3.png";
-    		labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
-    	}
-    	else if(pCont.equals("right5")){
-    		String iconBmW= "whiteright5.png";
-    		labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
-    	}
-    	else if(pCont.equals("up")){
-            String iconBmW= "whiteup.png";
-            labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
-        }
-    	else if(pCont.equals("up3")){
-    		String iconBmW= "whiteup3.png";
-    		labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
-    	}
-    	else if(pCont.equals("up4")){
-    		String iconBmW= "whiteup4.png";
-    		labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
-    	}
-    	else if(pCont.equals("down")){
-    		String iconBmW= "whitedown.png";
-            labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
-        }
-    	else if(pCont.equals("down2")){
-    		String iconBmW= "whitedown2.png";
-    		labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
-    	}
-    	else if(pCont.equals("down3")){
-    		String iconBmW= "whitedown3.png";
-    		labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
-    	}
-    	else if(pCont.equals("down4")){
-    		String iconBmW= "whitedown4.png";
-    		labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
-    	}
-    	else if(pCont.equals("bomberBomba")){
-            String iconBmW= "whitewithbomb.png";
-            labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBmW)));
-        }
-    	else if(pCont.equals("bloqueD")){
-    		String iconBloqD= "hard5.png";
-    		labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBloqD)));
-    	}	
-    	else if(pCont.equals("bloqueB")){
-    		String iconBloqB= "soft1.png";
-    		labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBloqB)));
-    	}
-    	else if(pCont.equals("enemigo.")){
-    		String iconEnemigo= "baloon1.png";
-    		labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconEnemigo)));
-    	}
-    	else if(pCont.equals("")) labels[pJ][pI].setIcon(null);
-    	else if(pCont.equals("bombaS")){
-    		String iconBombaS = "bomb1.png";
-    		labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconBombaS)));
-    	}
-    	else if(pCont.equals("*")) {
-    		String iconExploS= "blast.gif";
-    		labels[pJ][pI].setIcon(new StretchIcon(this.getClass().getResource(iconExploS)));
-    	}
+    	return esta;
     }
 
     @Override
     public void update(Observable o, Object arg) {
-    	
     	Object[] res = (Object[])arg;
         int pX= (int)res[0];
         int pY= (int)res[1];
         String pCont= (String)res[2];
-        verificarCasilla(pCont,pX,pY);	
+        String pAccion= (String)res[3];
+        int pCapa= (int)res[4];
+        System.out.println("Observer actualizado con: " +pX+", "+pY+", "+pCont+", "+pAccion);
+        if(pAccion.equals("add"))
+        {
+        	addImagen(pX,pY,pCont,pCapa);
+        }
+        else if(pAccion.equals("del"))
+        {
+        	removeImagen(pX,pY,pCont);
+        }
+        	
+    }
+    
+    public boolean esBomberman(String pCont)
+    {
+    	boolean es = false;
+    	if(pCont.equals("enllamas") 
+    			|| pCont.equals("enllamas")
+    			|| pCont.equals("left")
+    			|| pCont.equals("left4")
+    			|| pCont.equals("left3")
+    			|| pCont.equals("left5")
+    			|| pCont.equals("right")
+    			|| pCont.equals("right4")
+    			|| pCont.equals("right3")
+    			|| pCont.equals("right5")
+    			|| pCont.equals("up")
+    			|| pCont.equals("up3")
+    			|| pCont.equals("up4")
+    			|| pCont.equals("down")
+    			|| pCont.equals("down2")
+    			|| pCont.equals("down3")
+    			|| pCont.equals("down4")
+    			|| pCont.equals("bomberBomba"))
+    	{
+    		es = true;
+    	}
+    	
+    	return es;
+    }
+    
+    private String verificarCasilla(String pCont)
+    {
+    	String recurso = "";
+    	if(pCont.equals("bombermanW")){ recurso = "whitefront1.png";}
+    	else if(pCont.equals("enllamas")){recurso = "onFire2.png";}
+    	else if(pCont.equals("left")){recurso= "whiteleft.png";}
+    	else if(pCont.equals("left4")){recurso= "whiteleft4.png";}
+    	else if(pCont.equals("left3")){recurso= "whiteleft3.png";}
+    	else if(pCont.equals("left5")){recurso= "whiteleft5.png";}
+    	else if(pCont.equals("right")){recurso= "whiteright.png";}
+    	else if(pCont.equals("right4")){recurso= "whiteright4.png";}
+    	else if(pCont.equals("right3")){recurso= "whiteright3.png";}
+    	else if(pCont.equals("right5")){recurso= "whiteright5.png";}
+    	else if(pCont.equals("up")){recurso= "whiteup.png";}
+    	else if(pCont.equals("up3")){recurso= "whiteup3.png";}
+    	else if(pCont.equals("up4")){recurso= "whiteup4.png";}
+    	else if(pCont.equals("down")){recurso= "whitedown.png";}
+    	else if(pCont.equals("down2")){recurso= "whitedown2.png";}
+    	else if(pCont.equals("down3")){recurso= "whitedown3.png";}
+    	else if(pCont.equals("down4")){recurso= "whitedown4.png";}
+    	else if(pCont.equals("bomberBomba")){recurso= "whitewithbomb.png";}
+    	else if(pCont.equals("bloqueD")){recurso= "hard5.png";}	
+    	else if(pCont.equals("bloqueB")){recurso= "soft1.png";}
+    	else if(pCont.equals("enemigo.")){recurso= "baloon1.png";}
+    	else if(pCont.equals("bombaS")){recurso= "bomb1.png";}
+    	else if(pCont.equals("*")) {recurso= "blast.gif";}
+    	System.out.println("Verificando imagen "+recurso+" para: " + pCont);
+    	return recurso;
     }
 
     //INSTANCIA
@@ -193,7 +253,6 @@ public class TableroView extends JPanel implements Observer{
     //CONTROLADOR 
     private class TableroController implements KeyListener
     {
-            @SuppressWarnings({"FieldMayBeFinal", "Convert2Diamond"})
     	private Set<Integer> pressedKeys = new TreeSet<Integer>();
     	
     	@Override
@@ -204,12 +263,12 @@ public class TableroView extends JPanel implements Observer{
             if (!pressedKeys.contains(val)) 
             {
             	pressedKeys.add(val);
-            	if (key == KeyEvent.VK_UP) tablero.moverBomberman(0, -1);
-                if (key == KeyEvent.VK_DOWN) tablero.moverBomberman(0, 1);
-                if (key == KeyEvent.VK_LEFT) tablero.moverBomberman(-1, 0);
-                if (key == KeyEvent.VK_RIGHT) tablero.moverBomberman(1, 0);
+            	if (key == KeyEvent.VK_UP) tablero.moverBomberman(0, -1);System.out.println("");
+                if (key == KeyEvent.VK_DOWN) tablero.moverBomberman(0, 1);System.out.println("");
+                if (key == KeyEvent.VK_LEFT) tablero.moverBomberman(-1, 0);System.out.println("");
+                if (key == KeyEvent.VK_RIGHT) tablero.moverBomberman(1, 0);System.out.println("");
                 if (key == KeyEvent.VK_X) {
-                	tablero.crearBomba();
+                	tablero.crearBomba();System.out.println("");
                  }
         	}
         }

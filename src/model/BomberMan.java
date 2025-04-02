@@ -2,13 +2,10 @@ package model;
 
 public class BomberMan extends Elemento {
     private static BomberMan miBomberMan;
-	private int x, y;
 	private int orientacion;
     private BomberMan(String pNombre) {
     	
-    	super(pNombre);
-        this.x = 0;
-        this.y = 0;
+    	super(0,0,pNombre,3);
         orientacion=0;
     }
 
@@ -20,10 +17,46 @@ public class BomberMan extends Elemento {
     	}
     	return miBomberMan;
     }
+    
+    @Override
+    public void getHurt(int pDmg)
+    {
+    	
+    	if(vida>0) 
+    	{
+    		if(vida - pDmg == 0) {vida = 0;}
+    		else {vida = vida - pDmg;}
+    		TableroModel.getMiTablero().orientarBomber(x, y, "enllamas");
+    		System.out.println("OUCH, tengo "+vida+" y tenia "+(vida+pDmg)+" de vida");
+    	}
+    	if(vida==0) 
+    	{
+    		TableroModel.getMiTablero().eliminarContent(x, y, getNombre());
+    		TableroModel.getMiTablero().aniadirContent(0, 0, getNombre());
+    		x=0;
+    		y=0;
+    		System.out.println("HE PERDIDO, regreso a 0,0");
+    		vida = 3;
+    	}
+    }
+    
+    public boolean posibleMoverse(int pX, int pY)
+    {
+    	boolean moverse = false;
+    	
+    	if(!TableroModel.getMiTablero().casillaIncluye(pX, pY, nombre)
+    			&& !TableroModel.getMiTablero().casillaIncluye(pX, pY, "bloqueD")
+    			&& !TableroModel.getMiTablero().casillaIncluye(pX, pY, "bloqueB")
+    			&& !TableroModel.getMiTablero().casillaIncluye(pX, pY, "bombaS"))
+    	{
+    		moverse = true;
+    	}
+    	
+    	return moverse;
+    }
 
     public void mover(int pX, int pY)
     {
-    	TableroModel tablero = TableroModel.getMiTablero();
     	int nextX = this.x + pX;
     	int nextY = this.y + pY;
     	System.out.println("parametros: "+pX+", "+pY);
@@ -32,52 +65,37 @@ public class BomberMan extends Elemento {
     	if (nextX>=0 && nextY>=0 &&
             	nextX<=16 && nextY<=10)
         {
-    	    if (tablero.getContent(nextX,nextY).equals(""))
+    	    if (posibleMoverse(nextX,nextY))
     	    {
-    	    	if(!tablero.getContent(x,y).equals("bombaS")) {tablero.cambiarContent(x,y,"");}
-    	    	else {tablero.cambiarContent(x, y, "bombaS");}
+    	    	if(TableroModel.getMiTablero().casillaIncluye(x, y, "bombaS")) 
+    	    	{TableroModel.getMiTablero().aniadirContent(x, y, "bombaS");}
+    	    	TableroModel.getMiTablero().eliminarContent(x,y,nombre);
 	    		this.x = nextX;
 		        this.y = nextY;
     	    	if(pX==0) 
     	    	{
-    	    			if(pY==1)
-    	    				{
-    	    					tablero.cambiarContent(x, y, "bombermanW");
-    	    					cambiarOrientacion(pX,pY);
-    	    				}
-    	    				if(pY==-1)
-    	    				{
-    	    					tablero.cambiarContent(x, y, "bombermanW");
-    	    					cambiarOrientacion(pX,pY);
-    	    				}
+    	    		if(pY==1){cambiarOrientacion(pX,pY);}
+    	    		if(pY==-1){cambiarOrientacion(pX,pY);}
     	    	}
-    	    	else if(pX==1) 
-    	    	{
-    	    			tablero.cambiarContent(x, y, "bombermanW");
-    	    			cambiarOrientacion(pX,pY);
-    	    	}
-    	    	else if(pX==-1)
-    	    	{
-    	    		tablero.cambiarContent(x, y, "bombermanW");
-    	    		cambiarOrientacion(pX,pY);
-    	    	}
+    	    	else if(pX==1){cambiarOrientacion(pX,pY);}
+    	    	else if(pX==-1){cambiarOrientacion(pX,pY);}
     	    	System.out.println(x+","+y);
-
     	    }
     	    
     	    else
     	    {
-    	    	System.out.println("bloqueado por "+tablero.getContent(nextX,nextY));
-    	    	if(!TableroModel.getMiTablero().getContent(x,y).equals("bombaS")
-    	    	    	&& 	!TableroModel.getMiTablero().getContent(x,y).equals("*")) {cambiarOrientacion(pX,pY);}
+    	    	System.out.print("bloqueado por ");
+    	    	TableroModel.getMiTablero().printContent(nextX, nextY);
+    	    	if(!TableroModel.getMiTablero().casillaIncluye(x, y, "bombaS")
+    	    	    	&& 	!TableroModel.getMiTablero().casillaIncluye(x, y, "*")) {cambiarOrientacion(pX,pY);}
     	    }
     	    	
         }
         else
         {
         	System.out.println("mov erroneo");
-        	if(!TableroModel.getMiTablero().getContent(x,y).equals("bombaS")
-	    	    	&& 	!TableroModel.getMiTablero().getContent(x,y).equals("*")) {cambiarOrientacion(pX,pY);}
+        	if(!TableroModel.getMiTablero().casillaIncluye(x, y, "bombaS")
+	    	    	&& 	!TableroModel.getMiTablero().casillaIncluye(x, y, "*")) {cambiarOrientacion(pX,pY);}
         }
     }
     
@@ -164,10 +182,10 @@ public class BomberMan extends Elemento {
     
     public void soltarBomba()
     {
-    	TableroModel tablero = TableroModel.getMiTablero();
-    	if(tablero.getContent(x,y).equals("") || tablero.getContent(x,y).equals("bombermanW") )
+    	if(TableroModel.getMiTablero().casillaIncluye(x, y, "") || TableroModel.getMiTablero().casillaIncluye(x, y, nombre))
     	{
-        	tablero.cambiarContent(x,y,"bomberBomba");
+    		TableroModel.getMiTablero().eliminarContent(x, y, nombre);
+    		TableroModel.getMiTablero().aniadirContent(x,y,"bomberBomba");
     	}
     	System.out.println("BOMBA");
     }

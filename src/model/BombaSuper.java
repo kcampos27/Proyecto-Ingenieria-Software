@@ -12,5 +12,11 @@ public class BombaSuper extends Bombas {
 		BombaSuper bomba = new BombaSuper(bombX,bombY);
 		return bomba;
 	} */
+
+	@Override
+	public void getHurt(int pDmg) {
+		// TODO Auto-generated method stub
+		
+	}
 }
 

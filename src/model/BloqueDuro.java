@@ -2,13 +2,14 @@ package model;
 
 public class BloqueDuro extends Bloque {
 	
-	public BloqueDuro(String pNombre)
+	public BloqueDuro(int pX, int pY, String pNombre)
 	{
-		super(pNombre);
+		super(pX, pY, pNombre, -1);
 	}
 
-	public void destruir()
-	{
+	@Override
+	public void getHurt(int pDmg) {
+		// TODO Auto-generated method stub
 		
 	}
 }

@@ -4,16 +4,12 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public abstract class Bombas extends Elemento {
-    private int x;
-    private int y;
     private int rango;
     private boolean haExplo;
     private Timer timer;
 
 	public Bombas(int px, int py, int rango, String pTipo) {
-        super(pTipo);
-    	this.x = px;
-        this.y = py;
+        super(px,py,pTipo,-1);
         this.rango = rango;
         this.haExplo = false;
         this.timer = new Timer();
@@ -43,56 +39,65 @@ public abstract class Bombas extends Elemento {
     public void explotar() {
         if (!haExplo) {
             System.out.println("PUM");
-            TableroModel board = TableroModel.getMiTablero();
+            
             
             // Explosión central (la posición de la bomba)
-            board.cambiarContent(x, y, "*");
-
+            TableroModel.getMiTablero().eliminarContent(x, y, "bombaS");
+            TableroModel.getMiTablero().aniadirContent(x, y, "*");
+            TableroModel.getMiTablero().damage(x,y, 1);
+            
             // Explosión en las cuatro direcciones (arriba, abajo, izquierda, derecha)
             for (int i = 1; i <= rango; i++) {
                 // Explosión hacia la derecha
-                if (x + i < board.getAncho() && !board.getContent(x + i, y).equals("bloqueD")) {
-                    board.cambiarContent(x + i, y, "*");
+                if (x + i < TableroModel.getMiTablero().getAncho() && !TableroModel.getMiTablero().casillaIncluye(x + i, y,"bloqueD"))
+                {
+                	TableroModel.getMiTablero().aniadirContent(x + i, y, "*");
+                	TableroModel.getMiTablero().damage(x + i,y, 1);
                 }
                 // Explosión hacia la izquierda
-                if (x - i >= 0 && !board.getContent(x - i, y).equals("bloqueD")) {
-                    board.cambiarContent(x - i, y, "*");
+                if (x - i >= 0 && !TableroModel.getMiTablero().casillaIncluye(x - i, y,"bloqueD")) 
+                {
+                	TableroModel.getMiTablero().aniadirContent(x - i, y, "*");
+                	TableroModel.getMiTablero().damage(x - i,y, 1);
                 }
                 // Explosión hacia abajo
-                if (y + i < board.getAlto() && !board.getContent(x, y + i).equals("bloqueD")) {
-                    board.cambiarContent(x, y + i, "*");
+                if (y + i < TableroModel.getMiTablero().getAlto() && !TableroModel.getMiTablero().casillaIncluye(x, y + i,"bloqueD")) 
+                {
+                	TableroModel.getMiTablero().aniadirContent(x, y + i, "*");
+                	TableroModel.getMiTablero().damage(x,y + i, 1);
                 }
                 // Explosión hacia arriba
-                if (y - i >= 0 && !board.getContent(x, y - i).equals("bloqueD")) {
-                    board.cambiarContent(x, y - i, "*");
+                if (y - i >= 0 && !TableroModel.getMiTablero().casillaIncluye(x, y - i,"bloqueD")) 
+                {
+                	TableroModel.getMiTablero().aniadirContent(x, y - i, "*");
+                	TableroModel.getMiTablero().damage(x,y - 1, 1);
                 }
             }
         }
     }
 
     public void limpiarExplo(int x, int y, int rango) {
-        TableroModel board = TableroModel.getMiTablero();
         
         // Limpiar explosión central
-        board.cambiarContent(x, y, "");
+    	TableroModel.getMiTablero().eliminarContent(x, y, "*");
 
         // Limpiar explosión en las cuatro direcciones
         for (int i = 1; i <= rango; i++) {
             // Limpiar hacia la derecha
-            if (x + i < board.getAncho() && board.getContent(x + i, y).equals("*")) {
-                board.cambiarContent(x + i, y, "");
+            if (x + i < TableroModel.getMiTablero().getAncho() && TableroModel.getMiTablero().casillaIncluye(x + i, y, "*")) {
+            	TableroModel.getMiTablero().eliminarContent(x + i, y, "*");
             }
             // Limpiar hacia la izquierda
-            if (x - i >= 0 && board.getContent(x - i, y).equals("*")) {
-                board.cambiarContent(x - i, y, "");
+            if (x - i >= 0 && TableroModel.getMiTablero().casillaIncluye(x - i, y, "*")) {
+            	TableroModel.getMiTablero().eliminarContent(x - i, y, "*");
             }
             // Limpiar hacia abajo
-            if (y + i < board.getAlto() && board.getContent(x, y + i).equals("*")) {
-                board.cambiarContent(x, y + i, "");
+            if (y + i < TableroModel.getMiTablero().getAlto() && TableroModel.getMiTablero().casillaIncluye(x, y + i, "*")) {
+            	TableroModel.getMiTablero().eliminarContent(x, y + i, "*");
             }
             // Limpiar hacia arriba
-            if (y - i >= 0 && board.getContent(x, y - i).equals("*")) {
-                board.cambiarContent(x, y - i, "");
+            if (y - i >= 0 && TableroModel.getMiTablero().casillaIncluye(x, y - i, "*")) {
+            	TableroModel.getMiTablero().eliminarContent(x, y - i, "*");
             }
         }
     }
@@ -100,10 +105,6 @@ public abstract class Bombas extends Elemento {
     public boolean getHaExplo() {
         return haExplo;
     }
-
-    public int getX() { return x; }
-
-    public int getY() { return y; }
 
     public int getRango() { return rango; }
 }

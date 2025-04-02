@@ -49,67 +49,94 @@ public class TableroModel extends Observable {
     	if(pI==0&&pJ==0)
         {//Bomberman
         	System.out.println("BOMBERMAN");
-        	cambiarContent(pJ,pI,"bombermanW");
-        	System.out.println(tablero[pJ][pI].getContent());
+        	aniadirContent(pJ,pI,"bombermanW");
+        	tablero[pJ][pI].imprimirContent();
         }
     	else if(pI%2!=0 && pJ%2!=0) 
         {//Bloques duros
-    		cambiarContent(pJ,pI,"bloqueD");
-        	System.out.println(tablero[pJ][pI].getContent());
+    		aniadirContent(pJ,pI,"bloqueD");
+    		tablero[pJ][pI].imprimirContent();
         }
+    	//NO OCURRE NADA
         else if( (pI == 1 && pJ == 1) 
     			|| (pI == 1 && pJ == 0) || (pI == 0 && pJ == 1)){
-        cambiarContent(pJ,pI,"");
+        aniadirContent(pJ,pI,"");
         }
         else if((pI==0 && pJ == 2) || (pI==2 && pJ==0))
         {
-        	cambiarContent(pJ,pI,"bloqueB");
-        	System.out.println(tablero[pJ][pI].getContent());
+        	aniadirContent(pJ,pI,"bloqueB");
+        	tablero[pJ][pI].imprimirContent();
         }
         else 
         {
         	if (p <= 33)  
         	{ 
-                cambiarContent(pJ,pI,"bloqueB");
-            	System.out.println(tablero[pJ][pI].getContent());
+                aniadirContent(pJ,pI,"bloqueB");
+                tablero[pJ][pI].imprimirContent();
             } 
         	else if (p > 33 && p<=44) 
         	{ 
-                cambiarContent(pJ,pI,"enemigo");
-            	System.out.println(tablero[pJ][pI].getContent());
+                aniadirContent(pJ,pI,"enemigo");
+            	tablero[pJ][pI].imprimirContent();
             } 
         	else 
             {
-                cambiarContent(pJ,pI,"");
-            	System.out.println(tablero[pJ][pI].getContent());
+                aniadirContent(pJ,pI,"");
+                tablero[pJ][pI].imprimirContent();
             }
         }
+    	System.out.println("");
     }
 
-    public void cambiarContent(int x, int y, String newContent) {
+    public void aniadirContent(int x, int y, String newContent) {
             switch (newContent) {
-                case "bomberBomba" -> {
-                    tablero[x][y].setContent("bombaS");
+                case "bomberBomba" -> {//Bomberman pone la bomba
+                    tablero[x][y].addContent("bombaS");
+                    tablero[x][y].addContent(BomberMan.getMiBomberMan().getNombre());
                     setChanged();
-                    notifyObservers(new Object[] {x,y,"bomberBomba"});
+                    notifyObservers(new Object[] {x,y,"bomberBomba","add",1});
                 }
-                case "bombaS" -> {
+                case "bombaS" -> {//Para cuando el bomberman se va de la casilla donde deja bomba
                     setChanged();
-                    notifyObservers(new Object[] {x,y,"bombaS"});
+                    notifyObservers(new Object[] {x,y,"bombaS","add",1});
                 }
                 default -> {
-                    tablero[x][y].setContent(newContent);
+                    tablero[x][y].addContent(newContent);
+                    System.out.println("Aniadiendo contenido a [" + x + "][" + y + "]: " + newContent);
                     setChanged();
-                    notifyObservers(new Object[] {x,y,tablero[x][y].getContent()});
+                    notifyObservers(new Object[] {x,y,newContent,"add",1});
                 }
             }
         
     }
     
+    public void eliminarContent(int x, int y, String newContent)
+    {
+    	tablero[x][y].removeContent(newContent);
+    	setChanged();
+        notifyObservers(new Object[] {x,y,newContent,"del",1});
+    }
+    
     public void orientarBomber(int x, int y, String orientacion) {
-        tablero[x][y].setContent("bombermanW");
+        if(!casillaIncluye(x,y,BomberMan.getMiBomberMan().getNombre()))
+        {tablero[x][y].addContent(BomberMan.getMiBomberMan().getNombre());}
+        else 
+        {
+        	setChanged();
+            notifyObservers(new Object[] {x,y,BomberMan.getMiBomberMan().getNombre(),"del",1});
+        }
         setChanged();
-        notifyObservers(new Object[] {x,y,orientacion});
+        notifyObservers(new Object[] {x,y,orientacion,"add",1});
+    }
+    
+    public boolean casillaIncluye(int px, int py, String pCont)
+    {
+    	return tablero[px][py].estaContent(pCont);
+    }
+    
+    public void damage(int pX, int pY, int pDmg)
+    {
+    	tablero[pX][pY].damageElems(pDmg);
     }
     
     public void crearBomba()
@@ -145,9 +172,9 @@ public class TableroModel extends Observable {
     	return this.alto;
     } 
     
-    public String getContent(int pX, int pY)
+    public void printContent(int pX, int pY)
     {
-    	return tablero[pX][pY].getContent();
+    	tablero[pX][pY].imprimirContent();;
     }
   
 }
