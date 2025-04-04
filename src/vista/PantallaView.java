@@ -1,5 +1,8 @@
 package vista;
 
+import model.PantallaModel;
+import model.TableroModel;
+
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.SpringLayout;
@@ -7,12 +10,16 @@ import javax.swing.SpringLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.ImageIcon;
 
-public class PantallaView extends JPanel {
+public class PantallaView extends JPanel implements Observer {
 
 	private static final long serialVersionUID = 1L;
 	private SpringLayout springLayout;
@@ -26,6 +33,7 @@ public class PantallaView extends JPanel {
 	/**
 	 * Create the panel.
 	 */
+	//CONSTRUCTORA
 	public PantallaView() {
 		setBackground(new Color(255, 255, 255));
 		springLayout = new SpringLayout();
@@ -37,7 +45,9 @@ public class PantallaView extends JPanel {
 		add(getLblExploB());
 		getLblExploW().setVisible(false);
 		getLblExploB().setVisible(false);
-
+		PantallaModel.getMiPantalla().addObserver(this);
+		addKeyListener( this.getPController());
+		setFocusable(true);
 	}
 	private JLabel getLbl1() {
 		if (lbl1 == null) {
@@ -64,12 +74,12 @@ public class PantallaView extends JPanel {
 		return lbl2;
 	}
 	protected void paintComponent(Graphics g) {
-        super.paintComponent(g);  // Llamar al método de la superclase para asegurar un repintado correcto
+		super.paintComponent(g);  // Llamar al método de la superclase para asegurar un repintado correcto
 
-        Image backgroundImage= new StretchIcon(getClass().getResource("back.png")).getImage();
+		Image backgroundImage= new StretchIcon(getClass().getResource("back.png")).getImage();
 		// Dibujar la imagen de fondo, ajustándola al tamaño del panel
-        g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
-    }
+		g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+	}
 	private JLabel getTitulo() {
 		if (titulo == null) {
 			titulo = new JLabel("");
@@ -79,60 +89,87 @@ public class PantallaView extends JPanel {
 		}
 		return titulo;
 	}
-	
+
+	@Override
+	public void update(Observable o, Object arg) {
+
+	}
+
 	//INSTANCIA
-    private PantallaController getPController()
-    {
-    	if (controlador==null)
-    	{
-    		controlador= new PantallaController();
-    	}
-    	return controlador;
-    }
-	
-	
-	//CONTROLADOR 
-    private class PantallaController implements MouseListener
-    {
+	private PantallaController getPController()
+	{
+		if (controlador==null)
+		{
+			controlador= new PantallaController();
+		}
+		return controlador;
+	}
+
+	//CONTROLADOR
+	private class PantallaController implements MouseListener, KeyListener
+	{
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-			if (e.getSource().equals(lbl1))
+			if (e.getSource().equals(lbl1)) //Se ha pulsado el bomberman blanco
 			{
 				System.out.println("Blanco");
+				lblExploW.setVisible(true);
+				lblExploB.setVisible(false);
+				PantallaModel.getMiPantalla().setBomberman("W");
 			}
 			else if (e.getSource().equals(lbl2))
 			{
 				System.out.println("Negro");
+				lblExploB.setVisible(true);
+				lblExploW.setVisible(false);
+				PantallaModel.getMiPantalla().setBomberman("B");
 			}
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
-    	
-    }
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			Integer key = e.getKeyCode();
+			if (key.equals(KeyEvent.VK_SPACE))
+			{
+				PantallaModel.getMiPantalla().play();
+			}
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+
+		}
+	}
 	private JLabel getLblExploW() {
 		if (lblExploW == null) {
 			lblExploW = new JLabel("");
