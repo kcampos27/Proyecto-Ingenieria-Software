@@ -21,7 +21,7 @@ public class BomberMan extends Elemento {
     @Override
     public void getHurt(int pDmg)
     {
-    	
+		System.out.println("");
     	if(vida>0) 
     	{
     		if(vida - pDmg == 0) {vida = 0;}
@@ -32,12 +32,13 @@ public class BomberMan extends Elemento {
     	if(vida==0) 
     	{
     		TableroModel.getMiTablero().eliminarContent(x, y, getNombre());
-    		TableroModel.getMiTablero().aniadirContent(0, 0, getNombre());
+    		TableroModel.getMiTablero().aniadirContent(0, 0, this);
     		x=0;
     		y=0;
     		System.out.println("HE PERDIDO, regreso a 0,0");
     		vida = 3;
     	}
+		System.out.println("");
     }
     
     public boolean posibleMoverse(int pX, int pY)
@@ -68,18 +69,22 @@ public class BomberMan extends Elemento {
     	    if (posibleMoverse(nextX,nextY))
     	    {
     	    	if(TableroModel.getMiTablero().casillaIncluye(x, y, "bombaS")) 
-    	    	{TableroModel.getMiTablero().aniadirContent(x, y, "bombaS");}
+    	    	{TableroModel.getMiTablero().generarContent(x, y, "bombaS");}
     	    	TableroModel.getMiTablero().eliminarContent(x,y,nombre);
 	    		this.x = nextX;
 		        this.y = nextY;
     	    	if(pX==0) 
     	    	{
     	    		if(pY==1){cambiarOrientacion(pX,pY);}
-    	    		if(pY==-1){cambiarOrientacion(pX,pY);}
+    	    		else if(pY==-1){cambiarOrientacion(pX,pY);}
     	    	}
     	    	else if(pX==1){cambiarOrientacion(pX,pY);}
     	    	else if(pX==-1){cambiarOrientacion(pX,pY);}
     	    	System.out.println(x+","+y);
+    	    	
+    	    	if(TableroModel.getMiTablero().casillaIncluye(nextX, nextY, "enemigo")
+    	    			|| TableroModel.getMiTablero().casillaIncluye(nextX, nextY, "*"))//Si nos chocamos con un enemigo o explosion, recibimos danio
+    	    	{TableroModel.getMiTablero().damage(nextX, nextY, 1, new String[] {"bombermanW"});}
     	    }
     	    
     	    else
@@ -185,7 +190,9 @@ public class BomberMan extends Elemento {
     	if(TableroModel.getMiTablero().casillaIncluye(x, y, "") || TableroModel.getMiTablero().casillaIncluye(x, y, nombre))
     	{
     		TableroModel.getMiTablero().eliminarContent(x, y, nombre);
-    		TableroModel.getMiTablero().aniadirContent(x,y,"bomberBomba");
+    		nombre = "bomberBomba";
+    		TableroModel.getMiTablero().aniadirContent(x,y,this);
+    		nombre = "bombermanW";
     	}
     	System.out.println("BOMBA");
     }

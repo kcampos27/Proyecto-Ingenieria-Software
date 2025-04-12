@@ -234,7 +234,7 @@ public class TableroView extends JPanel implements Observer{
     	else if(pCont.equals("bomberBomba")){recurso= "whitewithbomb.png";}
     	else if(pCont.equals("bloqueD")){recurso= "hard5.png";}	
     	else if(pCont.equals("bloqueB")){recurso= "soft1.png";}
-    	else if(pCont.equals("enemigo.")){recurso= "baloon1.png";}
+    	else if(pCont.equals("enemigo")){recurso= "baloon1.png";}
     	else if(pCont.equals("bombaS")){recurso= "bomb1.png";}
     	else if(pCont.equals("*")) {recurso= "blast.gif";}
     	System.out.println("Verificando imagen "+recurso+" para: " + pCont);
@@ -259,16 +259,15 @@ public class TableroView extends JPanel implements Observer{
         public void keyPressed(KeyEvent e) {
     		int key = e.getKeyCode();
     		Integer val = key;
-            TableroModel tablero = TableroModel.getMiTablero();
             if (!pressedKeys.contains(val)) 
             {
             	pressedKeys.add(val);
-            	if (key == KeyEvent.VK_UP) tablero.moverBomberman(0, -1);System.out.println("");
-                if (key == KeyEvent.VK_DOWN) tablero.moverBomberman(0, 1);System.out.println("");
-                if (key == KeyEvent.VK_LEFT) tablero.moverBomberman(-1, 0);System.out.println("");
-                if (key == KeyEvent.VK_RIGHT) tablero.moverBomberman(1, 0);System.out.println("");
+            	if (key == KeyEvent.VK_UP) TableroModel.getMiTablero().moverBomberman(0, -1);System.out.println("");
+                if (key == KeyEvent.VK_DOWN) TableroModel.getMiTablero().moverBomberman(0, 1);System.out.println("");
+                if (key == KeyEvent.VK_LEFT) TableroModel.getMiTablero().moverBomberman(-1, 0);System.out.println("");
+                if (key == KeyEvent.VK_RIGHT) TableroModel.getMiTablero().moverBomberman(1, 0);System.out.println("");
                 if (key == KeyEvent.VK_X) {
-                	tablero.crearBomba();System.out.println("");
+                	TableroModel.getMiTablero().crearBomba();System.out.println("");
                  }
         	}
         }

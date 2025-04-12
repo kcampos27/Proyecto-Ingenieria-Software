@@ -1,5 +1,6 @@
 package model;
 
+import java.util.HashSet;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -29,6 +30,7 @@ public abstract class Bombas extends Elemento {
                     @Override
                     public void run() {
                         limpiarExplo(x, y, rango);
+                        x=-1;y=-1;
                         timer.cancel();
                     }
                 }, 1000); // 1000ms = 1 segundo
@@ -43,34 +45,34 @@ public abstract class Bombas extends Elemento {
             
             // Explosión central (la posición de la bomba)
             TableroModel.getMiTablero().eliminarContent(x, y, "bombaS");
-            TableroModel.getMiTablero().aniadirContent(x, y, "*");
-            TableroModel.getMiTablero().damage(x,y, 1);
+            TableroModel.getMiTablero().generarContent(x, y, "*");
+            TableroModel.getMiTablero().damage(x,y, 1, new String[] {"enemigo","bombermanW","bloqueB"});
             
             // Explosión en las cuatro direcciones (arriba, abajo, izquierda, derecha)
             for (int i = 1; i <= rango; i++) {
                 // Explosión hacia la derecha
                 if (x + i < TableroModel.getMiTablero().getAncho() && !TableroModel.getMiTablero().casillaIncluye(x + i, y,"bloqueD"))
                 {
-                	TableroModel.getMiTablero().aniadirContent(x + i, y, "*");
-                	TableroModel.getMiTablero().damage(x + i,y, 1);
+                	TableroModel.getMiTablero().generarContent(x + i, y, "*");
+                	TableroModel.getMiTablero().damage(x + i,y, 1, new String[] {"enemigo","bombermanW","bloqueB"});
                 }
                 // Explosión hacia la izquierda
                 if (x - i >= 0 && !TableroModel.getMiTablero().casillaIncluye(x - i, y,"bloqueD")) 
                 {
-                	TableroModel.getMiTablero().aniadirContent(x - i, y, "*");
-                	TableroModel.getMiTablero().damage(x - i,y, 1);
+                	TableroModel.getMiTablero().generarContent(x - i, y, "*");
+                	TableroModel.getMiTablero().damage(x - i,y, 1, new String[] {"enemigo","bombermanW","bloqueB"});
                 }
                 // Explosión hacia abajo
                 if (y + i < TableroModel.getMiTablero().getAlto() && !TableroModel.getMiTablero().casillaIncluye(x, y + i,"bloqueD")) 
                 {
-                	TableroModel.getMiTablero().aniadirContent(x, y + i, "*");
-                	TableroModel.getMiTablero().damage(x,y + i, 1);
+                	TableroModel.getMiTablero().generarContent(x, y + i, "*");
+                	TableroModel.getMiTablero().damage(x,y + i, 1, new String[] {"enemigo","bombermanW","bloqueB"});
                 }
                 // Explosión hacia arriba
                 if (y - i >= 0 && !TableroModel.getMiTablero().casillaIncluye(x, y - i,"bloqueD")) 
                 {
-                	TableroModel.getMiTablero().aniadirContent(x, y - i, "*");
-                	TableroModel.getMiTablero().damage(x,y - 1, 1);
+                	TableroModel.getMiTablero().generarContent(x, y - i, "*");
+                	TableroModel.getMiTablero().damage(x,y - 1, 1, new String[] {"enemigo","bombermanW","bloqueB"});
                 }
             }
         }

@@ -1,5 +1,7 @@
 package model;
 
+import java.util.HashSet;
+
 public class Casilla {
 	
    //ATRIBUTOS
@@ -23,16 +25,18 @@ public class Casilla {
         return y;
     }
     
-    public void damageElems(int pDmg)
+    public void damageElems(int pDmg, HashSet<String> targets)
     {
     	for(int i=0;i<3;i++)
     	{
-    		if(contenido[i] != null)
+    		if(contenido[i]  != null)
     		{
-    			contenido[i].getHurt(pDmg);
+    			if(targets.contains(contenido[i].getNombre())) 
+    			{contenido[i].getHurt(1);}
     		}
     	}
     }
+    
     
 	public String[] getContent()
     {
@@ -47,7 +51,7 @@ public class Casilla {
     	}
     	return content; 	
     }
-    public boolean addContent(String newContent) 
+    public boolean crearContent(String newContent) 
     {
     	boolean added = false;
     	if(newContent != "" && !estaContent(newContent)) 
@@ -56,7 +60,25 @@ public class Casilla {
     		while(i<3 && !added)
     		{
     			//if(contenido[i] != null)System.out.println("hay "+contenido[i].getNombre()+" en "+x+", "+y+" pos: "+ i);
-    			if(contenido[i] == null){contenido[i] = Elemento.escogerTipoElemento(x,y,newContent);
+    			if(contenido[i] == null){contenido[i] = GeneradorElementos.getGen().generarElemento(x, y, newContent);
+    			//System.out.println("add "+newContent+" a "+x+", "+y);
+    			added=true;}
+    			i++;
+    		}
+    	}
+    	return added;	
+    }
+    
+    public boolean addContent(Elemento newContent) 
+    {
+    	boolean added = false;
+    	if(newContent.getNombre() != "" && !estaContent(newContent.getNombre())) 
+    	{
+    		int i=0;
+    		while(i<3 && !added)
+    		{
+    			//if(contenido[i] != null)System.out.println("hay "+contenido[i].getNombre()+" en "+x+", "+y+" pos: "+ i);
+    			if(contenido[i] == null){contenido[i] = newContent;
     			//System.out.println("add "+newContent+" a "+x+", "+y);
     			added=true;}
     			i++;
@@ -88,8 +110,10 @@ public class Casilla {
     			if(contenido[i] != null)
     			{
     				if(contenido[i].getNombre().equals(newContent)) 
-    				{contenido[i] = null;
-    				removed=true;}
+    				{	
+    					contenido[i] = null;
+    					removed=true;
+    				}
     			}
     			i++;
     		}

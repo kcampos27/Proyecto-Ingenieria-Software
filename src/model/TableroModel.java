@@ -1,5 +1,6 @@
 package model;
 
+import java.util.HashSet;
 import java.util.Observable;
 import java.util.Random;
 import java.util.Timer;
@@ -16,6 +17,7 @@ public class TableroModel extends Observable {
     private static TableroModel miTablero;
     private Timer timer = new Timer();
     private boolean hayBomba = false;
+
     // CONSTRUCTORA
     private TableroModel() {
     	
@@ -49,66 +51,88 @@ public class TableroModel extends Observable {
     	if(pI==0&&pJ==0)
         {//Bomberman
         	System.out.println("BOMBERMAN");
-        	aniadirContent(pJ,pI,"bombermanW");
+        	generarContent(pJ,pI,"bombermanW");
         	tablero[pJ][pI].imprimirContent();
         }
     	else if(pI%2!=0 && pJ%2!=0) 
         {//Bloques duros
-    		aniadirContent(pJ,pI,"bloqueD");
+    		generarContent(pJ,pI,"bloqueD");
     		tablero[pJ][pI].imprimirContent();
         }
     	//NO OCURRE NADA
         else if( (pI == 1 && pJ == 1) 
     			|| (pI == 1 && pJ == 0) || (pI == 0 && pJ == 1)){
-        aniadirContent(pJ,pI,"");
+        	generarContent(pJ,pI,"");
         }
         else if((pI==0 && pJ == 2) || (pI==2 && pJ==0))
         {
-        	aniadirContent(pJ,pI,"bloqueB");
+        	generarContent(pJ,pI,"bloqueB");
         	tablero[pJ][pI].imprimirContent();
         }
         else 
         {
         	if (p <= 33)  
         	{ 
-                aniadirContent(pJ,pI,"bloqueB");
+                generarContent(pJ,pI,"bloqueB");
                 tablero[pJ][pI].imprimirContent();
             } 
-        	else if (p > 33 && p<=44) 
+        	else if (p > 33 && p<=40) 
         	{ 
-                aniadirContent(pJ,pI,"enemigo");
+                generarContent(pJ,pI,"enemigo");
             	tablero[pJ][pI].imprimirContent();
             } 
         	else 
             {
-                aniadirContent(pJ,pI,"");
+                generarContent(pJ,pI,"");
                 tablero[pJ][pI].imprimirContent();
             }
         }
     	System.out.println("");
     }
 
-    public void aniadirContent(int x, int y, String newContent) {
-            switch (newContent) {
-                case "bomberBomba" -> {//Bomberman pone la bomba
-                    tablero[x][y].addContent("bombaS");
-                    tablero[x][y].addContent(BomberMan.getMiBomberMan().getNombre());
+    public void generarContent(int x, int y, String newContent) {
+        switch (newContent) {
+            case "bomberBomba" -> {//Bomberman pone la bomba
+                tablero[x][y].crearContent("bombaS");
+                tablero[x][y].crearContent(BomberMan.getMiBomberMan().getNombre());
+                setChanged();
+                notifyObservers(new Object[] {x,y,"bomberBomba","add",1});
+            }
+            case "bombaS" -> {//Para cuando el bomberman se va de la casilla donde deja bomba
+                setChanged();
+                notifyObservers(new Object[] {x,y,"bombaS","add",1});
+            }
+            default -> {
+                tablero[x][y].crearContent(newContent);
+                System.out.println("Aniadiendo contenido a [" + x + "][" + y + "]: " + newContent);
+                setChanged();
+                notifyObservers(new Object[] {x,y,newContent,"add",1});
+            }
+        }
+    
+}
+    
+    public void aniadirContent(int x, int y, Elemento newContent) {
+           
+    	if(newContent.getNombre().equals("bomberBomba")){//Bomberman pone la bomba
+    		tablero[x][y].crearContent("bombaS");
+               tablero[x][y].addContent(newContent);
                     setChanged();
                     notifyObservers(new Object[] {x,y,"bomberBomba","add",1});
-                }
-                case "bombaS" -> {//Para cuando el bomberman se va de la casilla donde deja bomba
+        }
+    	else if(newContent.getNombre().equals("bombaS"))
+    	{//Para cuando el bomberman se va de la casilla donde deja bomba
                     setChanged();
                     notifyObservers(new Object[] {x,y,"bombaS","add",1});
-                }
-                default -> {
+        }
+    	else{
                     tablero[x][y].addContent(newContent);
-                    System.out.println("Aniadiendo contenido a [" + x + "][" + y + "]: " + newContent);
+                    System.out.println("Aniadiendo contenido a [" + x + "][" + y + "]: " + newContent.getNombre());
                     setChanged();
-                    notifyObservers(new Object[] {x,y,newContent,"add",1});
-                }
-            }
-        
+                    notifyObservers(new Object[] {x,y,newContent.getNombre(),"add",1});
+        }
     }
+        
     
     public void eliminarContent(int x, int y, String newContent)
     {
@@ -119,7 +143,7 @@ public class TableroModel extends Observable {
     
     public void orientarBomber(int x, int y, String orientacion) {
         if(!casillaIncluye(x,y,BomberMan.getMiBomberMan().getNombre()))
-        {tablero[x][y].addContent(BomberMan.getMiBomberMan().getNombre());}
+        {tablero[x][y].addContent(BomberMan.getMiBomberMan());}
         else 
         {
         	setChanged();
@@ -134,9 +158,30 @@ public class TableroModel extends Observable {
     	return tablero[px][py].estaContent(pCont);
     }
     
-    public void damage(int pX, int pY, int pDmg)
+    public boolean existe(String pCont) 
+    { 
+    	boolean esta = false;
+    	int i=0,j=0;
+    	while (i < alto && !esta) {
+    		while (j < ancho && !esta) 
+    		{
+    			if(casillaIncluye(j,i,pCont))
+    			{esta = true;}
+    			j++;
+    		}
+    		i++;
+    	}
+    	return esta;
+    }
+    
+    public void damage(int pX, int pY, int pDmg, String[] pTargets)
     {
-    	tablero[pX][pY].damageElems(pDmg);
+    	HashSet<String> targets = new HashSet<String>();
+    	for(String s : pTargets)
+    	{
+    		targets.add(s);
+    	}
+    	tablero[pX][pY].damageElems(pDmg, targets);
     }
     
     public void crearBomba()
