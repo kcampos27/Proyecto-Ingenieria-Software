@@ -54,18 +54,18 @@ public class PantallaModel extends Observable
     }
     public void select(int pNext)
     {
-        if (pNext == -1) {
-            switch (tipoPantalla) {
-                case "classic" -> tipoPantalla = "empty";
-                case "soft" -> tipoPantalla = "classic";
-                case "empty" -> tipoPantalla = "soft";
-            }
-        }
-        else if (pNext == 1) {
+        if (pNext == 1) {
             switch (tipoPantalla) {
                 case "classic" -> tipoPantalla = "soft";
                 case "soft" -> tipoPantalla = "empty";
                 case "empty" -> tipoPantalla = "classic";
+            }
+        }
+        else if (pNext == -1) {
+            switch (tipoPantalla) {
+                case "classic" -> tipoPantalla = "empty";
+                case "soft" -> tipoPantalla = "classic";
+                case "empty" -> tipoPantalla = "soft";
             }
         }
     }
@@ -74,8 +74,8 @@ public class PantallaModel extends Observable
         String pantalla="";
         switch (tipoPantalla) {
             case "classic" -> pantalla = "stageBack1";
-            case "soft" -> pantalla = "stageBack2";
-            case "empty" -> pantalla = "stageBack3";
+            case "soft" -> pantalla = "stageBack3";
+            case "empty" -> pantalla = "stageBack2";
         }
         return pantalla;
     }

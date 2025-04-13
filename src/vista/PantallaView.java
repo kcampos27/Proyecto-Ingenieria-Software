@@ -19,6 +19,8 @@ public class PantallaView extends JPanel implements Observer {
 	private SpringLayout springLayout;
 	private JLabel lbl1;
 	private JLabel lbl2;
+	private JButton btnPlay;
+	private JButton btnSelectMap;
 	private JLabel titulo;
 	private PantallaController controlador;
 	private JLabel lblExploW;
@@ -34,13 +36,14 @@ public class PantallaView extends JPanel implements Observer {
 		setLayout(springLayout);
 		add(getLbl1());
 		add(getLbl2());
+		add(getBtnPlay());
+		add(getBtnSelectMap());
 		add(getTitulo());
 		add(getLblExploW());
 		add(getLblExploB());
 		getLblExploW().setVisible(false);
 		getLblExploB().setVisible(false);
 		PantallaModel.getMiPantalla().addObserver(this);
-		addKeyListener(this.getPController());
 		setFocusable(true);
 	}
 	private JLabel getLbl1() {
@@ -82,6 +85,34 @@ public class PantallaView extends JPanel implements Observer {
 			titulo.setIcon(new ImageIcon(PantallaView.class.getResource("/vista/title.png")));
 		}
 		return titulo;
+	}
+	
+	private JButton getBtnPlay() {
+		if (btnPlay == null) {
+			btnPlay = new JButton("Play");
+			
+			springLayout.putConstraint(SpringLayout.NORTH, btnPlay, 220, SpringLayout.NORTH, this);
+			springLayout.putConstraint(SpringLayout.WEST, btnPlay, 318, SpringLayout.WEST, this);
+			springLayout.putConstraint(SpringLayout.EAST, btnPlay, 498, SpringLayout.WEST, this);
+			springLayout.putConstraint(SpringLayout.SOUTH, btnPlay, 250, SpringLayout.NORTH, this);
+			btnPlay.setFont(new Font("Rockwell Extra Bold", Font.BOLD, 16));
+			btnPlay.addMouseListener(getPController());
+		}
+		return btnPlay;
+	}
+	
+	private JButton getBtnSelectMap() {
+		if (btnSelectMap == null) {
+			btnSelectMap = new JButton("Select Map");
+			
+			springLayout.putConstraint(SpringLayout.NORTH, btnSelectMap, 270, SpringLayout.NORTH, this);
+			springLayout.putConstraint(SpringLayout.WEST, btnSelectMap, 318, SpringLayout.WEST, this);
+			springLayout.putConstraint(SpringLayout.EAST, btnSelectMap, 498, SpringLayout.WEST, this);
+			springLayout.putConstraint(SpringLayout.SOUTH, btnSelectMap, 300, SpringLayout.NORTH, this);
+			btnSelectMap.setFont(new Font("Rockwell Extra Bold", Font.BOLD, 16));
+			btnSelectMap.addMouseListener(getPController());
+		}
+		return btnSelectMap;
 	}
 
 	private void abrirSelPant()
@@ -145,12 +176,7 @@ public class PantallaView extends JPanel implements Observer {
 		private Set<Integer> pressedKeys = new TreeSet<Integer>();
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
+			
 			if (e.getSource().equals(lbl1)) //Se ha pulsado el bomberman blanco
 			{
 				System.out.println("Blanco");
@@ -165,6 +191,20 @@ public class PantallaView extends JPanel implements Observer {
 				lblExploW.setVisible(false);
 				PantallaModel.getMiPantalla().setBomberman("B");
 			}
+			else if (e.getSource().equals(btnPlay))
+			{
+				PantallaModel.getMiPantalla().play();
+			}
+			else if (e.getSource().equals(btnSelectMap))
+			{
+				abrirSelPant();
+			}
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			
 		}
 
 		@Override

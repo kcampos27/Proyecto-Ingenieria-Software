@@ -3,6 +3,7 @@ package model;
 import java.util.Random;
 
 public class Empty extends TableroModel{
+		
     public Empty(){}
     @Override
     public void inicializarPantalla(int pJ, int pI) {
@@ -13,6 +14,11 @@ public class Empty extends TableroModel{
         {//Bomberman
             System.out.println("BOMBERMAN");
             generarContent(pJ,pI,"bombermanW");
+            tablero[pJ][pI].imprimirContent();
+        }
+        else if (p > 33 && p<=40)
+        {
+            generarContent(pJ,pI,"enemigo");
             tablero[pJ][pI].imprimirContent();
         }
         else

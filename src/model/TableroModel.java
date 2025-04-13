@@ -38,7 +38,7 @@ public abstract class TableroModel extends Observable {
     {
     }
 
-    public void generarContent(int x, int y, String newContent) {
+    public synchronized void generarContent(int x, int y, String newContent) {
         switch (newContent) {
             case "bomberBomba" -> {//Bomberman pone la bomba
                 tablero[x][y].crearContent("bombaS");
@@ -60,7 +60,7 @@ public abstract class TableroModel extends Observable {
     
 }
     
-    public void aniadirContent(int x, int y, Elemento newContent) {
+    public synchronized void aniadirContent(int x, int y, Elemento newContent) {
            
     	if(newContent.getNombre().equals("bomberBomba")){//Bomberman pone la bomba
     		tablero[x][y].crearContent("bombaS");
@@ -82,7 +82,7 @@ public abstract class TableroModel extends Observable {
     }
         
     
-    public void eliminarContent(int x, int y, String newContent)
+    public synchronized void eliminarContent(int x, int y, String newContent)
     {
     	tablero[x][y].removeContent(newContent);
     	setChanged();

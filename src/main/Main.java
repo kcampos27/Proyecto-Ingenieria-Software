@@ -21,8 +21,8 @@ public class Main {
 
             // Crear instancia del panel
             PantallaView panel = new PantallaView();
-            PantallaModel modelo = PantallaModel.getMiPantalla();
-            Gestor gestor = Gestor.getInstance();
+            PantallaModel.getMiPantalla();
+            Gestor.getInstance();
             frame.setContentPane(panel);
             frame.setVisible(true);
         });

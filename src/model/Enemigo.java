@@ -27,6 +27,7 @@ public class Enemigo extends Elemento{
 			@Override
 			public void run()
 			{
+				
 				//System.out.println("enemigo: me muevo desde "+x+","+y);
 				TimerTask timerTask = new TimerTask() {
 					int[] coords;
@@ -34,17 +35,18 @@ public class Enemigo extends Elemento{
 					public void run() {
 						coords = randomcoords();
 						mover(coords[0],coords[1]);
-					}		
+					}
 				};
 				timer = new Timer();
 				timer.scheduleAtFixedRate(timerTask, 0, 1000);//Movimiento cada segundo
+				
 			}
 		
 		}, 1000);
     	
 	}
 	
-	public void mover(int pX, int pY)
+	public synchronized void mover(int pX, int pY)
 	{
 		int nextX = this.x + pX;
     	int nextY = this.y + pY;
@@ -57,6 +59,8 @@ public class Enemigo extends Elemento{
         {
     	    if (posibleMoverse(nextX,nextY))
     	    {
+    	    	System.out.println("");
+				System.out.println("______________________________________________");
     	    	Gestor.getInstance().getTablero().eliminarContent(x, y, nombre);
     	    	x = nextX;
     	    	y = nextY;
@@ -76,11 +80,13 @@ public class Enemigo extends Elemento{
     	    	if(Gestor.getInstance().getTablero().casillaIncluye(x, y, "*"))
     	    	{Gestor.getInstance().getTablero().damage(x, y, 1, new String[] {"enemigo"});}
     	    	//System.out.println(nextX+","+nextY);
+    	    	System.out.println("");
+				System.out.println("______________________________________________");
     	    }
     	    
     	    else
     	    {//System.out.print("bloqueado por ");
-    	    	Gestor.getInstance().getTablero().printContent(nextX, nextY);
+    	    	//Gestor.getInstance().getTablero().printContent(nextX, nextY);
     	    }
     	    	
         }
@@ -92,18 +98,18 @@ public class Enemigo extends Elemento{
 	public int[] randomcoords()
 	{
 		int[] coords = new int[2];
-		coords[0] = 0; coords[1] = 0;
+		coords[0] = 1; coords[1] = 0;
 		
 		Random r = new Random();
-		int dir = r.nextInt(5);
+		int dir = r.nextInt(4);
 		
-		if(dir == 1)//up
+		if(dir == 0)//up
 		{ coords[0] = 0; coords[1] = 1; }
-		else if(dir == 2)//down
+		else if(dir == 1)//down
 		{ coords[0] = 0; coords[1] = -1; }
-		else if(dir == 3)//left
+		else if(dir == 2)//left
 		{ coords[0] = -1; coords[1] = 0; }
-		else if(dir == 4)//right
+		else if(dir == 3)//right
 		{ coords[0] = 1; coords[1] = 0; }
 		
 		return coords;
