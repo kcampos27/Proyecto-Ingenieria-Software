@@ -17,7 +17,7 @@ public class BloqueBlando extends Bloque{
     	}
     	if(vida==0) 
     	{
-    		TableroModel.getMiTablero().eliminarContent(x, y, nombre);
+    		Gestor.getInstance().getTablero().eliminarContent(x, y, nombre);
     		x=-1;
     		y=-1;
     	}

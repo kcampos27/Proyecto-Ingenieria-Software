@@ -1,23 +1,17 @@
 package vista;
 
 import model.PantallaModel;
-import model.TableroModel;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.SpringLayout;
-
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Image;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Observable;
 import java.util.Observer;
-
-import javax.swing.ImageIcon;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class PantallaView extends JPanel implements Observer {
 
@@ -46,7 +40,7 @@ public class PantallaView extends JPanel implements Observer {
 		getLblExploW().setVisible(false);
 		getLblExploB().setVisible(false);
 		PantallaModel.getMiPantalla().addObserver(this);
-		addKeyListener( this.getPController());
+		addKeyListener(this.getPController());
 		setFocusable(true);
 	}
 	private JLabel getLbl1() {
@@ -90,9 +84,49 @@ public class PantallaView extends JPanel implements Observer {
 		return titulo;
 	}
 
+	private void abrirSelPant()
+	{
+		JFrame frameSel = new JFrame("Selector de pantallas");
+		frameSel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frameSel.setSize(800, 530);
+		frameSel.setResizable(false); // Permitir redimensionamiento
+
+		// Crear instancia del panel
+		JPanel panel = new SelectorPantallasView();
+		frameSel.setContentPane(panel);
+		frameSel.setVisible(true);
+	}
+
+	public void close()
+	{
+		Window ventana = SwingUtilities.getWindowAncestor(this);
+		if (ventana != null) {
+			ventana.dispose();
+		}
+	}
+
+	private void abrirTablero()
+	{
+		TableroView vista = new TableroView();
+		vista.setTipoPantalla(PantallaModel.getMiPantalla().getTipoPantalla());
+		//TableroModel modelo= Gestor.getInstance().getTablero();
+		//modelo.inicializar();
+		JFrame frame = new JFrame("Tablero");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(600, 400);
+		frame.add(vista);
+		frame.setVisible(true);
+		close();
+	}
+
 	@Override
 	public void update(Observable o, Object arg) {
-
+		System.out.println("RECIBIDO");
+		int codigo = (int)arg;
+		if (codigo==1)
+		{
+			abrirTablero();
+		}
 	}
 
 	//INSTANCIA
@@ -108,7 +142,7 @@ public class PantallaView extends JPanel implements Observer {
 	//CONTROLADOR
 	private class PantallaController implements MouseListener, KeyListener
 	{
-
+		private Set<Integer> pressedKeys = new TreeSet<Integer>();
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			// TODO Auto-generated method stub
@@ -158,10 +192,17 @@ public class PantallaView extends JPanel implements Observer {
 
 		@Override
 		public void keyPressed(KeyEvent e) {
-			Integer key = e.getKeyCode();
-			if (key.equals(KeyEvent.VK_SPACE))
+			int key = e.getKeyCode();
+			Integer val = key;
+			if (!pressedKeys.contains(val))
 			{
-				PantallaModel.getMiPantalla().play();
+				if (key == KeyEvent.VK_O) {
+					abrirSelPant();
+				}
+				if (key == KeyEvent.VK_SPACE)
+				{
+					PantallaModel.getMiPantalla().play();
+				}
 			}
 		}
 

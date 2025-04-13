@@ -26,13 +26,13 @@ public class BomberMan extends Elemento {
     	{
     		if(vida - pDmg == 0) {vida = 0;}
     		else {vida = vida - pDmg;}
-    		TableroModel.getMiTablero().orientarBomber(x, y, "enllamas");
+    		Gestor.getInstance().getTablero().orientarBomber(x, y, "enllamas");
     		System.out.println("OUCH, tengo "+vida+" y tenia "+(vida+pDmg)+" de vida");
     	}
     	if(vida==0) 
     	{
-    		TableroModel.getMiTablero().eliminarContent(x, y, getNombre());
-    		TableroModel.getMiTablero().aniadirContent(0, 0, this);
+    		Gestor.getInstance().getTablero().eliminarContent(x, y, getNombre());
+    		Gestor.getInstance().getTablero().aniadirContent(0, 0, this);
     		x=0;
     		y=0;
     		System.out.println("HE PERDIDO, regreso a 0,0");
@@ -45,10 +45,10 @@ public class BomberMan extends Elemento {
     {
     	boolean moverse = false;
     	
-    	if(!TableroModel.getMiTablero().casillaIncluye(pX, pY, nombre)
-    			&& !TableroModel.getMiTablero().casillaIncluye(pX, pY, "bloqueD")
-    			&& !TableroModel.getMiTablero().casillaIncluye(pX, pY, "bloqueB")
-    			&& !TableroModel.getMiTablero().casillaIncluye(pX, pY, "bombaS"))
+    	if(!Gestor.getInstance().getTablero().casillaIncluye(pX, pY, nombre)
+    			&& !Gestor.getInstance().getTablero().casillaIncluye(pX, pY, "bloqueD")
+    			&& !Gestor.getInstance().getTablero().casillaIncluye(pX, pY, "bloqueB")
+    			&& !Gestor.getInstance().getTablero().casillaIncluye(pX, pY, "bombaS"))
     	{
     		moverse = true;
     	}
@@ -68,9 +68,9 @@ public class BomberMan extends Elemento {
         {
     	    if (posibleMoverse(nextX,nextY))
     	    {
-    	    	if(TableroModel.getMiTablero().casillaIncluye(x, y, "bombaS")) 
-    	    	{TableroModel.getMiTablero().generarContent(x, y, "bombaS");}
-    	    	TableroModel.getMiTablero().eliminarContent(x,y,nombre);
+    	    	if(Gestor.getInstance().getTablero().casillaIncluye(x, y, "bombaS")) 
+    	    	{Gestor.getInstance().getTablero().generarContent(x, y, "bombaS");}
+    	    	Gestor.getInstance().getTablero().eliminarContent(x,y,nombre);
 	    		this.x = nextX;
 		        this.y = nextY;
     	    	if(pX==0) 
@@ -82,25 +82,25 @@ public class BomberMan extends Elemento {
     	    	else if(pX==-1){cambiarOrientacion(pX,pY);}
     	    	System.out.println(x+","+y);
     	    	
-    	    	if(TableroModel.getMiTablero().casillaIncluye(nextX, nextY, "enemigo")
-    	    			|| TableroModel.getMiTablero().casillaIncluye(nextX, nextY, "*"))//Si nos chocamos con un enemigo o explosion, recibimos danio
-    	    	{TableroModel.getMiTablero().damage(nextX, nextY, 1, new String[] {"bombermanW"});}
+    	    	if(Gestor.getInstance().getTablero().casillaIncluye(nextX, nextY, "enemigo")
+    	    			|| Gestor.getInstance().getTablero().casillaIncluye(nextX, nextY, "*"))//Si nos chocamos con un enemigo o explosion, recibimos danio
+    	    	{Gestor.getInstance().getTablero().damage(nextX, nextY, 1, new String[] {"bombermanW"});}
     	    }
     	    
     	    else
     	    {
     	    	System.out.print("bloqueado por ");
-    	    	TableroModel.getMiTablero().printContent(nextX, nextY);
-    	    	if(!TableroModel.getMiTablero().casillaIncluye(x, y, "bombaS")
-    	    	    	&& 	!TableroModel.getMiTablero().casillaIncluye(x, y, "*")) {cambiarOrientacion(pX,pY);}
+    	    	Gestor.getInstance().getTablero().printContent(nextX, nextY);
+    	    	if(!Gestor.getInstance().getTablero().casillaIncluye(x, y, "bombaS")
+    	    	    	&& 	!Gestor.getInstance().getTablero().casillaIncluye(x, y, "*")) {cambiarOrientacion(pX,pY);}
     	    }
     	    	
         }
         else
         {
         	System.out.println("mov erroneo");
-        	if(!TableroModel.getMiTablero().casillaIncluye(x, y, "bombaS")
-	    	    	&& 	!TableroModel.getMiTablero().casillaIncluye(x, y, "*")) {cambiarOrientacion(pX,pY);}
+        	if(!Gestor.getInstance().getTablero().casillaIncluye(x, y, "bombaS")
+	    	    	&& 	!Gestor.getInstance().getTablero().casillaIncluye(x, y, "*")) {cambiarOrientacion(pX,pY);}
         }
     }
     
@@ -170,7 +170,7 @@ public class BomberMan extends Elemento {
 			 sigOrientacion();}
     	}
     	
-    	TableroModel.getMiTablero().orientarBomber(x, y, newDir);
+    	Gestor.getInstance().getTablero().orientarBomber(x, y, newDir);
     }
     private void sigOrientacion()
     {
@@ -187,11 +187,11 @@ public class BomberMan extends Elemento {
     
     public void soltarBomba()
     {
-    	if(TableroModel.getMiTablero().casillaIncluye(x, y, "") || TableroModel.getMiTablero().casillaIncluye(x, y, nombre))
+    	if(Gestor.getInstance().getTablero().casillaIncluye(x, y, "") || Gestor.getInstance().getTablero().casillaIncluye(x, y, nombre))
     	{
-    		TableroModel.getMiTablero().eliminarContent(x, y, nombre);
+    		Gestor.getInstance().getTablero().eliminarContent(x, y, nombre);
     		nombre = "bomberBomba";
-    		TableroModel.getMiTablero().aniadirContent(x,y,this);
+    		Gestor.getInstance().getTablero().aniadirContent(x,y,this);
     		nombre = "bombermanW";
     	}
     	System.out.println("BOMBA");

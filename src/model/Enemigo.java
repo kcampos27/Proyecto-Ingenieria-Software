@@ -57,30 +57,30 @@ public class Enemigo extends Elemento{
         {
     	    if (posibleMoverse(nextX,nextY))
     	    {
-    	    	TableroModel.getMiTablero().eliminarContent(x, y, nombre);
+    	    	Gestor.getInstance().getTablero().eliminarContent(x, y, nombre);
     	    	x = nextX;
     	    	y = nextY;
     	    	if(pX==0) 
     	    	{
-    	    		//if(pY==0){TableroModel.getMiTablero().aniadirContent(x, y, this);}
-    	    		if(pY==1){TableroModel.getMiTablero().aniadirContent(x, y, this);}
-    	    		else if(pY==-1){TableroModel.getMiTablero().aniadirContent(x, y, this);}
+    	    		//if(pY==0){Gestor.getInstance().getTablero().aniadirContent(x, y, this);}
+    	    		if(pY==1){Gestor.getInstance().getTablero().aniadirContent(x, y, this);}
+    	    		else if(pY==-1){Gestor.getInstance().getTablero().aniadirContent(x, y, this);}
     	    	}
-    	    	else if(pX==1){TableroModel.getMiTablero().aniadirContent(x, y, this);}
-    	    	else if(pX==-1){TableroModel.getMiTablero().aniadirContent(x, y, this);}
+    	    	else if(pX==1){Gestor.getInstance().getTablero().aniadirContent(x, y, this);}
+    	    	else if(pX==-1){Gestor.getInstance().getTablero().aniadirContent(x, y, this);}
     	    	
     	    	//Daniar a bomberman
-    	    	if(TableroModel.getMiTablero().casillaIncluye(x, y, BomberMan.getMiBomberMan().getNombre()))
-    	    	{TableroModel.getMiTablero().damage(x, y, 1, new String[] {"bombermanW"});}
+    	    	if(Gestor.getInstance().getTablero().casillaIncluye(x, y, BomberMan.getMiBomberMan().getNombre()))
+    	    	{Gestor.getInstance().getTablero().damage(x, y, 1, new String[] {"bombermanW"});}
     	    	//Recibir danio si toca explosion
-    	    	if(TableroModel.getMiTablero().casillaIncluye(x, y, "*"))
-    	    	{TableroModel.getMiTablero().damage(x, y, 1, new String[] {"enemigo"});}
+    	    	if(Gestor.getInstance().getTablero().casillaIncluye(x, y, "*"))
+    	    	{Gestor.getInstance().getTablero().damage(x, y, 1, new String[] {"enemigo"});}
     	    	//System.out.println(nextX+","+nextY);
     	    }
     	    
     	    else
     	    {//System.out.print("bloqueado por ");
-    	    	TableroModel.getMiTablero().printContent(nextX, nextY);
+    	    	Gestor.getInstance().getTablero().printContent(nextX, nextY);
     	    }
     	    	
         }
@@ -113,11 +113,11 @@ public class Enemigo extends Elemento{
     {
     	boolean moverse = false;
     	
-    	if(!TableroModel.getMiTablero().casillaIncluye(pX, pY, nombre)
-    			&& !TableroModel.getMiTablero().casillaIncluye(pX, pY, "bloqueD")
-    			&& !TableroModel.getMiTablero().casillaIncluye(pX, pY, "bloqueB")
-    			&& !TableroModel.getMiTablero().casillaIncluye(pX, pY, "bombaS")
-    			&& !TableroModel.getMiTablero().casillaIncluye(pX, pY, "enemigo"))
+    	if(!Gestor.getInstance().getTablero().casillaIncluye(pX, pY, nombre)
+    			&& !Gestor.getInstance().getTablero().casillaIncluye(pX, pY, "bloqueD")
+    			&& !Gestor.getInstance().getTablero().casillaIncluye(pX, pY, "bloqueB")
+    			&& !Gestor.getInstance().getTablero().casillaIncluye(pX, pY, "bombaS")
+    			&& !Gestor.getInstance().getTablero().casillaIncluye(pX, pY, "enemigo"))
     	{
     		moverse = true;
     	}
@@ -135,7 +135,7 @@ public class Enemigo extends Elemento{
     	}
     	if(vida==0) 
     	{
-    		TableroModel.getMiTablero().eliminarContent(x, y, nombre);
+    		Gestor.getInstance().getTablero().eliminarContent(x, y, nombre);
     		x=-1;
     		y=-1;
     		timer.cancel();
@@ -145,7 +145,7 @@ public class Enemigo extends Elemento{
 	public void stop()
 	{
 		timer.cancel();
-		TableroModel.getMiTablero().eliminarContent(x,y,nombre);
+		Gestor.getInstance().getTablero().eliminarContent(x,y,nombre);
 		x=-1;
 		y=-1;
 	}

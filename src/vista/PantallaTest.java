@@ -1,8 +1,10 @@
 package vista;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.EventQueue;
+import model.Gestor;
+import model.PantallaModel;
+
+import javax.swing.*;
+import java.awt.*;
 
 public class PantallaTest {
 
@@ -12,11 +14,12 @@ public class PantallaTest {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(800, 530);
             frame.setResizable(false); // Permitir redimensionamiento
-            
-            // Crear instancia del panel
-            JPanel panel = new PantallaView();
-            frame.setContentPane(panel);
 
+            // Crear instancia del panel
+            PantallaView panel = new PantallaView();
+            PantallaModel modelo = PantallaModel.getMiPantalla();
+            Gestor gestor = Gestor.getInstance();
+            frame.setContentPane(panel);
             frame.setVisible(true);
         });
     }

@@ -7,19 +7,18 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 @SuppressWarnings("deprecation")
-public class TableroModel extends Observable {
+public abstract class TableroModel extends Observable {
 	
 	//ATRIBUTOS
-	private Casilla[][] tablero;
-    private Random random;
-    private int alto = 11;
-    private int ancho = 17;
-    private static TableroModel miTablero;
-    private Timer timer = new Timer();
-    private boolean hayBomba = false;
+	protected Casilla[][] tablero;
+    protected Random random;
+    protected int alto = 11;
+    protected int ancho = 17;
+    protected Timer timer = new Timer();
+    protected boolean hayBomba = false;
 
     // CONSTRUCTORA
-    private TableroModel() {
+    public TableroModel() {
     	
     }
 
@@ -30,64 +29,13 @@ public class TableroModel extends Observable {
         for (int i = 0; i < alto; i++) {
             for (int j = 0; j < ancho; j++) {
                 tablero[j][i] = new Casilla(j, i);
-                inicializarClassic(j,i);
+                inicializarPantalla(j,i);
             }
         }
-    }
-    public static TableroModel getMiTablero()
-    {
-    	if (miTablero==null)
-    	{
-    		miTablero= new TableroModel();
-    	}
-    	return miTablero;
     }
     
-    public  void inicializarClassic(int pJ, int pI)
+    public  void inicializarPantalla(int pJ, int pI)
     {
-    	random = new Random();
-    	int p = random.nextInt(100);
-    	
-    	if(pI==0&&pJ==0)
-        {//Bomberman
-        	System.out.println("BOMBERMAN");
-        	generarContent(pJ,pI,"bombermanW");
-        	tablero[pJ][pI].imprimirContent();
-        }
-    	else if(pI%2!=0 && pJ%2!=0) 
-        {//Bloques duros
-    		generarContent(pJ,pI,"bloqueD");
-    		tablero[pJ][pI].imprimirContent();
-        }
-    	//NO OCURRE NADA
-        else if( (pI == 1 && pJ == 1) 
-    			|| (pI == 1 && pJ == 0) || (pI == 0 && pJ == 1)){
-        	generarContent(pJ,pI,"");
-        }
-        else if((pI==0 && pJ == 2) || (pI==2 && pJ==0))
-        {
-        	generarContent(pJ,pI,"bloqueB");
-        	tablero[pJ][pI].imprimirContent();
-        }
-        else 
-        {
-        	if (p <= 33)  
-        	{ 
-                generarContent(pJ,pI,"bloqueB");
-                tablero[pJ][pI].imprimirContent();
-            } 
-        	else if (p > 33 && p<=40) 
-        	{ 
-                generarContent(pJ,pI,"enemigo");
-            	tablero[pJ][pI].imprimirContent();
-            } 
-        	else 
-            {
-                generarContent(pJ,pI,"");
-                tablero[pJ][pI].imprimirContent();
-            }
-        }
-    	System.out.println("");
     }
 
     public void generarContent(int x, int y, String newContent) {

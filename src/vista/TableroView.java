@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.awt.event.KeyEvent;
 
+import model.Gestor;
 import model.TableroModel;
 
 @SuppressWarnings({ "deprecation", "serial" })
@@ -20,14 +21,16 @@ public class TableroView extends JPanel implements Observer{
     private int alto = 11;
     private JPanel[][] casillas;
     private TableroController controlador;
+	private String tipoPantalla;
 
     // CONSTRUCTORA
     public TableroView() {
+		tipoPantalla = "stageBack1";
     	setLayout(new GridLayout(alto, ancho, 1, 1));
         casillas = new JPanel[ancho][alto];
         this.setBackground(Color.blue);
         inicializarVista();
-        TableroModel.getMiTablero().addObserver(this);        
+        Gestor.getInstance().getTablero().addObserver(this);
         //se aniade el controlador al tablero
         addKeyListener(this.getTController());
         setFocusable(true); 
@@ -42,7 +45,6 @@ public class TableroView extends JPanel implements Observer{
             }
         }
     }
-   
     private void visualizarCasilla(int pI, int pJ)
     {        
         if (casillas[pI][pJ] == null) {
@@ -58,15 +60,21 @@ public class TableroView extends JPanel implements Observer{
         }
         	
     }
-    
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);  // Llamar al metodo de la superclase para asegurar un repintado correcto
 
-        Image backgroundImage= new ImageIcon(getClass().getResource("stageBack1.png")).getImage();
+	public void setTipoPantalla(String tipoPantalla) {
+		{
+			this.tipoPantalla = tipoPantalla;
+		}
+	}
+
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);  // Llamar al metodo de la superclase para asegurar un repintado correcto
+
+		Image backgroundImage= new ImageIcon(getClass().getResource(tipoPantalla+".png")).getImage();
 		// Dibujar la imagen de fondo, ajustándola al tamaño del panel
-        g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
-    }
+		g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+	}
     
     private void addImagen(int pJ, int pI, String nuevaImagen, int pCapa)
     {
@@ -262,12 +270,12 @@ public class TableroView extends JPanel implements Observer{
             if (!pressedKeys.contains(val)) 
             {
             	pressedKeys.add(val);
-            	if (key == KeyEvent.VK_UP) TableroModel.getMiTablero().moverBomberman(0, -1);System.out.println("");
-                if (key == KeyEvent.VK_DOWN) TableroModel.getMiTablero().moverBomberman(0, 1);System.out.println("");
-                if (key == KeyEvent.VK_LEFT) TableroModel.getMiTablero().moverBomberman(-1, 0);System.out.println("");
-                if (key == KeyEvent.VK_RIGHT) TableroModel.getMiTablero().moverBomberman(1, 0);System.out.println("");
+            	if (key == KeyEvent.VK_UP) Gestor.getInstance().getTablero().moverBomberman(0, -1);System.out.println("");
+                if (key == KeyEvent.VK_DOWN) Gestor.getInstance().getTablero().moverBomberman(0, 1);System.out.println("");
+                if (key == KeyEvent.VK_LEFT) Gestor.getInstance().getTablero().moverBomberman(-1, 0);System.out.println("");
+                if (key == KeyEvent.VK_RIGHT) Gestor.getInstance().getTablero().moverBomberman(1, 0);System.out.println("");
                 if (key == KeyEvent.VK_X) {
-                	TableroModel.getMiTablero().crearBomba();System.out.println("");
+                	Gestor.getInstance().getTablero().crearBomba();System.out.println("");
                  }
         	}
         }
