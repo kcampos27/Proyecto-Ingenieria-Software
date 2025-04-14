@@ -29,29 +29,31 @@ public class PantallaModel extends Observable
         bomberman = pBomberman;
     }
 
-    public void play()
-    {
-        if (bomberman==null)
-        {
+    public void play() {
+        if (bomberman == null) {
             System.out.println("Seleccione un Bomberman");
-        }
-        else if (bomberman.equals("W"))
-        {
+        } else {
+            // 1. Crear estructura del tablero
             Gestor.getInstance().cargarPantalla(tipoPantalla);
+
+            // 2. Notificar a la vista para que cree y se suscriba a TableroView
             setChanged();
             notifyObservers(1);
+
+            // 3. Ahora que la vista está lista, inicializar el tablero con contenido
             Gestor.getInstance().getTablero().inicializar();
-            System.out.println("Bomberman W");
-        }
-        else if (bomberman.equals("B"))
-        {
-            Gestor.getInstance().cargarPantalla(tipoPantalla);
-            setChanged();
-            notifyObservers(1);
-            Gestor.getInstance().getTablero().inicializar();
-            System.out.println("Bomberman B");
+
+            // 4. Finalmente, seleccionar e instanciar BomberMan
+            Gestor.getInstance().seleccionarBomberman(bomberman);
+
+            System.out.println("Bomberman " + bomberman + " listo");
         }
     }
+
+
+
+
+
     public void select(int pNext)
     {
         if (pNext == 1) {

@@ -31,21 +31,35 @@ public class PantallaView extends JPanel implements Observer {
 	 */
 	//CONSTRUCTORA
 	public PantallaView() {
-		setBackground(new Color(255, 255, 255));
-		springLayout = new SpringLayout();
-		setLayout(springLayout);
-		add(getLbl1());
-		add(getLbl2());
-		add(getBtnPlay());
-		add(getBtnSelectMap());
-		add(getTitulo());
-		add(getLblExploW());
-		add(getLblExploB());
-		getLblExploW().setVisible(false);
-		getLblExploB().setVisible(false);
-		PantallaModel.getMiPantalla().addObserver(this);
-		setFocusable(true);
+	    setBackground(new Color(255, 255, 255));
+	    springLayout = new SpringLayout();
+	    setLayout(springLayout);
+	    add(getLbl1());
+	    add(getLbl2());
+	    add(getBtnPlay());
+	    add(getBtnSelectMap());
+	    add(getTitulo());
+	    add(getLblExploW());
+	    add(getLblExploB());
+
+	    getLblExploW().setVisible(false);
+	    getLblExploB().setVisible(false);
+
+	    PantallaModel.getMiPantalla().addObserver(this);
+
+	    // IMPORTANTE PARA CAPTURAR TECLA ESPACIO
+	    setFocusable(true);
+	    requestFocusInWindow();
+	    addKeyListener(getPController());
+
+	    // Si cambia el foco por otra ventana, lo recupera
+	    addHierarchyListener(e -> {
+	        if (isShowing()) {
+	            requestFocusInWindow();
+	        }
+	    });
 	}
+
 	private JLabel getLbl1() {
 		if (lbl1 == null) {
 			lbl1 = new JLabel("");
@@ -97,6 +111,7 @@ public class PantallaView extends JPanel implements Observer {
 			springLayout.putConstraint(SpringLayout.SOUTH, btnPlay, 250, SpringLayout.NORTH, this);
 			btnPlay.setFont(new Font("Rockwell Extra Bold", Font.BOLD, 16));
 			btnPlay.addMouseListener(getPController());
+			btnPlay.setFocusable(false); // evita que capture tecla espacio
 		}
 		return btnPlay;
 	}
@@ -111,6 +126,7 @@ public class PantallaView extends JPanel implements Observer {
 			springLayout.putConstraint(SpringLayout.SOUTH, btnSelectMap, 300, SpringLayout.NORTH, this);
 			btnSelectMap.setFont(new Font("Rockwell Extra Bold", Font.BOLD, 16));
 			btnSelectMap.addMouseListener(getPController());
+			btnSelectMap.setFocusable(false); // evita que capture espacio
 		}
 		return btnSelectMap;
 	}

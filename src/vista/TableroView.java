@@ -81,7 +81,11 @@ public class TableroView extends JPanel implements Observer{
     	// Verificar la ruta de la imagen asociada al contenido
         String imagen = verificarCasilla(nuevaImagen);
         String nombre = nuevaImagen;
-		if(esBomberman(nuevaImagen)) {nombre = "bombermanW";}//orientaciones bomberman
+        if (esBomberman(nuevaImagen)) {
+            nombre = nuevaImagen; // ✅ Deja el nombre tal cual para que coincida con el PNG
+        }
+
+
 
         System.out.println("Aniadiendo imagen a [" + pJ + "][" + pI + "]: " + imagen);
         
@@ -134,31 +138,34 @@ public class TableroView extends JPanel implements Observer{
 		System.out.println("}");
     }
     
-    private void removeImagen(int pJ, int pI, String pImagen) 
-    {
-    	String imagen = verificarCasilla(pImagen);
-    	String nombre = pImagen;
-		if(esBomberman(pImagen)) {nombre = "bombermanW";}//orientancion bomberman
-		
-    	boolean removed = false;
-		for(Component c : casillas[pJ][pI].getComponents())
-		{
-			if(c instanceof JLabel && !removed)
-			{//Si hay un JLabel sin icono y no se ha aniadido
-				if(((JLabel) c).getName().equals(nombre))
-				{
-					// Aniadir la imagen al panel
-					((JLabel) c).setIcon(null);
-					((JLabel) c).setName("null");
-					System.out.println("imagen "+imagen+" eliminada");
-					//removed = true;
-				}
-			}
-		}
-		//if(!removed) {System.out.println("Imagen "+imagen+" no eliminada, no esta");}
-		casillas[pJ][pI].revalidate();
-		casillas[pJ][pI].repaint();
+    private void removeImagen(int pJ, int pI, String pImagen) {
+        String imagen = verificarCasilla(pImagen);
+
+        for (Component c : casillas[pJ][pI].getComponents()) {
+            if (c instanceof JLabel label) {
+                String name = label.getName();
+
+                // Eliminamos todos los sprites que sean de tipo bomberman
+                if (esBomberman(name)) {
+                    label.setIcon(null);
+                    label.setName("null");
+                    System.out.println("imagen " + imagen + " eliminada de bomberman (" + name + ")");
+                }
+
+                // También eliminamos la imagen exacta si no es bomberman
+                if (name.equals(pImagen)) {
+                    label.setIcon(null);
+                    label.setName("null");
+                    System.out.println("imagen " + imagen + " eliminada (" + name + ")");
+                }
+            }
+        }
+
+        casillas[pJ][pI].revalidate();
+        casillas[pJ][pI].repaint();
     }
+
+
     
     private boolean esta(int pX, int pY, String pName)
     {
@@ -191,63 +198,95 @@ public class TableroView extends JPanel implements Observer{
         	
     }
     
-    public boolean esBomberman(String pCont)
-    {
-    	boolean es = false;
-    	if(pCont.equals("enllamas") 
-    			|| pCont.equals("enllamas")
-    			|| pCont.equals("left")
-    			|| pCont.equals("left4")
-    			|| pCont.equals("left3")
-    			|| pCont.equals("left5")
-    			|| pCont.equals("right")
-    			|| pCont.equals("right4")
-    			|| pCont.equals("right3")
-    			|| pCont.equals("right5")
-    			|| pCont.equals("up")
-    			|| pCont.equals("up3")
-    			|| pCont.equals("up4")
-    			|| pCont.equals("down")
-    			|| pCont.equals("down2")
-    			|| pCont.equals("down3")
-    			|| pCont.equals("down4")
-    			|| pCont.equals("bomberBomba"))
-    	{
-    		es = true;
-    	}
-    	
+    public boolean esBomberman(String pCont) {
+    	boolean es = switch (pCont) {
+    		// Blanco
+    		case "enllamas", "left", "left3", "left4", "left5",
+    		     "right", "right3", "right4", "right5",
+    		     "up", "up3", "up4",
+    		     "down", "down2", "down3", "down4",
+    		     "bomberBomba" -> true;
+
+    		// Negro
+    		case "blackleft1", "blackleft2", "blackleft3", "blackleft4", "blackleft5",
+    		     "blackright1", "blackright2", "blackright3", "blackright4", "blackright5",
+    		     "blackup1", "blackup2", "blackup3", "blackup4", "blackup5",
+    		     "blackdown1", "blackdown2", "blackdown3", "blackdown4",
+    		     "blackwithbomb1", "blackwithbomb2", "blackwithbomb3" -> true;
+
+    		default -> false;
+    	};
     	return es;
     }
+
+
     
-    private String verificarCasilla(String pCont)
-    {
+    private String verificarCasilla(String pCont) {
     	String recurso = "";
-    	if(pCont.equals("bombermanW")){ recurso = "whitefront1.png";}
-    	else if(pCont.equals("enllamas")){recurso = "onFire2.png";}
-    	else if(pCont.equals("left")){recurso= "whiteleft.png";}
-    	else if(pCont.equals("left4")){recurso= "whiteleft4.png";}
-    	else if(pCont.equals("left3")){recurso= "whiteleft3.png";}
-    	else if(pCont.equals("left5")){recurso= "whiteleft5.png";}
-    	else if(pCont.equals("right")){recurso= "whiteright.png";}
-    	else if(pCont.equals("right4")){recurso= "whiteright4.png";}
-    	else if(pCont.equals("right3")){recurso= "whiteright3.png";}
-    	else if(pCont.equals("right5")){recurso= "whiteright5.png";}
-    	else if(pCont.equals("up")){recurso= "whiteup.png";}
-    	else if(pCont.equals("up3")){recurso= "whiteup3.png";}
-    	else if(pCont.equals("up4")){recurso= "whiteup4.png";}
-    	else if(pCont.equals("down")){recurso= "whitedown.png";}
-    	else if(pCont.equals("down2")){recurso= "whitedown2.png";}
-    	else if(pCont.equals("down3")){recurso= "whitedown3.png";}
-    	else if(pCont.equals("down4")){recurso= "whitedown4.png";}
-    	else if(pCont.equals("bomberBomba")){recurso= "whitewithbomb.png";}
-    	else if(pCont.equals("bloqueD")){recurso= "hard5.png";}	
-    	else if(pCont.equals("bloqueB")){recurso= "soft1.png";}
-    	else if(pCont.equals("enemigo")){recurso= "baloon1.png";}
-    	else if(pCont.equals("bombaS")){recurso= "bomb1.png";}
-    	else if(pCont.equals("*")) {recurso= "blast.gif";}
-    	System.out.println("Verificando imagen "+recurso+" para: " + pCont);
+
+    	// Blanco
+    	switch (pCont) {
+    		case "bombermanW" -> recurso = "whitefront1.png";
+    		case "left" -> recurso = "whiteleft.png";
+    		case "left3" -> recurso = "whiteleft3.png";
+    		case "left4" -> recurso = "whiteleft4.png";
+    		case "left5" -> recurso = "whiteleft5.png";
+    		case "right" -> recurso = "whiteright.png";
+    		case "right3" -> recurso = "whiteright3.png";
+    		case "right4" -> recurso = "whiteright4.png";
+    		case "right5" -> recurso = "whiteright5.png";
+    		case "up" -> recurso = "whiteup.png";
+    		case "up3" -> recurso = "whiteup3.png";
+    		case "up4" -> recurso = "whiteup4.png";
+    		case "down" -> recurso = "whitedown.png";
+    		case "down2" -> recurso = "whitedown2.png";
+    		case "down3" -> recurso = "whitedown3.png";
+    		case "down4" -> recurso = "whitedown4.png";
+    		case "bomberBomba" -> recurso = "whitewithbomb.png";
+    	}
+
+    	// Negro
+    	switch (pCont) {
+    		case "bombermanN" -> recurso = "blackfront1.png";
+    		case "blackleft1" -> recurso = "blackleft1.png";
+    		case "blackleft2" -> recurso = "blackleft2.png";
+    		case "blackleft3" -> recurso = "blackleft3.png";
+    		case "blackleft4" -> recurso = "blackleft4.png";
+    		case "blackleft5" -> recurso = "blackleft5.png";
+    		case "blackright1" -> recurso = "blackright1.png";
+    		case "blackright2" -> recurso = "blackright2.png";
+    		case "blackright3" -> recurso = "blackright3.png";
+    		case "blackright4" -> recurso = "blackright4.png";
+    		case "blackright5" -> recurso = "blackright5.png";
+    		case "blackup1" -> recurso = "blackup1.png";
+    		case "blackup2" -> recurso = "blackup2.png";
+    		case "blackup3" -> recurso = "blackup3.png";
+    		case "blackup4" -> recurso = "blackup4.png";
+    		case "blackup5" -> recurso = "blackup5.png";
+    		case "blackdown1" -> recurso = "blackdown1.png";
+    		case "blackdown2" -> recurso = "blackdown2.png";
+    		case "blackdown3" -> recurso = "blackdown3.png";
+    		case "blackdown4" -> recurso = "blackdown4.png";
+    		case "blackwithbomb1" -> recurso = "blackwithbomb1.png";
+    		case "blackwithbomb2" -> recurso = "blackwithbomb2.png";
+    		case "blackwithbomb3" -> recurso = "blackwithbomb3.png";
+    	}
+
+    	// Otros elementos
+    	switch (pCont) {
+    		case "enllamas" -> recurso = "onFire2.png";
+    		case "bloqueD" -> recurso = "hard5.png";
+    		case "bloqueB" -> recurso = "soft1.png";
+    		case "enemigo" -> recurso = "baloon1.png";
+    		case "bombaS" -> recurso = "bomb1.png";
+    		case "*" -> recurso = "blast.gif";
+    	}
+
+    	System.out.println("Verificando imagen " + recurso + " para: " + pCont);
     	return recurso;
     }
+
+
 
     //INSTANCIA
     private TableroController getTController()
