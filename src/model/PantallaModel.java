@@ -46,6 +46,9 @@ public class PantallaModel extends Observable
             // 4. Finalmente, seleccionar e instanciar BomberMan
             Gestor.getInstance().seleccionarBomberman(bomberman);
 
+            // 5. Se coloca BomberMan en la posicion 0,0 del tablero
+            Gestor.getInstance().getTablero().aniadirContent(0,0,BomberMan.getMiBomberMan());
+
             System.out.println("Bomberman " + bomberman + " listo");
         }
     }

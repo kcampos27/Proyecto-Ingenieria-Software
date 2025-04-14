@@ -12,9 +12,6 @@ public class Empty extends TableroModel{
 
         if(pI==0&&pJ==0)
         {//Bomberman
-            System.out.println("BOMBERMAN");
-            generarContent(pJ,pI,"bombermanW");
-            tablero[pJ][pI].imprimirContent();
         }
         else if (p > 33 && p<=40)
         {

@@ -46,9 +46,19 @@ public abstract class TableroModel extends Observable {
                 setChanged();
                 notifyObservers(new Object[] {x,y,"bomberBomba","add",1});
             }
+            case "blackwithbomb1" -> {//Bomberman Negro pone la bomba
+                tablero[x][y].crearContent("bombaU");
+                tablero[x][y].crearContent(BomberMan.getMiBomberMan().getNombre());
+                setChanged();
+                notifyObservers(new Object[] {x,y,"blackwithbomb1","add",1});
+            }
             case "bombaS" -> {//Para cuando el bomberman se va de la casilla donde deja bomba
                 setChanged();
                 notifyObservers(new Object[] {x,y,"bombaS","add",1});
+            }
+            case "bombaU" -> {//Para cuando el bomberman Negro se va de la casilla donde deja bomba
+                setChanged();
+                notifyObservers(new Object[] {x,y,"bombaU","add",1});
             }
             default -> {
                 tablero[x][y].crearContent(newContent);
@@ -68,10 +78,21 @@ public abstract class TableroModel extends Observable {
                     setChanged();
                     notifyObservers(new Object[] {x,y,"bomberBomba","add",1});
         }
+        else if(newContent.getNombre().equals("blackwithbomb1")){//Bomberman negro pone la bomba
+            tablero[x][y].crearContent("bombaU");
+            tablero[x][y].addContent(newContent);
+            setChanged();
+            notifyObservers(new Object[] {x,y,"blackwithbomb1","add",1});
+        }
     	else if(newContent.getNombre().equals("bombaS"))
     	{//Para cuando el bomberman se va de la casilla donde deja bomba
                     setChanged();
                     notifyObservers(new Object[] {x,y,"bombaS","add",1});
+        }
+        else if(newContent.getNombre().equals("bombaU"))
+        {//Para cuando el bomberman negro se va de la casilla donde deja bomba
+            setChanged();
+            notifyObservers(new Object[] {x,y,"bombaU","add",1});
         }
     	else{
                     tablero[x][y].addContent(newContent);

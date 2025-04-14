@@ -41,65 +41,110 @@ public abstract class Bombas extends Elemento {
     public void explotar() {
         if (!haExplo) {
             System.out.println("PUM");
-            
-            
+
             // Explosión central (la posición de la bomba)
             Gestor.getInstance().getTablero().eliminarContent(x, y, "bombaS");
+            Gestor.getInstance().getTablero().eliminarContent(x, y, "bombaU");
             Gestor.getInstance().getTablero().generarContent(x, y, "*");
-            Gestor.getInstance().getTablero().damage(x,y, 1, new String[] {"enemigo","bombermanW","bloqueB"});
-            
-            // Explosión en las cuatro direcciones (arriba, abajo, izquierda, derecha)
+            Gestor.getInstance().getTablero().damage(x, y, 1, new String[]{"enemigo", "bombermanW", "bloqueB"});
+
+            // Banderas para cada dirección
+            boolean derechaActiva = true;
+            boolean izquierdaActiva = true;
+            boolean abajoActiva = true;
+            boolean arribaActiva = true;
+
             for (int i = 1; i <= rango; i++) {
-                // Explosión hacia la derecha
-                if (x + i < Gestor.getInstance().getTablero().getAncho() && !Gestor.getInstance().getTablero().casillaIncluye(x + i, y,"bloqueD"))
-                {
-                	Gestor.getInstance().getTablero().generarContent(x + i, y, "*");
-                	Gestor.getInstance().getTablero().damage(x + i,y, 1, new String[] {"enemigo","bombermanW","bloqueB"});
+                // Derecha
+                if (derechaActiva && x + i < Gestor.getInstance().getTablero().getAncho()) {
+                    if (Gestor.getInstance().getTablero().casillaIncluye(x + i, y, "bloqueD")) {
+                        derechaActiva = false;
+                    } else {
+                        Gestor.getInstance().getTablero().generarContent(x + i, y, "*");
+                        Gestor.getInstance().getTablero().damage(x + i, y, 1, new String[]{"enemigo","bombermanN", "bombermanW", "bloqueB"});
+                    }
                 }
-                // Explosión hacia la izquierda
-                if (x - i >= 0 && !Gestor.getInstance().getTablero().casillaIncluye(x - i, y,"bloqueD")) 
-                {
-                	Gestor.getInstance().getTablero().generarContent(x - i, y, "*");
-                	Gestor.getInstance().getTablero().damage(x - i,y, 1, new String[] {"enemigo","bombermanW","bloqueB"});
+
+                // Izquierda
+                if (izquierdaActiva && x - i >= 0) {
+                    if (Gestor.getInstance().getTablero().casillaIncluye(x - i, y, "bloqueD")) {
+                        izquierdaActiva = false;
+                    } else {
+                        Gestor.getInstance().getTablero().generarContent(x - i, y, "*");
+                        Gestor.getInstance().getTablero().damage(x - i, y, 1, new String[]{"enemigo","bombermanN", "bombermanW", "bloqueB"});
+                    }
                 }
-                // Explosión hacia abajo
-                if (y + i < Gestor.getInstance().getTablero().getAlto() && !Gestor.getInstance().getTablero().casillaIncluye(x, y + i,"bloqueD")) 
-                {
-                	Gestor.getInstance().getTablero().generarContent(x, y + i, "*");
-                	Gestor.getInstance().getTablero().damage(x,y + i, 1, new String[] {"enemigo","bombermanW","bloqueB"});
+
+                // Abajo
+                if (abajoActiva && y + i < Gestor.getInstance().getTablero().getAlto()) {
+                    if (Gestor.getInstance().getTablero().casillaIncluye(x, y + i, "bloqueD")) {
+                        abajoActiva = false;
+                    } else {
+                        Gestor.getInstance().getTablero().generarContent(x, y + i, "*");
+                        Gestor.getInstance().getTablero().damage(x, y + i, 1, new String[]{"enemigo", "bombermanW","bombermanN", "bloqueB"});
+                    }
                 }
-                // Explosión hacia arriba
-                if (y - i >= 0 && !Gestor.getInstance().getTablero().casillaIncluye(x, y - i,"bloqueD")) 
-                {
-                	Gestor.getInstance().getTablero().generarContent(x, y - i, "*");
-                	Gestor.getInstance().getTablero().damage(x,y - 1, 1, new String[] {"enemigo","bombermanW","bloqueB"});
+
+                // Arriba
+                if (arribaActiva && y - i >= 0) {
+                    if (Gestor.getInstance().getTablero().casillaIncluye(x, y - i, "bloqueD")) {
+                        arribaActiva = false;
+                    } else {
+                        Gestor.getInstance().getTablero().generarContent(x, y - i, "*");
+                        Gestor.getInstance().getTablero().damage(x, y - i, 1, new String[]{"enemigo", "bombermanW","bombermanN", "bloqueB"});
+                    }
                 }
             }
         }
+        BomberMan.getMiBomberMan().bombaExploto();
     }
 
-    public void limpiarExplo(int x, int y, int rango) {
-        
-        // Limpiar explosión central
-    	Gestor.getInstance().getTablero().eliminarContent(x, y, "*");
 
-        // Limpiar explosión en las cuatro direcciones
+    public void limpiarExplo(int x, int y, int rango) {
+        // Limpiar explosión central
+        Gestor.getInstance().getTablero().eliminarContent(x, y, "*");
+
+        // Banderas para controlar hasta dónde limpiar en cada dirección
+        boolean derechaActiva = true;
+        boolean izquierdaActiva = true;
+        boolean abajoActiva = true;
+        boolean arribaActiva = true;
+
         for (int i = 1; i <= rango; i++) {
-            // Limpiar hacia la derecha
-            if (x + i < Gestor.getInstance().getTablero().getAncho() && Gestor.getInstance().getTablero().casillaIncluye(x + i, y, "*")) {
-            	Gestor.getInstance().getTablero().eliminarContent(x + i, y, "*");
+            // Derecha
+            if (derechaActiva && x + i < Gestor.getInstance().getTablero().getAncho()) {
+                if (Gestor.getInstance().getTablero().casillaIncluye(x + i, y, "bloqueD")) {
+                    derechaActiva = false;
+                } else {
+                    Gestor.getInstance().getTablero().eliminarContent(x + i, y, "*");
+                }
             }
-            // Limpiar hacia la izquierda
-            if (x - i >= 0 && Gestor.getInstance().getTablero().casillaIncluye(x - i, y, "*")) {
-            	Gestor.getInstance().getTablero().eliminarContent(x - i, y, "*");
+
+            // Izquierda
+            if (izquierdaActiva && x - i >= 0) {
+                if (Gestor.getInstance().getTablero().casillaIncluye(x - i, y, "bloqueD")) {
+                    izquierdaActiva = false;
+                } else {
+                    Gestor.getInstance().getTablero().eliminarContent(x - i, y, "*");
+                }
             }
-            // Limpiar hacia abajo
-            if (y + i < Gestor.getInstance().getTablero().getAlto() && Gestor.getInstance().getTablero().casillaIncluye(x, y + i, "*")) {
-            	Gestor.getInstance().getTablero().eliminarContent(x, y + i, "*");
+
+            // Abajo
+            if (abajoActiva && y + i < Gestor.getInstance().getTablero().getAlto()) {
+                if (Gestor.getInstance().getTablero().casillaIncluye(x, y + i, "bloqueD")) {
+                    abajoActiva = false;
+                } else {
+                    Gestor.getInstance().getTablero().eliminarContent(x, y + i, "*");
+                }
             }
-            // Limpiar hacia arriba
-            if (y - i >= 0 && Gestor.getInstance().getTablero().casillaIncluye(x, y - i, "*")) {
-            	Gestor.getInstance().getTablero().eliminarContent(x, y - i, "*");
+
+            // Arriba
+            if (arribaActiva && y - i >= 0) {
+                if (Gestor.getInstance().getTablero().casillaIncluye(x, y - i, "bloqueD")) {
+                    arribaActiva = false;
+                } else {
+                    Gestor.getInstance().getTablero().eliminarContent(x, y - i, "*");
+                }
             }
         }
     }

@@ -279,6 +279,7 @@ public class TableroView extends JPanel implements Observer{
     		case "bloqueB" -> recurso = "soft1.png";
     		case "enemigo" -> recurso = "baloon1.png";
     		case "bombaS" -> recurso = "bomb1.png";
+			case "bombaU" -> recurso = "bomb1.png";
     		case "*" -> recurso = "blast.gif";
     	}
 
@@ -315,7 +316,7 @@ public class TableroView extends JPanel implements Observer{
                 if (key == KeyEvent.VK_RIGHT) Gestor.getInstance().getTablero().moverBomberman(1, 0);System.out.println("");
                 if (key == KeyEvent.VK_X) {
                 	Gestor.getInstance().getTablero().crearBomba();System.out.println("");
-                 }
+				}
         	}
         }
 

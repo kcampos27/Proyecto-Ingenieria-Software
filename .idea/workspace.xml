@@ -4,7 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ba18c32-9f38-4a11-978f-5f4b1c93f977" name="Changes" comment="Pantalla Inicio&#10;&#10;Implementacion terminada y unida al codigo previamente hecho" />
+    <list default="true" id="5ba18c32-9f38-4a11-978f-5f4b1c93f977" name="Changes" comment="Pantalla Inicio&#10;&#10;Implementacion terminada y unida al codigo previamente hecho">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Bombas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Bombas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/BomberMan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/BomberMan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/BomberManBlanco.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/BomberManBlanco.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/BomberManNegro.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/BomberManNegro.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Classic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Classic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/ElementosFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/ElementosFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Empty.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Empty.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/PantallaModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/PantallaModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Soft.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Soft.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/TableroModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/TableroModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/vista/TableroView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/vista/TableroView.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,33 +53,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "Application.PantallaTest.executor": "Debug",
-    "Downloaded.Files.Path.Enabled": "false",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Kenet/VSgit/Proyecto-Ingenieria-Software/src/vista",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "two.files.diff.last.used.folder": "C:/Users/Kenet/VSgit/Proyecto-Ingenieria-Software",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Debug&quot;,
+    &quot;Application.PantallaTest.executor&quot;: &quot;Debug&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Kenet/VSgit/Proyecto-Ingenieria-Software/src/vista&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;two.files.diff.last.used.folder&quot;: &quot;C:/Users/Kenet/VSgit/Proyecto-Ingenieria-Software&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Kenet\VSgit\Proyecto-Ingenieria-Software\src\vista" />
@@ -154,6 +167,7 @@
       <workItem from="1743868472047" duration="1221000" />
       <workItem from="1743910692717" duration="1752000" />
       <workItem from="1743941146900" duration="4471000" />
+      <workItem from="1744651933326" duration="4595000" />
     </task>
     <task id="LOCAL-00001" summary="Pantalla Inicio&#10;&#10;Avances en la pantalla de inicio (modelo y vista)">
       <option name="closed" value="true" />

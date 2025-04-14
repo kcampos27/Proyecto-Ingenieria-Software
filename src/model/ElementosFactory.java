@@ -21,6 +21,7 @@ public class ElementosFactory {
         case "bombermanW" -> elem = BomberMan.getMiBomberMan();
         case "*" -> elem = new Explosion(pX,pY,"*");
         case "bombaS" -> elem = new BombaSuper(pX,pY);
+		case "bombaU" -> elem = new BombaUltra(pX,pY);
         case "enemigo" -> elem = new Enemigo(pX,pY,pTipo);
         default -> {}
 		}

@@ -4,7 +4,7 @@ public abstract class BomberMan extends Elemento {
 
     protected static BomberMan miBomberMan;
     protected static String tipoInicial = "blanco";
-
+    protected int bombasActivas;
     protected int orientacion;
     protected int bombasActivasMax;
     protected String tipo;
@@ -52,6 +52,9 @@ public abstract class BomberMan extends Elemento {
                 if (Gestor.getInstance().getTablero().casillaIncluye(x, y, "bombaS")) {
                     Gestor.getInstance().getTablero().generarContent(x, y, "bombaS");
                 }
+                else if (Gestor.getInstance().getTablero().casillaIncluye(x, y, "bombaU")) {
+                    Gestor.getInstance().getTablero().generarContent(x, y, "bombaU");
+                }
                 Gestor.getInstance().getTablero().eliminarContent(x, y, nombre);
                 this.x = nextX;
                 this.y = nextY;
@@ -93,6 +96,9 @@ public abstract class BomberMan extends Elemento {
             Gestor.getInstance().getTablero().aniadirContent(0, 0, this);
             System.out.println("Reaparezco en 0,0");
         }
+    }
+    public void bombaExploto() {
+        bombasActivas--;
     }
 
     public void cambiarTipo(String nuevoNombre) {

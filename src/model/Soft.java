@@ -14,9 +14,6 @@ public class Soft extends TableroModel {
 
         if(pI==0&&pJ==0)
         {//Bomberman
-            System.out.println("BOMBERMAN");
-            generarContent(pJ,pI,"bombermanW");
-            tablero[pJ][pI].imprimirContent();
         }
         else if(pI%2!=0 && pJ%2!=0)
         {//Bloques blandos

@@ -2,8 +2,6 @@ package model;
 
 public class BomberManBlanco extends BomberMan {
 
-    private int bombasActivas;
-
     public BomberManBlanco() {
         super("bombermanW", "blanco");
         this.bombasActivas = 0;
@@ -20,14 +18,9 @@ public class BomberManBlanco extends BomberMan {
             Gestor.getInstance().getTablero().aniadirContent(x, y, this);
             cambiarTipo("bombermanW");
 
-            new BombaSuper(x, y);
             bombasActivas++;
             System.out.println("BOMBA SUPER colocada. Activas: " + bombasActivas);
         }
-    }
-
-    public void bombaExploto() {
-        bombasActivas = Math.max(0, bombasActivas - 1);
     }
 
     @Override
