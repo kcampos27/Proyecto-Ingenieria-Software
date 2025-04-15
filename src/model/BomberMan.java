@@ -87,6 +87,7 @@ public abstract class BomberMan extends Elemento {
     public void getHurt(int pDmg) {
         if (vida > 0) {
             vida = Math.max(0, vida - pDmg);
+            cambiarTipo("enllamas"); // 👈 AÑADIDO para que se vea en llamas
             Gestor.getInstance().getTablero().orientarBomber(x, y, "enllamas");
             System.out.println("OUCH, vida restante: " + vida);
         }
@@ -96,6 +97,11 @@ public abstract class BomberMan extends Elemento {
             x = 0;
             y = 0;
             vida = 3;
+
+            // Restaurar nombre original según tipo
+            if (tipo.equals("blanco")) cambiarTipo("bombermanW");
+            else if (tipo.equals("negro")) cambiarTipo("bombermanN");
+
             Gestor.getInstance().getTablero().aniadirContent(0, 0, this);
             System.out.println("Reaparezco en 0,0");
         }
