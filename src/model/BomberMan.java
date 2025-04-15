@@ -6,10 +6,10 @@ public abstract class BomberMan extends Elemento {
     protected static String tipoInicial = "blanco";
     protected int bombasActivas;
     protected int orientacion;
-    protected int bombasActivasMax;
     protected String tipo;
-    protected StrategySoltarBomba strategy;
+    protected StateSoltarBomba estado;
     protected int maxVida;
+    protected int maxBombas;
 
     public static void setTipoInicial(String tipo) {
         tipoInicial = tipo;
@@ -30,12 +30,13 @@ public abstract class BomberMan extends Elemento {
         return miBomberMan;
     }
 
-    protected BomberMan(String nombre, String tipo, int pVida) {
+    protected BomberMan(String nombre, String tipo, int pVida, int pMaxB) {
         super(0, 0, nombre, 3);
         Gestor.getInstance().getTablero().actualizarItem("switch","vida",pVida);
         this.tipo = tipo;
         this.orientacion = 0;
         maxVida = pVida;
+        maxBombas = pMaxB;
     }
 
     public boolean posibleMoverse(int pX, int pY) {
@@ -77,7 +78,7 @@ public abstract class BomberMan extends Elemento {
                 cambiarOrientacion(pX, pY);
             }
         } else {
-            System.out.println("Movimiento fuera de límites");
+            System.out.println("Movimiento fuera de limites");
             cambiarOrientacion(pX, pY);
         }
     }
@@ -90,7 +91,7 @@ public abstract class BomberMan extends Elemento {
     public void getHurt(int pDmg) {
     	if (vida > 0) {
             vida = vida - pDmg;
-            cambiarTipo("enllamas"); // 👈 para que se vea en llamas
+            cambiarNombre("enllamas"); // 👈 para que se vea en llamas
             Gestor.getInstance().getTablero().orientarBomber(x, y, "enllamas");
             System.out.println("OUCH, vida restante: " + vida);
             Gestor.getInstance().getTablero().actualizarItem("sub","vida",pDmg);
@@ -103,8 +104,8 @@ public abstract class BomberMan extends Elemento {
             vida = maxVida;
             
             // Restaurar nombre original según tipo
-            if (tipo.equals("blanco")) cambiarTipo("bombermanW");
-            else if (tipo.equals("negro")) cambiarTipo("bombermanN");
+            if (tipo.equals("blanco")) cambiarNombre("bombermanW");
+            else if (tipo.equals("negro")) cambiarNombre("bombermanN");
             
             Gestor.getInstance().getTablero().actualizarItem("add","vida",maxVida);
             Gestor.getInstance().getTablero().aniadirContent(0, 0, this);
@@ -115,7 +116,7 @@ public abstract class BomberMan extends Elemento {
         bombasActivas--;
     }
 
-    public void cambiarTipo(String nuevoNombre) {
+    public void cambiarNombre(String nuevoNombre) {
         nombre = nuevoNombre;
     }
 
@@ -123,9 +124,16 @@ public abstract class BomberMan extends Elemento {
     protected abstract void cambiarOrientacion(int pX, int pY);
 
     // Método abstracto que implementan Blanco y Negro
-    public void soltarBomba(){
-        strategy.soltarBomba(miBomberMan);
+    public void soltarBomba()
+    {
+        estado.soltarBomba();
     }
+    
+    public void cambiarEstado(StateSoltarBomba pEstado)
+    {
+    	estado = pEstado;
+    }
+    
     public String getTipo()
     {
         return tipo;

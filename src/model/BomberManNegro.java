@@ -3,9 +3,9 @@ package model;
 public class BomberManNegro extends BomberMan {
 
     public BomberManNegro() {
-        super("bombermanN", "negro",3);
+        super("bombermanN", "negro",3,1);
         this.bombasActivas = 0;
-        strategy= new StrategyUltra();
+        estado= new StateUltraBlack();
     }
 
     @Override

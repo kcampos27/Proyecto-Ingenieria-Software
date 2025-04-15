@@ -87,11 +87,12 @@ public abstract class TableroModel extends Observable {
                 notifyObservers(new Object[]{x, y, "bombaU", "add", 1});
             }
         }
-    	else{
-                    tablero[x][y].addContent(newContent);
-                    System.out.println("Aniadiendo contenido a [" + x + "][" + y + "]: " + newContent.getNombre());
-                    setChanged();
-                    notifyObservers(new Object[] {x,y,newContent.getNombre(),"add",1});
+    	else
+    	{
+    		tablero[x][y].addContent(newContent);
+            System.out.println("Aniadiendo contenido a [" + x + "][" + y + "]: " + newContent.getNombre());
+            setChanged();
+            notifyObservers(new Object[] {x,y,newContent.getNombre(),"add",1});
         }
     }
         
@@ -160,7 +161,7 @@ public abstract class TableroModel extends Observable {
     				hayBomba=false;
     			}
     		
-    		}, 1000);//cooldown
+    		}, 0000);//cooldown
     	}
     }
     
