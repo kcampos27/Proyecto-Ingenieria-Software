@@ -5,22 +5,7 @@ public class BomberManNegro extends BomberMan {
     public BomberManNegro() {
         super("bombermanN", "negro");
         this.bombasActivas = 0;
-    }
-
-    @Override
-    public void soltarBomba() {
-        if (bombasActivas < 1 &&
-            (Gestor.getInstance().getTablero().casillaIncluye(x, y, "") ||
-             Gestor.getInstance().getTablero().casillaIncluye(x, y, nombre))) {
-
-            Gestor.getInstance().getTablero().eliminarContent(x, y, nombre);
-            cambiarTipo("blackwithbomb1"); // ✅ Este sí existe en tus recursos
-            Gestor.getInstance().getTablero().aniadirContent(x, y, this);
-            cambiarTipo("bombermanN");
-
-            bombasActivas++;
-            System.out.println("BOMBA ULTRA colocada. Activas: " + bombasActivas);
-        }
+        strategy= new StrategyUltra();
     }
 
     @Override

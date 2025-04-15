@@ -4,19 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ba18c32-9f38-4a11-978f-5f4b1c93f977" name="Changes" comment="Pantalla Inicio&#10;&#10;Implementacion terminada y unida al codigo previamente hecho">
+    <list default="true" id="5ba18c32-9f38-4a11-978f-5f4b1c93f977" name="Changes" comment="Arreglos relacionados a explosion&#10;&#10;Las explosiones del bomberman negro y blanco ahora se ejecutan correctamente">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Bombas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Bombas.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/BomberMan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/BomberMan.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/BomberManBlanco.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/BomberManBlanco.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/BomberManNegro.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/BomberManNegro.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Classic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Classic.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/ElementosFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/ElementosFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Empty.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Empty.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/PantallaModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/PantallaModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Soft.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Soft.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/TableroModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/TableroModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/vista/TableroView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/vista/TableroView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +20,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -167,7 +162,8 @@
       <workItem from="1743868472047" duration="1221000" />
       <workItem from="1743910692717" duration="1752000" />
       <workItem from="1743941146900" duration="4471000" />
-      <workItem from="1744651933326" duration="4595000" />
+      <workItem from="1744651933326" duration="6036000" />
+      <workItem from="1744706663328" duration="8082000" />
     </task>
     <task id="LOCAL-00001" summary="Pantalla Inicio&#10;&#10;Avances en la pantalla de inicio (modelo y vista)">
       <option name="closed" value="true" />
@@ -201,7 +197,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744544617539</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Arreglos relacionados a explosion&#10;&#10;Las explosiones del bomberman negro y blanco ahora se ejecutan correctamente">
+      <option name="closed" value="true" />
+      <created>1744656625380</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1744656625380</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -222,6 +226,7 @@
     <MESSAGE value="Pantalla Inicio&#10;&#10;Avances en la pantalla de inicio (modelo y vista)" />
     <MESSAGE value="Pantalla Inicio&#10;&#10;Avances finales en la pantalla de inicio (modelo y vista), cambios en modelo: TableroModel ahora es una clase abstracta que da lugar a las clases hijas: Classic, Soft y Empty, que se corresponden a los 3 tipos de pantalla del juego." />
     <MESSAGE value="Pantalla Inicio&#10;&#10;Implementacion terminada y unida al codigo previamente hecho" />
-    <option name="LAST_COMMIT_MESSAGE" value="Pantalla Inicio&#10;&#10;Implementacion terminada y unida al codigo previamente hecho" />
+    <MESSAGE value="Arreglos relacionados a explosion&#10;&#10;Las explosiones del bomberman negro y blanco ahora se ejecutan correctamente" />
+    <option name="LAST_COMMIT_MESSAGE" value="Arreglos relacionados a explosion&#10;&#10;Las explosiones del bomberman negro y blanco ahora se ejecutan correctamente" />
   </component>
 </project>

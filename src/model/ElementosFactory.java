@@ -19,6 +19,7 @@ public class ElementosFactory {
         case "bloqueB" -> elem = new BloqueBlando(pX,pY,pTipo);
         case "bloqueD" -> elem = new BloqueDuro(pX,pY,pTipo);
         case "bombermanW" -> elem = BomberMan.getMiBomberMan();
+		case "bombermanN" -> elem = BomberMan.getMiBomberMan();
         case "*" -> elem = new Explosion(pX,pY,"*");
         case "bombaS" -> elem = new BombaSuper(pX,pY);
 		case "bombaU" -> elem = new BombaUltra(pX,pY);

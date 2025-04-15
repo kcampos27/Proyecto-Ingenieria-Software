@@ -5,22 +5,7 @@ public class BomberManBlanco extends BomberMan {
     public BomberManBlanco() {
         super("bombermanW", "blanco");
         this.bombasActivas = 0;
-    }
-
-    @Override
-    public void soltarBomba() {
-        if (bombasActivas < 10 &&
-            (Gestor.getInstance().getTablero().casillaIncluye(x, y, "") ||
-             Gestor.getInstance().getTablero().casillaIncluye(x, y, nombre))) {
-
-            Gestor.getInstance().getTablero().eliminarContent(x, y, nombre);
-            cambiarTipo("bomberBomba");
-            Gestor.getInstance().getTablero().aniadirContent(x, y, this);
-            cambiarTipo("bombermanW");
-
-            bombasActivas++;
-            System.out.println("BOMBA SUPER colocada. Activas: " + bombasActivas);
-        }
+        strategy= new StrategySuper();
     }
 
     @Override

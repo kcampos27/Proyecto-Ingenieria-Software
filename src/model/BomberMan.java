@@ -8,6 +8,7 @@ public abstract class BomberMan extends Elemento {
     protected int orientacion;
     protected int bombasActivasMax;
     protected String tipo;
+    protected StrategySoltarBomba strategy;
 
     public static void setTipoInicial(String tipo) {
         tipoInicial = tipo;
@@ -38,7 +39,8 @@ public abstract class BomberMan extends Elemento {
         return !Gestor.getInstance().getTablero().casillaIncluye(pX, pY, nombre)
             && !Gestor.getInstance().getTablero().casillaIncluye(pX, pY, "bloqueD")
             && !Gestor.getInstance().getTablero().casillaIncluye(pX, pY, "bloqueB")
-            && !Gestor.getInstance().getTablero().casillaIncluye(pX, pY, "bombaS");
+            && !Gestor.getInstance().getTablero().casillaIncluye(pX, pY, "bombaS")
+            && !Gestor.getInstance().getTablero().casillaIncluye(pX, pY, "bombaU");
     }
 
     public void mover(int pX, int pY) {
@@ -109,5 +111,11 @@ public abstract class BomberMan extends Elemento {
     protected abstract void cambiarOrientacion(int pX, int pY);
 
     // Método abstracto que implementan Blanco y Negro
-    public abstract void soltarBomba();
+    public void soltarBomba(){
+        strategy.soltarBomba();
+    }
+    public String getTipo()
+    {
+        return tipo;
+    }
 }
