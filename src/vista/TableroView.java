@@ -22,18 +22,34 @@ public class TableroView extends JPanel implements Observer{
     private JPanel[][] casillas;
     private TableroController controlador;
 	private String tipoPantalla;
+	private FondoPanel fondo;
+	private JPanel bar;
+	private JLabel vida;
+	private int maxContent = 10;
 
     // CONSTRUCTORA
-    public TableroView() {
-		tipoPantalla = "stageBack1";
-    	setLayout(new GridLayout(alto, ancho, 1, 1));
+    public TableroView(String pTipo) {
+    	tipoPantalla = pTipo;
+		
+		//Todo dentro de un border layout
+    	setLayout(new BorderLayout(0,0));
+    	
+    	//aniadir barra con items
+    	bar = new JPanel();
+    	inicializarBarra();
+		add(bar, BorderLayout.NORTH);
+		
+		//aniadir tablero con fondo en el medio
+		fondo = new FondoPanel(tipoPantalla);
+    	add(fondo, BorderLayout.CENTER);
         casillas = new JPanel[ancho][alto];
-        this.setBackground(Color.blue);
+        
         inicializarVista();
-        Gestor.getInstance().getTablero().addObserver(this);
+        
         //se aniade el controlador al tablero
+        Gestor.getInstance().getTablero().addObserver(this);
         addKeyListener(this.getTController());
-        setFocusable(true); 
+        setFocusable(true);
     }
 
     // METODOS
@@ -52,7 +68,7 @@ public class TableroView extends JPanel implements Observer{
             casillas[pI][pJ].setLayout(new BorderLayout());
             casillas[pI][pJ].setOpaque(false);
             casillas[pI][pJ].setForeground(Color.BLACK);
-            add(casillas[pI][pJ]);
+            fondo.add(casillas[pI][pJ]);
         }
         else {
         	casillas[pI][pJ].revalidate();
@@ -61,11 +77,46 @@ public class TableroView extends JPanel implements Observer{
         	
     }
 
-	public void setTipoPantalla(String tipoPantalla) {
-		{
-			this.tipoPantalla = tipoPantalla;
-		}
-	}
+    private void inicializarBarra()
+    {
+    	SpringLayout springLayout = new SpringLayout();
+    	bar.setLayout(springLayout);
+    	bar.setPreferredSize(new Dimension(30, 30));
+    	JLabel lbl = new JLabel(new StretchIcon(getClass().getResource("heart.png")));
+    	bar.add(lbl);
+    	springLayout.putConstraint(SpringLayout.NORTH, lbl, -20, SpringLayout.NORTH, bar);
+		springLayout.putConstraint(SpringLayout.WEST, lbl, 8, SpringLayout.WEST, bar);
+		springLayout.putConstraint(SpringLayout.EAST, lbl, 108, SpringLayout.WEST, bar);
+		springLayout.putConstraint(SpringLayout.SOUTH, lbl, 40, SpringLayout.NORTH, bar);
+    	
+    	vida = new JLabel("x"+3);
+    	vida.setFont(new Font("Rockwell Extra Bold", Font.BOLD, 16));
+    	bar.add(vida);
+    	springLayout.putConstraint(SpringLayout.NORTH, vida, -20, SpringLayout.NORTH, bar);
+		springLayout.putConstraint(SpringLayout.WEST, vida, 78, SpringLayout.WEST, bar);
+		springLayout.putConstraint(SpringLayout.EAST, vida, 188, SpringLayout.WEST, bar);
+		springLayout.putConstraint(SpringLayout.SOUTH, vida, 40, SpringLayout.NORTH, bar);
+    }
+    
+    private void actualizarBarra(String pItem, int pCantidad, String pAccion)
+    {
+    	if(pItem.equals("vida"))
+    	{
+    		int numero = Integer.parseInt(vida.getText().replaceAll("[^0-9]", ""));
+    		if(pAccion.equals("sub"))
+    		{
+    			vida.setText("x"+(numero -pCantidad));
+    		}
+    		else if(pAccion.equals("add"))
+    		{
+    			vida.setText("x"+(numero +pCantidad));
+    		}
+    		else if(pAccion.equals("switch"))
+    		{
+    			vida.setText("x"+pCantidad);
+    		}
+    	}
+    }
 
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -93,7 +144,7 @@ public class TableroView extends JPanel implements Observer{
         {	// No hacer nada si la imagen no existe o es vacia
 
             // Crear JLabel con la imagen
-        	if(casillas[pJ][pI].getComponents().length < 3 && !esta(pJ,pI,nuevaImagen))
+        	if(casillas[pJ][pI].getComponents().length < maxContent && !esta(pJ,pI,nuevaImagen))
             {
         		JLabel labelImagen = new JLabel(new StretchIcon(this.getClass().getResource(imagen)));
         		// Aniadir la imagen al panel
@@ -179,35 +230,46 @@ public class TableroView extends JPanel implements Observer{
 
     @Override
     public void update(Observable o, Object arg) {
+    	
     	Object[] res = (Object[])arg;
-        int pX= (int)res[0];
-        int pY= (int)res[1];
-        String pCont= (String)res[2];
-        String pAccion= (String)res[3];
-        int pCapa= (int)res[4];
-        System.out.println("Observer actualizado con: " +pX+", "+pY+", "+pCont+", "+pAccion);
-        if(pAccion.equals("add"))
-        {
-        	addImagen(pX,pY,pCont,pCapa);
-        }
-        else if(pAccion.equals("del"))
-        {
-        	removeImagen(pX,pY,pCont);
-        }
-        	
+    	
+    	if(res.length == 3)
+    	{
+    		String pItem= (String)res[0];
+            int pCantidad= (int)res[1];
+            String pAccion= (String)res[2];
+    		actualizarBarra(pItem, pCantidad, pAccion);
+    	}
+    	else 
+    	{
+    		int pX= (int)res[0];
+            int pY= (int)res[1];
+            String pCont= (String)res[2];
+            String pAccion= (String)res[3];
+            int pCapa= (int)res[4];
+            System.out.println("Observer actualizado con: " +pX+", "+pY+", "+pCont+", "+pAccion);
+            if(pAccion.equals("add"))
+            {
+            	addImagen(pX,pY,pCont,pCapa);
+            }
+            else if(pAccion.equals("del"))
+            {
+            	removeImagen(pX,pY,pCont);
+            }
+    	}	
     }
     
     public boolean esBomberman(String pCont) {
     	boolean es = switch (pCont) {
     		// Blanco
-    		case "left", "left3", "left4", "left5",
+    		case "bombermanW","left", "left3", "left4", "left5",
     		     "right", "right3", "right4", "right5",
     		     "up", "up3", "up4",
     		     "down", "down2", "down3", "down4",
     		     "bomberBomba" -> true;
 
     		// Negro
-    		case "blackleft1", "blackleft2", "blackleft3", "blackleft4", "blackleft5",
+    		case "bombermanN","blackfront1","blackleft1", "blackleft2", "blackleft3", "blackleft4", "blackleft5",
     		     "blackright1", "blackright2", "blackright3", "blackright4", "blackright5",
     		     "blackup1", "blackup2", "blackup3", "blackup4", "blackup5",
     		     "blackdown1", "blackdown2", "blackdown3", "blackdown4",

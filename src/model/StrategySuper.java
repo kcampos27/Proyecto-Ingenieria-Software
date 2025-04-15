@@ -12,7 +12,7 @@ public class StrategySuper implements StrategySoltarBomba{
                 pBomber.cambiarTipo("bombermanW");
                 Gestor.getInstance().getTablero().aniadirContent(pBomber.x, pBomber.y, new BombaSuper(pBomber.x, pBomber.y));
                 pBomber.bombasActivas++;
-                System.out.println("BOMBA ULTRA colocada. Activas: " + pBomber.bombasActivas);
+                System.out.println("BOMBA SUPER colocada. Activas: " + pBomber.bombasActivas);
             }
         }
         else if (pBomber.tipo.equals("negro")){
@@ -25,7 +25,7 @@ public class StrategySuper implements StrategySoltarBomba{
                 pBomber.cambiarTipo("bombermanN");
                 Gestor.getInstance().getTablero().aniadirContent(pBomber.x, pBomber.y, new BombaSuper(pBomber.x, pBomber.y));
                 pBomber.bombasActivas++;
-                System.out.println("BOMBA ULTRA colocada. Activas: " + pBomber.bombasActivas);
+                System.out.println("BOMBA SUPER colocada. Activas: " + pBomber.bombasActivas);
             }
         }
     }

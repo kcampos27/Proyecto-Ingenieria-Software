@@ -154,8 +154,7 @@ public class PantallaView extends JPanel implements Observer {
 
 	private void abrirTablero()
 	{
-		TableroView vista = new TableroView();
-		vista.setTipoPantalla(PantallaModel.getMiPantalla().getTipoPantalla());
+		TableroView vista = new TableroView(PantallaModel.getMiPantalla().getTipoPantalla());
 		//TableroModel modelo= Gestor.getInstance().getTablero();
 		//modelo.inicializar();
 		JFrame frame = new JFrame("Tablero");

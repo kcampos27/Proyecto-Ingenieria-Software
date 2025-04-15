@@ -46,7 +46,7 @@ public abstract class Bombas extends Elemento {
             Gestor.getInstance().getTablero().eliminarContent(x, y, "bombaS");
             Gestor.getInstance().getTablero().eliminarContent(x, y, "bombaU");
             Gestor.getInstance().getTablero().generarContent(x, y, "*");
-            Gestor.getInstance().getTablero().damage(x, y, 1, new String[]{"enemigo", "bombermanW", "bloqueB"});
+            Gestor.getInstance().getTablero().damage(x, y, 1, new String[]{"enemigo", "bombermanW", "bombermanN" ,"bloqueB"});
 
             // Banderas para cada dirección
             boolean derechaActiva = true;

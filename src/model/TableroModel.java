@@ -160,7 +160,7 @@ public abstract class TableroModel extends Observable {
     				hayBomba=false;
     			}
     		
-    		}, 1000);
+    		}, 1000);//cooldown
     	}
     }
     
@@ -183,5 +183,12 @@ public abstract class TableroModel extends Observable {
     {
     	tablero[pX][pY].imprimirContent();;
     }
+
+	public void actualizarItem(String pAccion, String pItem, int pCantidad) 
+	{
+		setChanged();
+        notifyObservers(new Object[] {pItem,pCantidad,pAccion});
+		
+	}
   
 }

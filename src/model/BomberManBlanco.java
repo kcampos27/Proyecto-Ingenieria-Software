@@ -3,7 +3,7 @@ package model;
 public class BomberManBlanco extends BomberMan {
 
     public BomberManBlanco() {
-        super("bombermanW", "blanco");
+        super("bombermanW", "blanco",3);
         this.bombasActivas = 0;
         strategy= new StrategySuper();
     }

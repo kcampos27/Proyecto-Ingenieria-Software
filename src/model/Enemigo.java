@@ -66,7 +66,7 @@ public class Enemigo extends Elemento{
     	    	y = nextY;
     	    	if(pX==0) 
     	    	{
-    	    		//if(pY==0){Gestor.getInstance().getTablero().aniadirContent(x, y, this);}
+    	    		if(pY==0){Gestor.getInstance().getTablero().aniadirContent(x, y, this);}
     	    		if(pY==1){Gestor.getInstance().getTablero().aniadirContent(x, y, this);}
     	    		else if(pY==-1){Gestor.getInstance().getTablero().aniadirContent(x, y, this);}
     	    	}
@@ -75,7 +75,7 @@ public class Enemigo extends Elemento{
     	    	
     	    	//Daniar a bomberman
     	    	if(Gestor.getInstance().getTablero().casillaIncluye(x, y, BomberMan.getMiBomberMan().getNombre()))
-    	    	{Gestor.getInstance().getTablero().damage(x, y, 1, new String[] {"bombermanW"});}
+    	    	{Gestor.getInstance().getTablero().damage(x, y, 1, new String[] {BomberMan.getMiBomberMan().getNombre()});}
     	    	//Recibir danio si toca explosion
     	    	if(Gestor.getInstance().getTablero().casillaIncluye(x, y, "*"))
     	    	{Gestor.getInstance().getTablero().damage(x, y, 1, new String[] {"enemigo"});}

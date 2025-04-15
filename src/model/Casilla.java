@@ -7,13 +7,14 @@ public class Casilla {
    //ATRIBUTOS
     private int x;
     private int y;
+    private int maxContent=10;
     private Elemento[] contenido; 
 
     // CONSTRUCTORA
     public Casilla(int x, int y) {
         this.x = x;
         this.y = y;
-        this.contenido = new Elemento[3];  
+        this.contenido = new Elemento[maxContent];  
     }
 
     // METODOS
@@ -27,7 +28,7 @@ public class Casilla {
     
     public void damageElems(int pDmg, HashSet<String> targets)
     {
-    	for(int i=0;i<3;i++)
+    	for(int i=0;i<maxContent;i++)
     	{
     		if(contenido[i]  != null)
     		{
@@ -40,9 +41,9 @@ public class Casilla {
     
 	public String[] getContent()
     {
-    	String[] content = new String[3];
+    	String[] content = new String[maxContent];
     	
-    	for(int i = 0;i<3;i++) {
+    	for(int i = 0;i<maxContent;i++) {
     		content[i]="";
     		if (contenido[i] != null)
     		{
@@ -57,7 +58,7 @@ public class Casilla {
     	if(newContent != "" && !estaContent(newContent)) 
     	{
     		int i=0;
-    		while(i<3 && !added)
+    		while(i<maxContent && !added)
     		{
     			//if(contenido[i] != null)System.out.println("hay "+contenido[i].getNombre()+" en "+x+", "+y+" pos: "+ i);
     			if(contenido[i] == null){contenido[i] = GeneradorElementos.getGen().generarElemento(x, y, newContent);
@@ -75,7 +76,7 @@ public class Casilla {
     	if(newContent.getNombre() != "" && !estaContent(newContent.getNombre())) 
     	{
     		int i=0;
-    		while(i<3 && !added)
+    		while(i<maxContent && !added)
     		{
     			//if(contenido[i] != null)System.out.println("hay "+contenido[i].getNombre()+" en "+x+", "+y+" pos: "+ i);
     			if(contenido[i] == null){contenido[i] = newContent;
@@ -91,7 +92,7 @@ public class Casilla {
     {
     	boolean enc = false;
     	int i = 0;
-    	while(i<3)
+    	while(i<maxContent)
     	{
     		if(contenido[i] != null) {if(contenido[i].getNombre().equals(pCont)) {enc = true;}}
     		i++;
@@ -105,7 +106,7 @@ public class Casilla {
         int i=0;
     	if(newContent !="")
     	{
-    		while(i<3 && !removed)
+    		while(i<maxContent && !removed)
     		{
     			if(contenido[i] != null)
     			{
@@ -124,13 +125,13 @@ public class Casilla {
     public void imprimirContent()
     {
     	System.out.print(x+", "+y+" contiene: {");
-    	for(int i = 0;i<3;i++) {
+    	for(int i = 0;i<maxContent;i++) {
     		if (contenido[i] != null)
     		{
     			System.out.print(contenido[i].getNombre()+", ");
     		}
     		else {System.out.print("null"+", ");}
-    		if(i==2) {System.out.print("}");}
+    		if(i==maxContent-1) {System.out.print("}");}
     	} 
     	System.out.println("");
     }

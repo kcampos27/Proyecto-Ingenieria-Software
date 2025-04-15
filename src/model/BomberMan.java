@@ -9,6 +9,7 @@ public abstract class BomberMan extends Elemento {
     protected int bombasActivasMax;
     protected String tipo;
     protected StrategySoltarBomba strategy;
+    protected int maxVida;
 
     public static void setTipoInicial(String tipo) {
         tipoInicial = tipo;
@@ -29,10 +30,12 @@ public abstract class BomberMan extends Elemento {
         return miBomberMan;
     }
 
-    protected BomberMan(String nombre, String tipo) {
+    protected BomberMan(String nombre, String tipo, int pVida) {
         super(0, 0, nombre, 3);
+        Gestor.getInstance().getTablero().actualizarItem("switch","vida",pVida);
         this.tipo = tipo;
         this.orientacion = 0;
+        maxVida = pVida;
     }
 
     public boolean posibleMoverse(int pX, int pY) {
@@ -85,23 +88,25 @@ public abstract class BomberMan extends Elemento {
 
     @Override
     public void getHurt(int pDmg) {
-        if (vida > 0) {
-            vida = Math.max(0, vida - pDmg);
-            cambiarTipo("enllamas"); // 👈 AÑADIDO para que se vea en llamas
+    	if (vida > 0) {
+            vida = vida - pDmg;
+            cambiarTipo("enllamas"); // 👈 para que se vea en llamas
             Gestor.getInstance().getTablero().orientarBomber(x, y, "enllamas");
             System.out.println("OUCH, vida restante: " + vida);
+            Gestor.getInstance().getTablero().actualizarItem("sub","vida",pDmg);
         }
 
         if (vida == 0) {
             Gestor.getInstance().getTablero().eliminarContent(x, y, nombre);
             x = 0;
             y = 0;
-            vida = 3;
-
+            vida = maxVida;
+            
             // Restaurar nombre original según tipo
             if (tipo.equals("blanco")) cambiarTipo("bombermanW");
             else if (tipo.equals("negro")) cambiarTipo("bombermanN");
-
+            
+            Gestor.getInstance().getTablero().actualizarItem("add","vida",maxVida);
             Gestor.getInstance().getTablero().aniadirContent(0, 0, this);
             System.out.println("Reaparezco en 0,0");
         }
