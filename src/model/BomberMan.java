@@ -58,6 +58,7 @@ public abstract class BomberMan extends Elemento {
                     Gestor.getInstance().getTablero().generarContent(x, y, "bombaU");
                 }
                 Gestor.getInstance().getTablero().eliminarContent(x, y, nombre);
+                Gestor.getInstance().getTablero().eliminarContent(x, y, "enllamas");
                 this.x = nextX;
                 this.y = nextY;
 
@@ -112,7 +113,7 @@ public abstract class BomberMan extends Elemento {
 
     // Método abstracto que implementan Blanco y Negro
     public void soltarBomba(){
-        strategy.soltarBomba();
+        strategy.soltarBomba(miBomberMan);
     }
     public String getTipo()
     {

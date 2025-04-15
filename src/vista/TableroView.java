@@ -144,10 +144,9 @@ public class TableroView extends JPanel implements Observer{
         for (Component c : casillas[pJ][pI].getComponents()) {
             if (c instanceof JLabel label) {
                 String name = label.getName();
-
                 // Eliminamos todos los sprites que sean de tipo bomberman
                 if (esBomberman(name)) {
-                    label.setIcon(null);
+					label.setIcon(null);
                     label.setName("null");
                     System.out.println("imagen " + imagen + " eliminada de bomberman (" + name + ")");
                 }
@@ -201,7 +200,7 @@ public class TableroView extends JPanel implements Observer{
     public boolean esBomberman(String pCont) {
     	boolean es = switch (pCont) {
     		// Blanco
-    		case "enllamas", "left", "left3", "left4", "left5",
+    		case "left", "left3", "left4", "left5",
     		     "right", "right3", "right4", "right5",
     		     "up", "up3", "up4",
     		     "down", "down2", "down3", "down4",
