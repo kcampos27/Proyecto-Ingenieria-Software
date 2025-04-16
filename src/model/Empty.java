@@ -15,7 +15,7 @@ public class Empty extends TableroModel{
         }
         else if (p > 33 && p<=40)
         {
-            //generarContent(pJ,pI,"enemigo");
+            generarContent(pJ,pI,"enemigo");
             tablero[pJ][pI].imprimirContent();
         }
         else

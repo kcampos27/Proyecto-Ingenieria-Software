@@ -13,7 +13,9 @@ public class StateSinBombas implements StateSoltarBomba
 			{BomberMan.getMiBomberMan().cambiarEstado(new StateSuperWhite());}
 			
 			else if(BomberMan.getMiBomberMan().getTipo().equals("negro"))
-			{BomberMan.getMiBomberMan().cambiarEstado(new StateUltraBlack());}
+			{BomberMan.getMiBomberMan().cambiarEstado(new StateUltraBlack());
+			//Evitar tener que soltar la bomba 2 veces una vez recargada
+			BomberMan.getMiBomberMan().soltarBomba();}
 		}
 	}
 
