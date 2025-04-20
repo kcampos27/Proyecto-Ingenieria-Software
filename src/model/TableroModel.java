@@ -10,12 +10,12 @@ import java.util.TimerTask;
 public abstract class TableroModel extends Observable {
 	
 	//ATRIBUTOS
-	protected Casilla[][] tablero;
-    protected Random random;
-    protected int alto = 11;
-    protected int ancho = 17;
-    protected Timer timer = new Timer();
-    protected boolean hayBomba = false;
+	private Casilla[][] tablero;
+    private Random random;
+    private int alto = 11;
+    private int ancho = 17;
+    private Timer timer = new Timer();
+    private boolean hayBomba = false;
 
     // CONSTRUCTORA
     public TableroModel() {
@@ -190,6 +190,17 @@ public abstract class TableroModel extends Observable {
 		setChanged();
         notifyObservers(new Object[] {pItem,pCantidad,pAccion});
 		
+	}
+	
+	protected Casilla getCasilla(int pX, int pY)
+	{
+		return tablero[pX][pY];
+	}
+	
+	protected Random getRandom()
+	{
+		if(random == null) {random = new Random();}
+		return random;
 	}
   
 }

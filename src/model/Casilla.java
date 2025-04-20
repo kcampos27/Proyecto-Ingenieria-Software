@@ -61,7 +61,7 @@ public class Casilla {
     		while(i<maxContent && !added)
     		{
     			//if(contenido[i] != null)System.out.println("hay "+contenido[i].getNombre()+" en "+x+", "+y+" pos: "+ i);
-    			if(contenido[i] == null){contenido[i] = GeneradorElementos.getGen().generarElemento(x, y, newContent);
+    			if(contenido[i] == null){contenido[i] = ElementosFactory.getFactory().fabricarElemento(x, y, newContent);
     			//System.out.println("add "+newContent+" a "+x+", "+y);
     			added=true;}
     			i++;

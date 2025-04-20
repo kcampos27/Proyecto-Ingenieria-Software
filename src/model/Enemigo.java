@@ -15,11 +15,6 @@ public class Enemigo extends Elemento{
 		movimiento();
 	}
 	
-	public String getName()
-	{
-		return nombre;
-	}
-	
 	public void movimiento()
 	{
 		timer.schedule(new TimerTask() //delay 1 segundo antes de empezar a moverse, evitar que no se hayan generado casillas
@@ -48,8 +43,8 @@ public class Enemigo extends Elemento{
 	
 	public synchronized void mover(int pX, int pY)
 	{
-		int nextX = this.x + pX;
-    	int nextY = this.y + pY;
+		int nextX = getX() + pX;
+    	int nextY = getY() + pY;
     	//System.out.println("");
     	//System.out.println("enemigo: parametros: "+pX+", "+pY);
     	//System.out.println("enemigo: solicitado moverse a la casilla "+nextX+", "+nextY);
@@ -61,24 +56,24 @@ public class Enemigo extends Elemento{
     	    {
     	    	System.out.println("");
 				System.out.println("______________________________________________");
-    	    	Gestor.getInstance().getTablero().eliminarContent(x, y, nombre);
-    	    	x = nextX;
-    	    	y = nextY;
+    	    	Gestor.getInstance().getTablero().eliminarContent(getX(), getY(), getNombre());
+    	    	setX(nextX);
+    	    	setY(nextY);
     	    	if(pX==0) 
     	    	{
-    	    		if(pY==0){Gestor.getInstance().getTablero().aniadirContent(x, y, this);}
-    	    		if(pY==1){Gestor.getInstance().getTablero().aniadirContent(x, y, this);}
-    	    		else if(pY==-1){Gestor.getInstance().getTablero().aniadirContent(x, y, this);}
+    	    		if(pY==0){Gestor.getInstance().getTablero().aniadirContent(getX(), getY(), this);}
+    	    		if(pY==1){Gestor.getInstance().getTablero().aniadirContent(getX(), getY(), this);}
+    	    		else if(pY==-1){Gestor.getInstance().getTablero().aniadirContent(getX(), getY(), this);}
     	    	}
-    	    	else if(pX==1){Gestor.getInstance().getTablero().aniadirContent(x, y, this);}
-    	    	else if(pX==-1){Gestor.getInstance().getTablero().aniadirContent(x, y, this);}
+    	    	else if(pX==1){Gestor.getInstance().getTablero().aniadirContent(getX(), getY(), this);}
+    	    	else if(pX==-1){Gestor.getInstance().getTablero().aniadirContent(getX(), getY(), this);}
     	    	
     	    	//Daniar a bomberman
-    	    	if(Gestor.getInstance().getTablero().casillaIncluye(x, y, BomberMan.getMiBomberMan().getNombre()))
-    	    	{Gestor.getInstance().getTablero().damage(x, y, 1, new String[] {BomberMan.getMiBomberMan().getNombre()});}
+    	    	if(Gestor.getInstance().getTablero().casillaIncluye(getX(), getY(), BomberMan.getMiBomberMan().getNombre()))
+    	    	{Gestor.getInstance().getTablero().damage(getX(), getY(), 1, new String[] {BomberMan.getMiBomberMan().getNombre()});}
     	    	//Recibir danio si toca explosion
-    	    	if(Gestor.getInstance().getTablero().casillaIncluye(x, y, "*"))
-    	    	{Gestor.getInstance().getTablero().damage(x, y, 1, new String[] {"enemigo"});}
+    	    	if(Gestor.getInstance().getTablero().casillaIncluye(getX(), getY(), "*"))
+    	    	{Gestor.getInstance().getTablero().damage(getX(), getY(), 1, new String[] {"enemigo"});}
     	    	//System.out.println(nextX+","+nextY);
     	    	System.out.println("");
 				System.out.println("______________________________________________");
@@ -119,10 +114,11 @@ public class Enemigo extends Elemento{
     {
     	boolean moverse = false;
     	
-    	if(!Gestor.getInstance().getTablero().casillaIncluye(pX, pY, nombre)
+    	if(!Gestor.getInstance().getTablero().casillaIncluye(pX, pY, getNombre())
     			&& !Gestor.getInstance().getTablero().casillaIncluye(pX, pY, "bloqueD")
     			&& !Gestor.getInstance().getTablero().casillaIncluye(pX, pY, "bloqueB")
     			&& !Gestor.getInstance().getTablero().casillaIncluye(pX, pY, "bombaS")
+    			&& !Gestor.getInstance().getTablero().casillaIncluye(pX, pY, "bombaU")
     			&& !Gestor.getInstance().getTablero().casillaIncluye(pX, pY, "enemigo"))
     	{
     		moverse = true;
@@ -134,25 +130,17 @@ public class Enemigo extends Elemento{
 	@Override
 	public void getHurt(int pDmg) 
 	{
-		if(vida>0) 
+		if(getVida()>0) 
     	{
-    		if(vida - pDmg == 0) {vida = 0;}
-    		else {vida = vida - pDmg;}
+    		if(getVida() - pDmg >= 0) {matar();}
+    		else {restarVida(pDmg);}
     	}
-    	if(vida==0) 
+    	if(getVida() == 0) 
     	{
-    		Gestor.getInstance().getTablero().eliminarContent(x, y, nombre);
-    		x=-1;
-    		y=-1;
+    		Gestor.getInstance().getTablero().eliminarContent(getX(), getY(), getNombre());
+    		setX(-1);
+    		setY(-1);
     		timer.cancel();
     	}
-	}
-	
-	public void stop()
-	{
-		timer.cancel();
-		Gestor.getInstance().getTablero().eliminarContent(x,y,nombre);
-		x=-1;
-		y=-1;
 	}
 }

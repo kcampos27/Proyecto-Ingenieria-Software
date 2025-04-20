@@ -7,8 +7,7 @@ public class Classic extends TableroModel {
 
     @Override
     public void inicializarPantalla(int pJ, int pI) {
-        random = new Random();
-        int p = random.nextInt(100);
+        int p = getRandom().nextInt(100);
 
         if(pI==0&&pJ==0)
         {//Bomberman
@@ -16,7 +15,7 @@ public class Classic extends TableroModel {
         else if(pI%2!=0 && pJ%2!=0)
         {//Bloques duros
             generarContent(pJ,pI,"bloqueD");
-            tablero[pJ][pI].imprimirContent();
+            getCasilla(pJ,pI).imprimirContent();
         }
         //NO OCURRE NADA
         else if( (pI == 1 && pJ == 1)
@@ -26,24 +25,24 @@ public class Classic extends TableroModel {
         else if((pI==0 && pJ == 2) || (pI==2 && pJ==0))
         {
             generarContent(pJ,pI,"bloqueB");
-            tablero[pJ][pI].imprimirContent();
+            getCasilla(pJ,pI).imprimirContent();
         }
         else
         {
             if (p <= 33)
             {
                 generarContent(pJ,pI,"bloqueB");
-                tablero[pJ][pI].imprimirContent();
+                getCasilla(pJ,pI).imprimirContent();
             }
             else if (p > 33 && p<=40)
             {
                 generarContent(pJ,pI,"enemigo");
-                tablero[pJ][pI].imprimirContent();
+                getCasilla(pJ,pI).imprimirContent();
             }
             else
             {
                 generarContent(pJ,pI,"");
-                tablero[pJ][pI].imprimirContent();
+                getCasilla(pJ,pI).imprimirContent();
             }
         }
         System.out.println("");

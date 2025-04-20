@@ -4,16 +4,18 @@ public class BomberManBlanco extends BomberMan {
 
     public BomberManBlanco() {
         super("bombermanW", "blanco",3,3);
-        this.bombasActivas = 0;
-        estado= new StateSuperWhite();
+        this.setActivas(0);
+        setEstado(new StateSuperWhite());
     }
 
-    @Override
+    
+
+	@Override
     protected void cambiarOrientacion(int pX, int pY) {
-        String newDir = nombre;
+        String newDir = getNombre();
 
         if (pX == 0 && pY == 1) {
-            newDir = switch (orientacion) {
+            newDir = switch (getOrientacion()) {
                 case 0 -> "down";
                 case 1 -> "down2";
                 case 2 -> "down3";
@@ -21,7 +23,7 @@ public class BomberManBlanco extends BomberMan {
                 default -> "down";
             };
         } else if (pX == 0 && pY == -1) {
-            newDir = switch (orientacion) {
+            newDir = switch (getOrientacion()) {
                 case 0 -> "up";
                 case 1 -> "up3";
                 case 2 -> "up4";
@@ -29,7 +31,7 @@ public class BomberManBlanco extends BomberMan {
                 default -> "up";
             };
         } else if (pX == 1) {
-            newDir = switch (orientacion) {
+            newDir = switch (getOrientacion()) {
                 case 0 -> "right";
                 case 1 -> "right4";
                 case 2 -> "right3";
@@ -37,7 +39,7 @@ public class BomberManBlanco extends BomberMan {
                 default -> "right";
             };
         } else if (pX == -1) {
-            newDir = switch (orientacion) {
+            newDir = switch (getOrientacion()) {
                 case 0 -> "left";
                 case 1 -> "left4";
                 case 2 -> "left3";
@@ -47,6 +49,6 @@ public class BomberManBlanco extends BomberMan {
         }
 
         sigOrientacion();
-        Gestor.getInstance().getTablero().orientarBomber(x, y, newDir);
+        Gestor.getInstance().getTablero().orientarBomber(getX(), getY(), newDir);
     }
 }

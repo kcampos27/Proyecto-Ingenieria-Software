@@ -7,7 +7,7 @@ public class StateSinBombas implements StateSoltarBomba
 	public void soltarBomba() 
 	{
 		System.out.println("No hay bombas suficientes, recargando...");
-		if(BomberMan.getMiBomberMan().bombasActivas < BomberMan.getMiBomberMan().maxBombas)
+		if(BomberMan.getMiBomberMan().hayBombas())
 		{
 			if(BomberMan.getMiBomberMan().getTipo().equals("blanco"))
 			{BomberMan.getMiBomberMan().cambiarEstado(new StateSuperWhite());}

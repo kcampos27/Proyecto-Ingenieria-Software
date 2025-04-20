@@ -152,9 +152,9 @@ public class PantallaView extends JPanel implements Observer {
 		}
 	}
 
-	private void abrirTablero()
+	private void abrirTablero(String tipoPantalla)
 	{
-		TableroView vista = new TableroView(PantallaModel.getMiPantalla().getTipoPantalla());
+		TableroView vista = new TableroView(tipoPantalla);
 		//TableroModel modelo= Gestor.getInstance().getTablero();
 		//modelo.inicializar();
 		JFrame frame = new JFrame("Tablero");
@@ -168,10 +168,12 @@ public class PantallaView extends JPanel implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		System.out.println("RECIBIDO");
-		int codigo = (int)arg;
-		if (codigo==1)
+		Object[] args = (Object[])arg;
+		int codigo = (int)args[0];
+		String tipoPantalla = (String)args[1];
+		if (codigo == 1)
 		{
-			abrirTablero();
+			abrirTablero(tipoPantalla);
 		}
 	}
 

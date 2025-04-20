@@ -2,9 +2,9 @@ package model;
 
 public abstract class Elemento {
 	
-	protected String nombre;
-	protected int vida;
-	protected int x, y;
+	private String nombre;
+	private int vida;
+	private int x, y;
 	
 	public Elemento(int px, int py, String pNombre, int pHP)
 	{
@@ -17,5 +17,48 @@ public abstract class Elemento {
 	public String getNombre(){return nombre;}
 	
 	public abstract void getHurt(int pDmg);
-
+	
+	protected void setX(int pX)
+	{
+		x = pX;
+	}
+	
+	protected void setY(int pY)
+	{
+		y = pY;
+	}
+	
+	protected int getX()
+	{
+		return x;
+	}
+	
+	protected int getY()
+	{
+		return y;
+	}
+	
+	protected int getVida()
+	{
+		return vida;
+	}
+	
+	protected void matar() {
+		vida = 0;
+	}
+	
+	protected void restarVida(int pDmg)
+	{
+		vida = vida - pDmg;
+	}
+	
+	protected void setVida(int pMax)
+	{
+		vida = pMax;
+	}
+	
+	protected void setNombre(String pN)
+	{
+		nombre = pN;
+	}
 }

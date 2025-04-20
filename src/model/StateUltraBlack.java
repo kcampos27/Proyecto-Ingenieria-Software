@@ -6,11 +6,11 @@ public class StateUltraBlack implements StateSoltarBomba
 	@Override
 	public void soltarBomba() 
 	{
-		 int x = BomberMan.getMiBomberMan().x;
-         int y = BomberMan.getMiBomberMan().y;
+		 int x = BomberMan.getMiBomberMan().getX();
+         int y = BomberMan.getMiBomberMan().getY();
          
          //Quitar bomberman para volver a aniadirlo con el sprite de bomber + bomba
-         Gestor.getInstance().getTablero().eliminarContent(x, y, BomberMan.getMiBomberMan().nombre);
+         Gestor.getInstance().getTablero().eliminarContent(x, y, BomberMan.getMiBomberMan().getNombre());
          BomberMan.getMiBomberMan().cambiarNombre("blackwithbomb1");
          Gestor.getInstance().getTablero().aniadirContent(x, y, BomberMan.getMiBomberMan());
          
@@ -19,10 +19,10 @@ public class StateUltraBlack implements StateSoltarBomba
          
          //Crear la nueva bomba
          Gestor.getInstance().getTablero().aniadirContent(x, y, new BombaUltra(x, y));
-         BomberMan.getMiBomberMan().bombasActivas++;
-         System.out.println("BOMBA ULTRA colocada. Activas: " + BomberMan.getMiBomberMan().bombasActivas);
+         BomberMan.getMiBomberMan().incrementarActivas();;
+         System.out.println("BOMBA ULTRA colocada. Activas: ");
            
-         if (BomberMan.getMiBomberMan().bombasActivas >= BomberMan.getMiBomberMan().maxBombas)
+         if (!BomberMan.getMiBomberMan().hayBombas())
          //Si no tiene suficientes bombas, hay que cambiar de estado
          {BomberMan.getMiBomberMan().cambiarEstado(new StateSinBombas());}
        

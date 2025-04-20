@@ -7,8 +7,7 @@ public class Empty extends TableroModel{
     public Empty(){}
     @Override
     public void inicializarPantalla(int pJ, int pI) {
-        random = new Random();
-        int p = random.nextInt(100);
+        int p = getRandom().nextInt(100);
 
         if(pI==0&&pJ==0)
         {//Bomberman
@@ -16,7 +15,7 @@ public class Empty extends TableroModel{
         else if (p > 33 && p<=40)
         {
             generarContent(pJ,pI,"enemigo");
-            tablero[pJ][pI].imprimirContent();
+            getCasilla(pJ,pI).imprimirContent();
         }
         else
         {

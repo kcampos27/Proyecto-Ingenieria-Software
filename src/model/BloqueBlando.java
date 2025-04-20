@@ -10,16 +10,16 @@ public class BloqueBlando extends Bloque{
 	@Override
     public void getHurt(int pDmg)
     {
-    	if(vida>0) 
+    	if(getVida()>0) 
     	{
-    		if(vida - pDmg == 0) {vida = 0;}
-    		else {vida = vida - pDmg;}
+    		if(getVida() - pDmg == 0) {matar();}
+    		else {restarVida(pDmg);}
     	}
-    	if(vida==0) 
+    	if(getVida()==0) 
     	{
-    		Gestor.getInstance().getTablero().eliminarContent(x, y, nombre);
-    		x=-1;
-    		y=-1;
+    		Gestor.getInstance().getTablero().eliminarContent(getX(), getY(), getNombre());
+    		setX(-1);
+    		setY(-1);
     	}
     }
 }
