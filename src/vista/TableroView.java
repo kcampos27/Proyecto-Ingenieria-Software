@@ -4,6 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyListener;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
@@ -26,10 +30,13 @@ public class TableroView extends JPanel implements Observer{
 	private JPanel bar;
 	private JLabel vida;
 	private int maxContent = 10;
-
+	private PantallaPausaView pausaSc;
+	private HashMap<String,PantallaPausaView> listaPausas;
+	
     // CONSTRUCTORA
     public TableroView(String pTipo) {
     	tipoPantalla = pTipo;
+    	listaPausas = new HashMap<String,PantallaPausaView>();
 		
 		//Todo dentro de un border layout
     	setLayout(new BorderLayout(0,0));
@@ -50,6 +57,12 @@ public class TableroView extends JPanel implements Observer{
         Gestor.getInstance().getTablero().addObserver(this);
         addKeyListener(this.getTController());
         setFocusable(true);
+        addHierarchyListener(e -> {
+	        if (isShowing()) {
+	            requestFocusInWindow();
+	        }
+	    });
+        
     }
 
     // METODOS
@@ -116,6 +129,49 @@ public class TableroView extends JPanel implements Observer{
     			vida.setText("x"+pCantidad);
     		}
     	}
+    }
+    
+    private void manejarPausa(String pAccion)
+    {
+    	if(pAccion.equals("pausar")) {
+    		verPausa("pausa");
+    	}
+    	//Si se quiere continuar, se deja de ver la ventana
+    	else if(pAccion.equals("continuar"))
+    	{
+    		pausaSc.setVisible(false);
+    		System.out.println("la pausa no es visible");
+    	}
+    	else if(pAccion.equals("perder"))
+    	{
+    		verPausa("derrota");
+    	}
+    	else if(pAccion.equals("ganar"))
+    	{
+    		verPausa("victoria");
+    	}
+    	
+    }
+    
+    private void verPausa(String pTipo)
+    {
+    	if(pausaSc == null) //Crear pantalla del tipo adecuado si no hay
+		{
+			pausaSc = new PantallaPausaView(pTipo);
+		}
+		else if (!pausaSc.getTipo().equals(pTipo) && !listaPausas.containsKey(pTipo))
+		{//Si ya hay pantalla, y no hay del tipo nuevo,
+		 //se crea otra del tipo adecuado y se guarda la anterior
+			listaPausas.put(pTipo, pausaSc);
+			pausaSc = new PantallaPausaView(pTipo);
+		}
+		else if (listaPausas.containsKey(pTipo))
+		{
+			pausaSc = listaPausas.get(pTipo);
+		}
+    	pausaSc.setVisible(true);
+		pausaSc.setLocationRelativeTo(this);
+		pausaSc.setSize(300, 235);
     }
 
 	@Override
@@ -227,6 +283,15 @@ public class TableroView extends JPanel implements Observer{
     	}
     	return esta;
     }
+    
+    private void cerrarVista()
+    {
+    	this.setVisible(false);
+    	Window ventana = SwingUtilities.getWindowAncestor(this);
+		if (ventana != null) {
+			ventana.dispose();
+		}
+    }
 
     @Override
     public void update(Observable o, Object arg) {
@@ -239,6 +304,20 @@ public class TableroView extends JPanel implements Observer{
             int pCantidad= (int)res[1];
             String pAccion= (String)res[2];
     		actualizarBarra(pItem, pCantidad, pAccion);
+    	}
+    	else if(res.length == 1)
+    	{
+    		
+    		String pAccion = (String)res[0];
+    		if(pAccion.equals("cerrar"))
+    		{
+    			System.out.println("cerrando pantalla pausa");
+    			cerrarVista();
+    			manejarPausa("continuar");
+    		}
+    		else {manejarPausa(pAccion);
+			System.out.println("ver pantalla de pausa: "+pAccion);}
+    		
     	}
     	else 
     	{
@@ -375,9 +454,11 @@ public class TableroView extends JPanel implements Observer{
                 if (key == KeyEvent.VK_DOWN) Gestor.getInstance().getTablero().moverBomberman(0, 1);System.out.println("");
                 if (key == KeyEvent.VK_LEFT) Gestor.getInstance().getTablero().moverBomberman(-1, 0);System.out.println("");
                 if (key == KeyEvent.VK_RIGHT) Gestor.getInstance().getTablero().moverBomberman(1, 0);System.out.println("");
-                if (key == KeyEvent.VK_X) {
-                	Gestor.getInstance().getTablero().crearBomba();System.out.println("");
-				}
+                if (key == KeyEvent.VK_X) {Gestor.getInstance().getTablero().crearBomba();System.out.println("");}
+                if (key == KeyEvent.VK_ESCAPE)
+                {
+                	Gestor.getInstance().getTablero().pausar("pause",true);
+                }
         	}
         }
 

@@ -54,7 +54,11 @@ public class PantallaModel extends Observable
     }
 
 
-
+    public void abrir()
+    {
+    	setChanged();
+    	notifyObservers(new Object[] {2});
+    }
 
 
     public void select(int pNext)

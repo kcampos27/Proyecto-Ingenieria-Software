@@ -18,6 +18,10 @@ public abstract class Elemento {
 	
 	public abstract void getHurt(int pDmg);
 	
+	public void detener(){}
+	
+	public void continuar(){}
+	
 	protected void setX(int pX)
 	{
 		x = pX;

@@ -14,11 +14,12 @@ public class Main {
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
-            JFrame frame = new JFrame("Prueba de PantallaView");
+            JFrame frame = new JFrame("PantallaView");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(800, 530);
             frame.setResizable(false); // Permitir redimensionamiento
-
+            frame.setLocationRelativeTo(frame);
+            
             // Crear instancia del panel
             PantallaView panel = new PantallaView();
             PantallaModel.getMiPantalla();
@@ -26,5 +27,6 @@ public class Main {
             frame.setContentPane(panel);
             frame.setVisible(true);
         });
+        
     }
 }

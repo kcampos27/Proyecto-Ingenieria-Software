@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Arrays;
 import java.util.HashSet;
 
 public class Casilla {
@@ -134,6 +135,16 @@ public class Casilla {
     		if(i==maxContent-1) {System.out.print("}");}
     	} 
     	System.out.println("");
+    }
+    
+    public void pause()
+    {
+    	Arrays.stream(contenido).filter(c -> c != null).forEach(c -> c.detener());
+    }
+    
+    public void goOn()
+    {
+    	Arrays.stream(contenido).filter(c -> c != null).forEach(c -> c.continuar());
     }
   
 }

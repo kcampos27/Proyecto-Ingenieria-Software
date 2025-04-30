@@ -8,6 +8,7 @@ public abstract class Bombas extends Elemento {
     private int rango;
     private boolean haExplo;
     private Timer timer;
+    private boolean pausado = false;
 
 	public Bombas(int px, int py, int rango, String pTipo) {
         super(px,py,pTipo,-1);
@@ -22,18 +23,37 @@ public abstract class Bombas extends Elemento {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                explotar();
-                haExplo = true;
+            	try 
+            	{   		
+            		if(pausado)
+            		{
+            			throw new PausadoException();
+            		}
+            		else
+            		{
+            			explotar();
+            			haExplo = true;
 
-                //limpia el fuego
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        limpiarExplo(getX(), getY(), rango);
-                        setX(-1);setY(-1);
-                        timer.cancel();
-                    }
-                }, 1000); // 1000ms = 1 segundo
+            			//limpia el fuego
+            			timer.schedule(new TimerTask() {
+            				@Override
+            				public void run() {
+            					limpiarExplo(getX(), getY(), rango);
+            					setX(-1);setY(-1);
+            					timer.cancel();
+            				}
+            			}, 1000); // 1000ms = 1 segundo
+            		}
+            	}
+            	catch (PausadoException pe)
+            	{
+            		timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            iniciarTemporizador();  // vuelve a intentarlo
+                        }
+                    }, 200);
+            	}
             }
         }, 1000); 
     }
@@ -154,4 +174,16 @@ public abstract class Bombas extends Elemento {
     }
 
     public int getRango() { return rango; }
+    
+    @Override
+    public void detener()
+    {
+    	pausado = true;
+    }
+    
+    @Override
+    public void continuar()
+    {
+    	pausado = false;
+    }
 }

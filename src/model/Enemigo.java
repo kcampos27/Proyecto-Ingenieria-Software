@@ -7,6 +7,7 @@ import java.util.TimerTask;
 public class Enemigo extends Elemento{
 	
 	private Timer timer;
+	private boolean pausado = false;
 	
 	public Enemigo(int pX, int pY,String pName)
 	{
@@ -28,13 +29,15 @@ public class Enemigo extends Elemento{
 					int[] coords;
 					@Override
 					public void run() {
-						coords = randomcoords();
-						mover(coords[0],coords[1]);
+						if(!pausado) 
+						{
+							coords = randomcoords();
+							mover(coords[0],coords[1]);
+						}
 					}
 				};
 				timer = new Timer();
 				timer.scheduleAtFixedRate(timerTask, 0, 1000);//Movimiento cada segundo
-				
 			}
 		
 		}, 1000);
@@ -141,6 +144,20 @@ public class Enemigo extends Elemento{
     		setX(-1);
     		setY(-1);
     		timer.cancel();
+    		Gestor.getInstance().getTablero().sumarEnemigos(-1);
+    		Gestor.getInstance().getTablero().comprobarVictoria();
     	}
+	}
+	
+	@Override
+	public void detener()
+	{
+		pausado = true;
+	}
+	
+	@Override
+	public void continuar()
+	{
+		pausado = false;
 	}
 }

@@ -13,6 +13,7 @@ import java.util.Observer;
 import java.util.Set;
 import java.util.TreeSet;
 
+@SuppressWarnings("deprecation")
 public class PantallaView extends JPanel implements Observer {
 
 	private static final long serialVersionUID = 1L;
@@ -41,7 +42,6 @@ public class PantallaView extends JPanel implements Observer {
 	    add(getTitulo());
 	    add(getLblExploW());
 	    add(getLblExploB());
-
 	    getLblExploW().setVisible(false);
 	    getLblExploB().setVisible(false);
 
@@ -137,6 +137,7 @@ public class PantallaView extends JPanel implements Observer {
 		frameSel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frameSel.setSize(800, 530);
 		frameSel.setResizable(false); // Permitir redimensionamiento
+		frameSel.setLocationRelativeTo(this);
 
 		// Crear instancia del panel
 		JPanel panel = new SelectorPantallasView();
@@ -144,11 +145,19 @@ public class PantallaView extends JPanel implements Observer {
 		frameSel.setVisible(true);
 	}
 
-	public void close()
+	private void close()
 	{
 		Window ventana = SwingUtilities.getWindowAncestor(this);
 		if (ventana != null) {
-			ventana.dispose();
+			ventana.setVisible(false);;
+		}
+	}
+	
+	private void open()
+	{
+		Window ventana = SwingUtilities.getWindowAncestor(this);
+		if (ventana != null) {
+			ventana.setVisible(true);;
 		}
 	}
 
@@ -160,6 +169,7 @@ public class PantallaView extends JPanel implements Observer {
 		JFrame frame = new JFrame("Tablero");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(600, 400);
+		frame.setLocationRelativeTo(null);
 		frame.add(vista);
 		frame.setVisible(true);
 		close();
@@ -170,10 +180,14 @@ public class PantallaView extends JPanel implements Observer {
 		System.out.println("RECIBIDO");
 		Object[] args = (Object[])arg;
 		int codigo = (int)args[0];
-		String tipoPantalla = (String)args[1];
 		if (codigo == 1)
 		{
+			String tipoPantalla = (String)args[1];
 			abrirTablero(tipoPantalla);
+		}
+		else if (codigo == 2)
+		{
+			open();
 		}
 	}
 
@@ -265,7 +279,7 @@ public class PantallaView extends JPanel implements Observer {
 
 		@Override
 		public void keyReleased(KeyEvent e) {
-
+        	pressedKeys.remove(e.getKeyCode());
 		}
 	}
 	private JLabel getLblExploW() {

@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Observable;
 import java.util.Random;
@@ -16,6 +17,7 @@ public abstract class TableroModel extends Observable {
     private int ancho = 17;
     private Timer timer = new Timer();
     private boolean hayBomba = false;
+    private int enemigos = 0;
 
     // CONSTRUCTORA
     public TableroModel() {
@@ -116,6 +118,24 @@ public abstract class TableroModel extends Observable {
         notifyObservers(new Object[] {x,y,orientacion,"add",1});
     }
     
+    public void actualizarItem(String pAccion, String pItem, int pCantidad) 
+	{
+		setChanged();
+        notifyObservers(new Object[] {pItem,pCantidad,pAccion});
+	}
+    
+    public void PantallaPausa(String pAccion)
+    {
+    	setChanged();
+    	notifyObservers(new Object[] {pAccion});
+    }
+    
+    public void cerrar()
+    {
+    	setChanged();
+    	notifyObservers(new Object[] {"cerrar"});
+    }
+    
     public boolean casillaIncluye(int px, int py, String pCont)
     {
     	return tablero[px][py].estaContent(pCont);
@@ -184,13 +204,6 @@ public abstract class TableroModel extends Observable {
     {
     	tablero[pX][pY].imprimirContent();;
     }
-
-	public void actualizarItem(String pAccion, String pItem, int pCantidad) 
-	{
-		setChanged();
-        notifyObservers(new Object[] {pItem,pCantidad,pAccion});
-		
-	}
 	
 	protected Casilla getCasilla(int pX, int pY)
 	{
@@ -201,6 +214,46 @@ public abstract class TableroModel extends Observable {
 	{
 		if(random == null) {random = new Random();}
 		return random;
+	}
+	
+	public void pausar(String pSituacion, boolean pantalla)
+	{
+		Arrays.stream(tablero).flatMap(a -> Arrays.stream(a)).forEach(a -> a.pause());
+		if(pantalla)
+		{
+			if(pSituacion.equals("pause"))
+			{
+				PantallaPausa("pausar");
+			}
+			else if(pSituacion.equals("lose"))
+			{
+				PantallaPausa("perder");
+			}
+			else if(pSituacion.equals("win"))
+			{
+				PantallaPausa("ganar");
+			}
+		}
+	}
+	
+	public void seguir()
+	{
+		Arrays.stream(tablero).flatMap(a -> Arrays.stream(a)).forEach(a -> a.goOn());
+		PantallaPausa("continuar");
+	}
+	
+	public void sumarEnemigos(int pCantidad)
+	{
+		if(enemigos + pCantidad >= 0)
+		{
+			enemigos = enemigos + pCantidad;
+		}
+		else {enemigos = 0;}
+	}
+	
+	public void comprobarVictoria()
+	{
+		if(enemigos == 0) {pausar("win",true);}
 	}
   
 }
