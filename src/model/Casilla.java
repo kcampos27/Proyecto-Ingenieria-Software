@@ -2,6 +2,8 @@ package model;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Casilla {
 	
@@ -26,33 +28,19 @@ public class Casilla {
     public int getY() {
         return y;
     }
-    
-    public void damageElems(int pDmg, HashSet<String> targets)
-    {
-    	for(int i=0;i<maxContent;i++)
-    	{
-    		if(contenido[i]  != null)
-    		{
-    			if(targets.contains(contenido[i].getNombre())) 
-    			{contenido[i].getHurt(1);}
-    		}
-    	}
-    }
-    
-    
-	public String[] getContent()
-    {
-    	String[] content = new String[maxContent];
-    	
-    	for(int i = 0;i<maxContent;i++) {
-    		content[i]="";
-    		if (contenido[i] != null)
-    		{
-    			content[i] = contenido[i].getNombre() ;
-    		}
-    	}
-    	return content; 	
-    }
+
+	public void damageElems(int pDmg, HashSet<String> targets)
+	{
+		Arrays.stream(contenido).
+				filter(e -> e!=null && targets.contains(e.getNombre())).
+				forEach(e -> e.getHurt(pDmg));
+	}
+
+	public String[] getContent() {
+		return Arrays.stream(contenido)
+				.map(e -> e != null ? e.getNombre() : "")
+				.toArray(String[]::new);
+	}
     public boolean crearContent(String newContent) 
     {
     	boolean added = false;
@@ -88,20 +76,14 @@ public class Casilla {
     	}
     	return added;	
     }
-    
-    public boolean estaContent(String pCont)
-    {
-    	boolean enc = false;
-    	int i = 0;
-    	while(i<maxContent)
-    	{
-    		if(contenido[i] != null) {if(contenido[i].getNombre().equals(pCont)) {enc = true;}}
-    		i++;
-    	}
-    	return enc; 
-    }
-    
-    public boolean removeContent(String newContent) 
+
+	public boolean estaContent(String pCont)
+	{
+		return Arrays.stream(contenido).
+				anyMatch(e -> e != null && e.getNombre().equals(pCont));
+	}
+
+    public boolean removeContent(String newContent)
     {
     	boolean removed = false;
         int i=0;
@@ -111,8 +93,8 @@ public class Casilla {
     		{
     			if(contenido[i] != null)
     			{
-    				if(contenido[i].getNombre().equals(newContent)) 
-    				{	
+    				if(contenido[i].getNombre().equals(newContent))
+    				{
     					contenido[i] = null;
     					removed=true;
     				}
@@ -122,20 +104,16 @@ public class Casilla {
     	}
     	return removed;
     }
-    
-    public void imprimirContent()
-    {
-    	System.out.print(x+", "+y+" contiene: {");
-    	for(int i = 0;i<maxContent;i++) {
-    		if (contenido[i] != null)
-    		{
-    			System.out.print(contenido[i].getNombre()+", ");
-    		}
-    		else {System.out.print("null"+", ");}
-    		if(i==maxContent-1) {System.out.print("}");}
-    	} 
-    	System.out.println("");
-    }
+
+	public void imprimirContent() {
+		System.out.print(x + ", " + y + " contiene: {");
+
+		String contentString = IntStream.range(0, maxContent)
+				.mapToObj(i -> contenido[i] != null ? contenido[i].getNombre() : "null")
+				.collect(Collectors.joining(", "));
+
+		System.out.println(contentString + "}");
+	}
     
     public void pause()
     {

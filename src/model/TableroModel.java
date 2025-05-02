@@ -6,6 +6,7 @@ import java.util.Observable;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.stream.Collectors;
 
 @SuppressWarnings("deprecation")
 public abstract class TableroModel extends Observable {
@@ -36,9 +37,7 @@ public abstract class TableroModel extends Observable {
         }
     }
     
-    public  void inicializarPantalla(int pJ, int pI)
-    {
-    }
+    abstract  void inicializarPantalla(int pJ, int pI);
 
     public synchronized void generarContent(int x, int y, String newContent) {
         switch (newContent) {
@@ -156,17 +155,15 @@ public abstract class TableroModel extends Observable {
     	}
     	return esta;
     }
-    
+
     public void damage(int pX, int pY, int pDmg, String[] pTargets)
     {
-    	HashSet<String> targets = new HashSet<String>();
-    	for(String s : pTargets)
-    	{
-    		targets.add(s);
-    	}
-    	tablero[pX][pY].damageElems(pDmg, targets);
+        HashSet<String> targets = Arrays.stream(pTargets)
+                .collect(Collectors.toCollection(HashSet::new));
+        tablero[pX][pY].damageElems(pDmg, targets);
     }
-    
+
+
     public void crearBomba()
     {
     	if(!hayBomba)

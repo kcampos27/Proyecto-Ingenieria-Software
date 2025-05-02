@@ -6,8 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="5ba18c32-9f38-4a11-978f-5f4b1c93f977" name="Changes" comment="Strategy para el metodo anteriormente llamado soltarBomba()">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/BomberMan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/BomberMan.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/vista/TableroView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/vista/TableroView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Casilla.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Casilla.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/TableroModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/TableroModel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -234,6 +234,7 @@
     <MESSAGE value="Pantalla Inicio&#10;&#10;Implementacion terminada y unida al codigo previamente hecho" />
     <MESSAGE value="Arreglos relacionados a explosion&#10;&#10;Las explosiones del bomberman negro y blanco ahora se ejecutan correctamente" />
     <MESSAGE value="Strategy para el metodo anteriormente llamado soltarBomba()" />
-    <option name="LAST_COMMIT_MESSAGE" value="Strategy para el metodo anteriormente llamado soltarBomba()" />
+    <MESSAGE value="Implementacion de java8 en algunos for's del codigo" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implementacion de java8 en algunos for's del codigo" />
   </component>
 </project>
