@@ -19,6 +19,7 @@ public abstract class TableroModel extends Observable {
     private Timer timer = new Timer();
     private boolean hayBomba = false;
     private int enemigos = 0;
+    private int enemigosR = 0;
 
     // CONSTRUCTORA
     public TableroModel() {
