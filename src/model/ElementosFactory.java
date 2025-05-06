@@ -25,6 +25,7 @@ public class ElementosFactory {
 		case "bombaU" -> elem = new BombaUltra(pX,pY);
         case "enemigo" -> elem = new EnemigoNormal(pX,pY,pTipo);
         case "enemigoR" -> elem = new EnemigoConRango(pX,pY,pTipo);
+        case "+" -> elem = new Explosion(pX,pY,"+");
 
         default -> {}
 		}

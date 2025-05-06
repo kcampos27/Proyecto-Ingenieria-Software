@@ -67,14 +67,14 @@ public abstract class BomberMan extends Elemento {
     				setX(nextX);
     				setY(nextY);
     				
+    				cambiarOrientacion(pX, pY);
+    				
     				if (Gestor.getInstance().getTablero().casillaIncluye(nextX, nextY, "enemigo")
     						|| Gestor.getInstance().getTablero().casillaIncluye(nextX, nextY, "*")
     						|| Gestor.getInstance().getTablero().casillaIncluye(nextX, nextY, "enemigoR")
     						|| Gestor.getInstance().getTablero().casillaIncluye(nextX, nextY, "+")) {
     					Gestor.getInstance().getTablero().damage(nextX, nextY, 1, new String[] { getNombre() });
     				}
-
-    				cambiarOrientacion(pX, pY);
     				
     			} else {
     				//System.out.print("Bloqueado por: ");

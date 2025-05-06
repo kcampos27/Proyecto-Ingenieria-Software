@@ -100,8 +100,7 @@ public class EnemigoConRango extends Enemigo {
 	{
 		if(getVida()>0) 
     	{
-    		if(getVida() - pDmg >= 0) {matar();}
-    		else {restarVida(pDmg);}
+			restarVida(pDmg);
     	}
     	if(getVida() == 0) 
     	{
