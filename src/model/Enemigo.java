@@ -4,14 +4,14 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Enemigo extends Elemento{
+public abstract class Enemigo extends Elemento{
 	
 	private Timer timer;
 	private boolean pausado = false;
 	
-	public Enemigo(int pX, int pY,String pName)
+	public Enemigo(int pX, int pY,String pName, int pVida)
 	{
-		super(pX, pY, pName, 1);
+		super(pX, pY, pName, pVida);
 		timer = new Timer();
 		movimiento();
 	}
@@ -122,7 +122,8 @@ public class Enemigo extends Elemento{
     			&& !Gestor.getInstance().getTablero().casillaIncluye(pX, pY, "bloqueB")
     			&& !Gestor.getInstance().getTablero().casillaIncluye(pX, pY, "bombaS")
     			&& !Gestor.getInstance().getTablero().casillaIncluye(pX, pY, "bombaU")
-    			&& !Gestor.getInstance().getTablero().casillaIncluye(pX, pY, "enemigo"))
+    			&& !Gestor.getInstance().getTablero().casillaIncluye(pX, pY, "enemigo")
+    			&& !Gestor.getInstance().getTablero().casillaIncluye(pX, pY, "enemigoR"))
     	{
     		moverse = true;
     	}
@@ -159,5 +160,23 @@ public class Enemigo extends Elemento{
 	public void continuar()
 	{
 		pausado = false;
+	}
+	
+	protected Timer getTimer()
+	{
+		if(timer == null)
+		{
+			timer = new Timer();
+		}
+		return timer;
+	}
+	protected void setTimer(Timer pT)
+	{
+		timer = pT;
+	}
+	
+	protected boolean estaPausado()
+	{
+		return pausado;
 	}
 }

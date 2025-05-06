@@ -42,6 +42,12 @@ public class Soft extends TableroModel {
                 sumarEnemigos(1);
                 getCasilla(pJ,pI).imprimirContent();
             }
+            else if (p > 40 && p<=42)
+            {
+                generarContent(pJ,pI,"enemigoR");
+                sumarEnemigos(1);
+                getCasilla(pJ,pI).imprimirContent();
+            }
             else
             {
                 generarContent(pJ,pI,"");

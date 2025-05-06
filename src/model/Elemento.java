@@ -53,7 +53,9 @@ public abstract class Elemento {
 	
 	protected void restarVida(int pDmg)
 	{
-		vida = vida - pDmg;
+		if( vida - pDmg < 0) {vida = 0;}
+		else {vida = vida - pDmg;}
+		
 	}
 	
 	protected void setVida(int pMax)
@@ -65,4 +67,5 @@ public abstract class Elemento {
 	{
 		nombre = pN;
 	}
+
 }

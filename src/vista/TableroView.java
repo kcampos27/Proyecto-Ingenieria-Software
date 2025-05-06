@@ -418,7 +418,7 @@ public class TableroView extends JPanel implements Observer{
     		case "bloqueD" -> recurso = "hard5.png";
     		case "bloqueB" -> recurso = "soft1.png";
     		case "enemigo" -> recurso = "baloon1.png";
-    		case "enemigoR" -> recurso = "doria1.png";
+    		case "enemigoR" -> recurso = "pass1.png";
     		case "bombaS" -> recurso = "bomb1.png";
 			case "bombaU" -> recurso = "bomb1.png";
     		case "*" -> recurso = "blast.gif";

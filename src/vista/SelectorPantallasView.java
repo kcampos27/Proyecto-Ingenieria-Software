@@ -137,7 +137,7 @@ public class SelectorPantallasView extends JPanel {
     //CONTROLADOR 
     private class SelPanController implements MouseListener, KeyListener
     {
-            @SuppressWarnings({"FieldMayBeFinal", "Convert2Diamond"})
+            @SuppressWarnings({})
     	private Set<Integer> pressedKeys = new TreeSet<Integer>();
     	
     	@Override

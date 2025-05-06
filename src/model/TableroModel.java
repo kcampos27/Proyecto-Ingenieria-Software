@@ -138,7 +138,10 @@ public abstract class TableroModel extends Observable {
     
     public boolean casillaIncluye(int px, int py, String pCont)
     {
-    	return tablero[px][py].estaContent(pCont);
+    	if(px >= 0 && px <= ancho && py >= 0 && py <= alto)
+    	{return tablero[px][py].estaContent(pCont);}
+    	else
+    	{return false;}
     }
     
     public boolean existe(String pCont) 

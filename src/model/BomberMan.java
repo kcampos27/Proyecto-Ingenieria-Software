@@ -8,7 +8,6 @@ public abstract class BomberMan extends Elemento {
     private int orientacion;
     private String tipo;
     private StateSoltarBomba estado;
-    private int maxVida;
     private int maxBombas;
     private boolean pausado = false;
 
@@ -32,11 +31,10 @@ public abstract class BomberMan extends Elemento {
     }
 
     protected BomberMan(String nombre, String tipo, int pVida, int pMaxB) {
-        super(0, 0, nombre, 3);
+        super(0, 0, nombre, pVida);
         Gestor.getInstance().getTablero().actualizarItem("switch","vida",pVida);
         this.tipo = tipo;
         this.orientacion = 0;
-        maxVida = pVida;
         maxBombas = pMaxB;
     }
 
@@ -68,20 +66,23 @@ public abstract class BomberMan extends Elemento {
     				Gestor.getInstance().getTablero().eliminarContent(getX(), getY(), "enllamas");
     				setX(nextX);
     				setY(nextY);
-
-    				cambiarOrientacion(pX, pY);
-
+    				
     				if (Gestor.getInstance().getTablero().casillaIncluye(nextX, nextY, "enemigo")
-    						|| Gestor.getInstance().getTablero().casillaIncluye(nextX, nextY, "*")) {
+    						|| Gestor.getInstance().getTablero().casillaIncluye(nextX, nextY, "*")
+    						|| Gestor.getInstance().getTablero().casillaIncluye(nextX, nextY, "enemigoR")
+    						|| Gestor.getInstance().getTablero().casillaIncluye(nextX, nextY, "+")) {
     					Gestor.getInstance().getTablero().damage(nextX, nextY, 1, new String[] { getNombre() });
     				}
+
+    				cambiarOrientacion(pX, pY);
+    				
     			} else {
-    				System.out.print("Bloqueado por: ");
-    				Gestor.getInstance().getTablero().printContent(nextX, nextY);
+    				//System.out.print("Bloqueado por: ");
+    				//Gestor.getInstance().getTablero().printContent(nextX, nextY);
     				cambiarOrientacion(pX, pY);
     			}
     		} else {
-    			System.out.println("Movimiento fuera de limites");
+    			//System.out.println("Movimiento fuera de limites");
     			cambiarOrientacion(pX, pY);
     		}
     	}
@@ -101,7 +102,7 @@ public abstract class BomberMan extends Elemento {
     		Gestor.getInstance().getTablero().actualizarItem("sub","vida",pDmg);
     	}
 
-    	if (getVida() == 0) {
+    	if (getVida() <= 0) {
     		Gestor.getInstance().getTablero().eliminarContent(getX(), getY(), getNombre());
     		setX(-1);
     		setY(-1);

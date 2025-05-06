@@ -3,7 +3,7 @@ package model;
 public class BomberManNegro extends BomberMan {
 
     public BomberManNegro() {
-        super("bombermanN", "negro",3,1);
+        super("bombermanN", "negro",1,1);
         this.setActivas(0);
         setEstado(new StateUltraBlack());
     }

@@ -58,6 +58,7 @@ public class PantallaModel extends Observable
     {
     	setChanged();
     	notifyObservers(new Object[] {2});
+    	tipoPantalla = "classic";
     }
 
 
