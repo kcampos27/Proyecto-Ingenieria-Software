@@ -123,7 +123,8 @@ public abstract class Enemigo extends Elemento{
     			&& !Gestor.getInstance().getTablero().casillaIncluye(pX, pY, "bombaS")
     			&& !Gestor.getInstance().getTablero().casillaIncluye(pX, pY, "bombaU")
     			&& !Gestor.getInstance().getTablero().casillaIncluye(pX, pY, "enemigo")
-    			&& !Gestor.getInstance().getTablero().casillaIncluye(pX, pY, "enemigoR"))
+    			&& !Gestor.getInstance().getTablero().casillaIncluye(pX, pY, "enemigoR")
+    			&& !Gestor.getInstance().getTablero().casillaIncluye(pX, pY, "enemigoV"))
     	{
     		moverse = true;
     	}

@@ -19,7 +19,6 @@ public abstract class TableroModel extends Observable {
     private Timer timer = new Timer();
     private boolean hayBomba = false;
     private int enemigos = 0;
-    private int enemigosR = 0;
 
     // CONSTRUCTORA
     public TableroModel() {
@@ -233,6 +232,27 @@ public abstract class TableroModel extends Observable {
 			else if(pSituacion.equals("win"))
 			{
 				PantallaPausa("ganar");
+			}
+			else if(pSituacion.equals("stun"))
+			{
+				timer.schedule(new TimerTask()
+				{
+					@Override
+					public void run() 
+					{
+						try
+						{
+							if(BomberMan.getMiBomberMan().getVida() == 0
+									|| enemigos == 0)
+							{throw new PausadoException();}
+			                seguir();
+						}
+						catch(PausadoException pe)
+						{
+							//No se reanuda el stun porque ha terminado la partida
+						}
+						
+					}}, 1000);
 			}
 		}
 	}

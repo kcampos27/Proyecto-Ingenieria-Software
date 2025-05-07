@@ -34,15 +34,21 @@ public class Classic extends TableroModel {
                 generarContent(pJ,pI,"bloqueB");
                 getCasilla(pJ,pI).imprimirContent();
             }
-            else if (p > 33 && p<=40)
+            else if (p > 33 && p<=38)
             {
                 generarContent(pJ,pI,"enemigo");
                 sumarEnemigos(1);
                 getCasilla(pJ,pI).imprimirContent();
             }
-            else if (p > 40 && p<=42)
+            else if (p > 38 && p<=40)
             {
                 generarContent(pJ,pI,"enemigoR");
+                sumarEnemigos(1);
+                getCasilla(pJ,pI).imprimirContent();
+            }
+            else if (p > 40 && p<=42)
+            {
+                generarContent(pJ,pI,"enemigoV");
                 sumarEnemigos(1);
                 getCasilla(pJ,pI).imprimirContent();
             }

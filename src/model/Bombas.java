@@ -66,7 +66,7 @@ public abstract class Bombas extends Elemento {
             Gestor.getInstance().getTablero().eliminarContent(getX(), getY(), "bombaS");
             Gestor.getInstance().getTablero().eliminarContent(getX(), getY(), "bombaU");
             Gestor.getInstance().getTablero().generarContent(getX(), getY(), "*");
-            Gestor.getInstance().getTablero().damage(getX(), getY(), 1, new String[]{"enemigoR","enemigo", "bombermanW", "bombermanN" ,"bloqueB"});
+            Gestor.getInstance().getTablero().damage(getX(), getY(), 1, new String[]{"enemigoV","enemigoR","enemigo", "bombermanW", "bombermanN" ,"bloqueB"});
 
             // Banderas para cada dirección
             boolean derechaActiva = true;
@@ -81,7 +81,7 @@ public abstract class Bombas extends Elemento {
                         derechaActiva = false;
                     } else {
                         Gestor.getInstance().getTablero().generarContent(getX() + i, getY(), "*");
-                        Gestor.getInstance().getTablero().damage(getX() + i, getY(), 1, new String[]{"enemigoR","enemigo","bombermanN", "bombermanW", "bloqueB"});
+                        Gestor.getInstance().getTablero().damage(getX() + i, getY(), 1, new String[]{"enemigoV","enemigoR","enemigo","bombermanN", "bombermanW", "bloqueB"});
                     }
                 }
 
@@ -91,7 +91,7 @@ public abstract class Bombas extends Elemento {
                         izquierdaActiva = false;
                     } else {
                         Gestor.getInstance().getTablero().generarContent(getX() - i, getY(), "*");
-                        Gestor.getInstance().getTablero().damage(getX() - i, getY(), 1, new String[]{"enemigoR","enemigo","bombermanN", "bombermanW", "bloqueB"});
+                        Gestor.getInstance().getTablero().damage(getX() - i, getY(), 1, new String[]{"enemigoV","enemigoR","enemigo","bombermanN", "bombermanW", "bloqueB"});
                     }
                 }
 
@@ -101,7 +101,7 @@ public abstract class Bombas extends Elemento {
                         abajoActiva = false;
                     } else {
                         Gestor.getInstance().getTablero().generarContent(getX(), getY() + i, "*");
-                        Gestor.getInstance().getTablero().damage(getX(), getY() + i, 1, new String[]{"enemigoR","enemigo", "bombermanW","bombermanN", "bloqueB"});
+                        Gestor.getInstance().getTablero().damage(getX(), getY() + i, 1, new String[]{"enemigoV","enemigoR","enemigo", "bombermanW","bombermanN", "bloqueB"});
                     }
                 }
 
@@ -111,7 +111,7 @@ public abstract class Bombas extends Elemento {
                         arribaActiva = false;
                     } else {
                         Gestor.getInstance().getTablero().generarContent(getX(), getY() - i, "*");
-                        Gestor.getInstance().getTablero().damage(getX(), getY() - i, 1, new String[]{"enemigoR","enemigo", "bombermanW","bombermanN", "bloqueB"});
+                        Gestor.getInstance().getTablero().damage(getX(), getY() - i, 1, new String[]{"enemigoV","enemigoR","enemigo", "bombermanW","bombermanN", "bloqueB"});
                     }
                 }
             }

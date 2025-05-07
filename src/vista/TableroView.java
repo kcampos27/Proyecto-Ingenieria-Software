@@ -137,7 +137,7 @@ public class TableroView extends JPanel implements Observer{
     		verPausa("pausa");
     	}
     	//Si se quiere continuar, se deja de ver la ventana
-    	else if(pAccion.equals("continuar"))
+    	else if(pAccion.equals("continuar") && pausaSc != null)
     	{
     		pausaSc.setVisible(false);
     		System.out.println("la pausa no es visible");
@@ -150,20 +150,29 @@ public class TableroView extends JPanel implements Observer{
     	{
     		verPausa("victoria");
     	}
+    	else if(pAccion.equals("stun"))
+    	{
+    		verPausa("stun");
+    	}
     	
     }
     
     private void verPausa(String pTipo)
     {
+    	Boolean reanudable = false;
+    	if(pTipo.equals("pausa"))
+    	{
+    		reanudable = true;
+    	}
     	if(pausaSc == null) //Crear pantalla del tipo adecuado si no hay
 		{
-			pausaSc = new PantallaPausaView(pTipo);
+			pausaSc = new PantallaPausaView(pTipo,reanudable);
 		}
 		else if (!pausaSc.getTipo().equals(pTipo) && !listaPausas.containsKey(pTipo))
 		{//Si ya hay pantalla, y no hay del tipo nuevo,
 		 //se crea otra del tipo adecuado y se guarda la anterior
 			listaPausas.put(pTipo, pausaSc);
-			pausaSc = new PantallaPausaView(pTipo);
+			pausaSc = new PantallaPausaView(pTipo,reanudable);
 		}
 		else if (listaPausas.containsKey(pTipo))
 		{
@@ -419,6 +428,7 @@ public class TableroView extends JPanel implements Observer{
     		case "bloqueB" -> recurso = "soft1.png";
     		case "enemigo" -> recurso = "baloon1.png";
     		case "enemigoR" -> recurso = "pass1.png";
+    		case "enemigoV" -> recurso = "doria1.png";
     		case "bombaS" -> recurso = "bomb1.png";
 			case "bombaU" -> recurso = "bomb1.png";
     		case "*" -> recurso = "blast.gif";

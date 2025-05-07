@@ -40,10 +40,10 @@ public class PantallaPausaView extends JFrame implements Observer
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public PantallaPausaView(String pTipo)
+	public PantallaPausaView(String pTipo, boolean reanudable)
 	{
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		this.add(getMainPanel(pTipo));
+		this.add(getMainPanel(pTipo, reanudable));
 		
 		this.setUndecorated(true);
 		this.setBackground(Color.GRAY);
@@ -51,8 +51,8 @@ public class PantallaPausaView extends JFrame implements Observer
     	this.setResizable(false);
     	this.setVisible(false);
     	
-    	this.addMouseListener(getPPController());
-    	this.addKeyListener(getPPController());
+    	this.addMouseListener(getPPController(reanudable));
+    	this.addKeyListener(getPPController(reanudable));
     	
     	this.setFocusable(true);
     	this.setLocationRelativeTo(this);
@@ -68,7 +68,7 @@ public class PantallaPausaView extends JFrame implements Observer
 		return tipo;
 	}
 	
-	private JPanel getMainPanel(String pTipo)
+	private JPanel getMainPanel(String pTipo, boolean reanudable)
 	{
 		if (mainPanel == null)
 		{
@@ -79,11 +79,11 @@ public class PantallaPausaView extends JFrame implements Observer
 			mainPanel.setOpaque(true);
 			mainPanel.setLayout(spLayout);
 			mainPanel.add(getLogo(spLayout));
-	    	mainPanel.add(getBtnSalir(spLayout));
+	    	mainPanel.add(getBtnSalir(spLayout, reanudable));
 			
 			if(pTipo.equals("pausa"))
 			{
-				mainPanel.add(getBtnContinuar(spLayout));
+				mainPanel.add(getBtnContinuar(spLayout, reanudable));
 			}
 			else if(pTipo.equals("victoria"))
 			{
@@ -100,7 +100,7 @@ public class PantallaPausaView extends JFrame implements Observer
 		return mainPanel;
 	}
 	
-	private JButton getBtnContinuar(SpringLayout springLayout)
+	private JButton getBtnContinuar(SpringLayout springLayout, boolean reanudable)
 	{
 		if(btnContinuar == null) {
 			btnContinuar = new JButton("Continue");
@@ -109,7 +109,7 @@ public class PantallaPausaView extends JFrame implements Observer
 			springLayout.putConstraint(SpringLayout.WEST, btnContinuar, 60, SpringLayout.WEST, mainPanel);
 			springLayout.putConstraint(SpringLayout.EAST, btnContinuar, 240, SpringLayout.WEST, mainPanel);
 			springLayout.putConstraint(SpringLayout.SOUTH, btnContinuar, 200, SpringLayout.NORTH, mainPanel);
-			btnContinuar.addMouseListener(getPPController());
+			btnContinuar.addMouseListener(getPPController(reanudable));
 		}
 		return btnContinuar;
 	}
@@ -174,7 +174,7 @@ public class PantallaPausaView extends JFrame implements Observer
 		return lblLose;
 	}
 	
-	private JButton getBtnSalir(SpringLayout springLayout)
+	private JButton getBtnSalir(SpringLayout springLayout, boolean reanudable)
 	{
 		if (btnSalir == null)
 		{
@@ -184,16 +184,16 @@ public class PantallaPausaView extends JFrame implements Observer
 			springLayout.putConstraint(SpringLayout.WEST, btnSalir, 60, SpringLayout.WEST, mainPanel);
 			springLayout.putConstraint(SpringLayout.EAST, btnSalir, 240, SpringLayout.WEST, mainPanel);
 			springLayout.putConstraint(SpringLayout.SOUTH, btnSalir, 130, SpringLayout.NORTH, mainPanel);
-			btnSalir.addMouseListener(getPPController());
+			btnSalir.addMouseListener(getPPController(reanudable));
 		}
 		return btnSalir;
 	}
 	
-	private PPController getPPController()
+	private PPController getPPController(boolean reanudable)
 	{
 		if (controlador == null)
 		{
-			controlador = new PPController();
+			controlador = new PPController(reanudable);
 		}
 		return controlador;
 	}
@@ -213,6 +213,12 @@ public class PantallaPausaView extends JFrame implements Observer
 	private class PPController implements MouseListener, KeyListener
 	{
     	private Set<Integer> pressedKeys = new TreeSet<Integer>();
+    	private boolean reanudable;
+    	
+    	public PPController(boolean pReanudable)
+    	{
+    		reanudable = pReanudable;
+    	}
 
 		@Override
 		public void keyTyped(KeyEvent e) {
@@ -226,7 +232,7 @@ public class PantallaPausaView extends JFrame implements Observer
     		Integer val = key;
             if (!pressedKeys.contains(val)) 
             {
-            	 if (key == KeyEvent.VK_ESCAPE)
+            	 if (key == KeyEvent.VK_ESCAPE && reanudable)
                  {
             		 pressedKeys.add(e.getKeyCode());
             		 Gestor.getInstance().getTablero().seguir();
