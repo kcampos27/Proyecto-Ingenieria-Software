@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="5ba18c32-9f38-4a11-978f-5f4b1c93f977" name="Changes" comment="Strategy para el metodo anteriormente llamado soltarBomba()">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Casilla.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Casilla.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/TableroModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/TableroModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/BomberMan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/BomberMan.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +46,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Debug&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
     &quot;Application.PantallaTest.executor&quot;: &quot;Debug&quot;,
     &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
     &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
@@ -129,8 +128,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26053.27" />
-        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26053.27" />
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.23774.435" />
+        <option value="bundled-js-predefined-d6986cc7102b-f27c65a3e318-JavaScript-IU-251.23774.435" />
       </set>
     </attachedChunks>
   </component>
@@ -162,6 +161,8 @@
       <workItem from="1744651933326" duration="6036000" />
       <workItem from="1744706663328" duration="8493000" />
       <workItem from="1744720435864" duration="5801000" />
+      <workItem from="1746558480826" duration="3985000" />
+      <workItem from="1746611232753" duration="329000" />
     </task>
     <task id="LOCAL-00001" summary="Pantalla Inicio&#10;&#10;Avances en la pantalla de inicio (modelo y vista)">
       <option name="closed" value="true" />

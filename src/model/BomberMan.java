@@ -1,5 +1,8 @@
 package model;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public abstract class BomberMan extends Elemento {
 
     private static BomberMan miBomberMan;
@@ -10,6 +13,7 @@ public abstract class BomberMan extends Elemento {
     private StateSoltarBomba estado;
     private int maxBombas;
     private boolean pausado = false;
+    private boolean stuneado = false;
 
     public static void setTipoInicial(String tipo) {
         tipoInicial = tipo;
@@ -47,7 +51,7 @@ public abstract class BomberMan extends Elemento {
     }
 
     public void mover(int pX, int pY) {
-    	if (!pausado)
+    	if (!pausado&&!stuneado)
     	{
     		int nextX = this.getX() + pX;
     		int nextY = this.getY() + pY;
@@ -95,6 +99,7 @@ public abstract class BomberMan extends Elemento {
     @Override
     public void getHurt(int pDmg) {
     	if (getVida() > 0) {
+            aturdir();
     		this.restarVida(pDmg);
     		cambiarNombre("enllamas"); // 👈 para que se vea en llamas
     		Gestor.getInstance().getTablero().orientarBomber(getX(), getY(), "enllamas");
@@ -170,5 +175,17 @@ public abstract class BomberMan extends Elemento {
     public void continuar()
     {
     	pausado = false;
+    }
+    private void aturdir() {
+        stuneado = true;
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                stuneado = false;
+                timer.cancel(); // opcional: detener el temporizador si ya no se usará
+            }
+        }, 1000); // 1000 ms = 1 segundo
     }
 }
