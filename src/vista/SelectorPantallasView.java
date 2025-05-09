@@ -44,7 +44,7 @@ public class SelectorPantallasView extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);  // Llamar al método de la superclase para asegurar un repintado correcto
 
-		Image backgroundImage= new StretchIcon(getClass().getResource(pantalla+".png")).getImage();
+		Image backgroundImage= new StretchIcon(getClass().getResource("/vista/sprites/"+pantalla+".png")).getImage();
 		// Dibujar la imagen de fondo, ajustándola al tamaño del panel
 		g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
 	}

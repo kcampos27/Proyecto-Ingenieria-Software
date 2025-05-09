@@ -26,7 +26,7 @@ public class FondoPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (imagenFondo != null) {
-            g.drawImage(new StretchIcon(getClass().getResource(imagenFondo+".png")).getImage(), 0, 0, getWidth(), getHeight(), this);
+            g.drawImage(new StretchIcon(getClass().getResource("/vista/sprites/"+imagenFondo+".png")).getImage(), 0, 0, getWidth(), getHeight(), this);
         }
     }
 	

@@ -66,7 +66,7 @@ public class PantallaView extends JPanel implements Observer {
 			springLayout.putConstraint(SpringLayout.WEST, lbl1, 157, SpringLayout.WEST, this);
 			springLayout.putConstraint(SpringLayout.SOUTH, lbl1, -192, SpringLayout.SOUTH, this);
 			springLayout.putConstraint(SpringLayout.EAST, lbl1, 262, SpringLayout.WEST, this);
-			lbl1.setIcon(new StretchIcon(PantallaView.class.getResource("/vista/bomber1.png")));
+			lbl1.setIcon(new StretchIcon(PantallaView.class.getResource("/vista/sprites/bomber1.png")));
 			lbl1.addMouseListener(getPController());
 		}
 		return lbl1;
@@ -79,7 +79,7 @@ public class PantallaView extends JPanel implements Observer {
 			springLayout.putConstraint(SpringLayout.EAST, lbl2, -159, SpringLayout.EAST, this);
 			springLayout.putConstraint(SpringLayout.WEST, lbl2, -235, SpringLayout.EAST, this);
 			springLayout.putConstraint(SpringLayout.SOUTH, lbl2, 318, SpringLayout.NORTH, this);
-			lbl2.setIcon(new StretchIcon(PantallaView.class.getResource("/vista/bomber2.png")));
+			lbl2.setIcon(new StretchIcon(PantallaView.class.getResource("/vista/sprites/bomber2.png")));
 			lbl2.addMouseListener(getPController());
 		}
 		return lbl2;
@@ -87,7 +87,7 @@ public class PantallaView extends JPanel implements Observer {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);  // Llamar al método de la superclase para asegurar un repintado correcto
 
-		Image backgroundImage= new StretchIcon(getClass().getResource("back.png")).getImage();
+		Image backgroundImage= new StretchIcon(getClass().getResource("/vista/sprites/back.png")).getImage();
 		// Dibujar la imagen de fondo, ajustándola al tamaño del panel
 		g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
 	}
@@ -96,7 +96,7 @@ public class PantallaView extends JPanel implements Observer {
 			titulo = new JLabel("");
 			springLayout.putConstraint(SpringLayout.NORTH, titulo, 28, SpringLayout.NORTH, this);
 			springLayout.putConstraint(SpringLayout.WEST, titulo, 208, SpringLayout.WEST, this);
-			titulo.setIcon(new ImageIcon(PantallaView.class.getResource("/vista/title.png")));
+			titulo.setIcon(new ImageIcon(PantallaView.class.getResource("/vista/sprites/title.png")));
 		}
 		return titulo;
 	}
@@ -164,8 +164,6 @@ public class PantallaView extends JPanel implements Observer {
 	private void abrirTablero(String tipoPantalla)
 	{
 		TableroView vista = new TableroView(tipoPantalla);
-		//TableroModel modelo= Gestor.getInstance().getTablero();
-		//modelo.inicializar();
 		JFrame frame = new JFrame("Tablero");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(600, 400);
@@ -229,6 +227,7 @@ public class PantallaView extends JPanel implements Observer {
 			else if (e.getSource().equals(btnSelectMap))
 			{
 				abrirSelPant();
+				PantallaModel.getMiPantalla().setClassic();
 			}
 			
 		}
@@ -287,7 +286,7 @@ public class PantallaView extends JPanel implements Observer {
 			lblExploW = new JLabel("");
 			springLayout.putConstraint(SpringLayout.NORTH, lblExploW, 70, SpringLayout.SOUTH, getTitulo());
 			springLayout.putConstraint(SpringLayout.WEST, lblExploW, -640, SpringLayout.EAST, this);
-			lblExploW.setIcon(new ImageIcon(PantallaView.class.getResource("/vista/blast.gif")));
+			lblExploW.setIcon(new ImageIcon(PantallaView.class.getResource("/vista/sprites/blast.gif")));
 		}
 		return lblExploW;
 	}
@@ -296,7 +295,7 @@ public class PantallaView extends JPanel implements Observer {
 			lblExploB = new JLabel("");
 			springLayout.putConstraint(SpringLayout.NORTH, lblExploB, 203, SpringLayout.NORTH, this);
 			springLayout.putConstraint(SpringLayout.WEST, lblExploB, -265, SpringLayout.EAST, this);
-			lblExploB.setIcon(new ImageIcon(PantallaView.class.getResource("/vista/blast.gif")));
+			lblExploB.setIcon(new ImageIcon(PantallaView.class.getResource("/vista/sprites/blast.gif")));
 		}
 		return lblExploB;
 	}

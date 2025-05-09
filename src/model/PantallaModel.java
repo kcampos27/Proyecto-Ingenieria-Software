@@ -52,6 +52,11 @@ public class PantallaModel extends Observable
             System.out.println("Bomberman " + bomberman + " listo");
         }
     }
+    
+    public void setClassic()
+    {
+    	tipoPantalla = "classic";
+    }
 
 
     public void abrir()

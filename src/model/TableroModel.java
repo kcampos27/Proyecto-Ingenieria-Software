@@ -129,12 +129,6 @@ public abstract class TableroModel extends Observable {
     	notifyObservers(new Object[] {pAccion});
     }
     
-    public void cerrar()
-    {
-    	setChanged();
-    	notifyObservers(new Object[] {"cerrar"});
-    }
-    
     public boolean casillaIncluye(int px, int py, String pCont)
     {
     	if(px >= 0 && px <= ancho && py >= 0 && py <= alto)

@@ -95,7 +95,7 @@ public class TableroView extends JPanel implements Observer{
     	SpringLayout springLayout = new SpringLayout();
     	bar.setLayout(springLayout);
     	bar.setPreferredSize(new Dimension(30, 30));
-    	JLabel lbl = new JLabel(new StretchIcon(getClass().getResource("heart.png")));
+    	JLabel lbl = new JLabel(new StretchIcon(getClass().getResource("/vista/sprites/"+"heart.png")));
     	bar.add(lbl);
     	springLayout.putConstraint(SpringLayout.NORTH, lbl, -20, SpringLayout.NORTH, bar);
 		springLayout.putConstraint(SpringLayout.WEST, lbl, 8, SpringLayout.WEST, bar);
@@ -187,7 +187,7 @@ public class TableroView extends JPanel implements Observer{
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);  // Llamar al metodo de la superclase para asegurar un repintado correcto
 
-		Image backgroundImage= new ImageIcon(getClass().getResource(tipoPantalla+".png")).getImage();
+		Image backgroundImage= new ImageIcon(getClass().getResource("/vista/sprites/"+tipoPantalla+".png")).getImage();
 		// Dibujar la imagen de fondo, ajustándola al tamaño del panel
 		g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
 	}
@@ -211,7 +211,7 @@ public class TableroView extends JPanel implements Observer{
             // Crear JLabel con la imagen
         	if(casillas[pJ][pI].getComponents().length < maxContent && !esta(pJ,pI,nuevaImagen))
             {
-        		JLabel labelImagen = new JLabel(new StretchIcon(this.getClass().getResource(imagen)));
+        		JLabel labelImagen = new JLabel(new StretchIcon(this.getClass().getResource("/vista/sprites/"+imagen)));
         		// Aniadir la imagen al panel
         		casillas[pJ][pI].add(labelImagen, BorderLayout.CENTER);
         		
@@ -229,7 +229,7 @@ public class TableroView extends JPanel implements Observer{
         				if(((JLabel) c).getName().equals("null"))
         				{
         					// Aniadir la imagen al panel
-        					((JLabel) c).setIcon(new StretchIcon(this.getClass().getResource(imagen)));
+        					((JLabel) c).setIcon(new StretchIcon(this.getClass().getResource("/vista/sprites/"+imagen)));
         					
         					//Poner un nombre a la casilla
         					((JLabel) c).setName(nombre);
@@ -432,7 +432,7 @@ public class TableroView extends JPanel implements Observer{
     		case "bombaS" -> recurso = "bomb1.png";
 			case "bombaU" -> recurso = "bomb1.png";
     		case "*" -> recurso = "blast.gif";
-			case "+" -> recurso = "miniblast3.gif";
+			case "+" -> recurso = "miniBlast3.gif";
 
     	}
 

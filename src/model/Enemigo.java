@@ -145,6 +145,7 @@ public abstract class Enemigo extends Elemento{
     		setX(-1);
     		setY(-1);
     		timer.cancel();
+    		timer = null;
     		Gestor.getInstance().getTablero().sumarEnemigos(-1);
     		Gestor.getInstance().getTablero().comprobarVictoria();
     	}

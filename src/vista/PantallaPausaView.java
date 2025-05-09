@@ -2,15 +2,10 @@ package vista;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -23,8 +18,7 @@ import javax.swing.SpringLayout;
 import model.Gestor;
 import model.PantallaModel;
 
-@SuppressWarnings("deprecation")
-public class PantallaPausaView extends JFrame implements Observer
+public class PantallaPausaView extends JFrame
 {
 	private JButton btnSalir;
 	private JButton btnContinuar;
@@ -123,7 +117,7 @@ public class PantallaPausaView extends JFrame implements Observer
 			springLayout.putConstraint(SpringLayout.WEST, lblLogo, 50, SpringLayout.WEST, mainPanel);
 			springLayout.putConstraint(SpringLayout.SOUTH, lblLogo, -160, SpringLayout.SOUTH, mainPanel);
 			springLayout.putConstraint(SpringLayout.EAST, lblLogo, 250, SpringLayout.WEST, mainPanel);
-			lblLogo.setIcon(new StretchIcon(PantallaView.class.getResource("/vista/title.png")));
+			lblLogo.setIcon(new StretchIcon(PantallaView.class.getResource("/vista/sprites/title.png")));
 			lblLogo.setVisible(true);
 			lblLogo.setOpaque(false);
 			revalidate();
@@ -144,7 +138,6 @@ public class PantallaPausaView extends JFrame implements Observer
 			springLayout.putConstraint(SpringLayout.WEST, lblWin, 90, SpringLayout.WEST, mainPanel);
 			springLayout.putConstraint(SpringLayout.SOUTH, lblWin, 100, SpringLayout.SOUTH, mainPanel);
 			springLayout.putConstraint(SpringLayout.EAST, lblWin, 400, SpringLayout.WEST, mainPanel);
-			//lblWin.setIcon(new StretchIcon(PantallaView.class.getResource("/vista/title.png")));
 			lblWin.setVisible(true);
 			lblWin.setOpaque(false);
 			revalidate();
@@ -164,7 +157,6 @@ public class PantallaPausaView extends JFrame implements Observer
 			springLayout.putConstraint(SpringLayout.WEST, lblLose, 20, SpringLayout.WEST, mainPanel);
 			springLayout.putConstraint(SpringLayout.SOUTH, lblLose, 100, SpringLayout.SOUTH, mainPanel);
 			springLayout.putConstraint(SpringLayout.EAST, lblLose, 400, SpringLayout.WEST, mainPanel);
-			//lblLose.setIcon(new StretchIcon(PantallaView.class.getResource("/vista/title.png")));
 			lblLose.setVisible(true);
 			lblLose.setOpaque(false);
 			revalidate();
@@ -196,18 +188,6 @@ public class PantallaPausaView extends JFrame implements Observer
 			controlador = new PPController(reanudable);
 		}
 		return controlador;
-	}
-	
-	@Override
-	public void update(Observable o, Object arg) {
-		
-		Object[] args = (Object[])arg;
-		if(args.length == 1)
-		{
-			String pAccion = (String)args[0];
-			
-		}
-		
 	}
 	
 	private class PPController implements MouseListener, KeyListener
@@ -256,7 +236,7 @@ public class PantallaPausaView extends JFrame implements Observer
 			{
 				Gestor.getInstance().getTablero().seguir();
 				Gestor.getInstance().getTablero().pausar("", false);
-				Gestor.getInstance().getTablero().cerrar();
+				Gestor.getInstance().getTablero().PantallaPausa("cerrar");
 				PantallaModel.getMiPantalla().abrir();
 			}
 			

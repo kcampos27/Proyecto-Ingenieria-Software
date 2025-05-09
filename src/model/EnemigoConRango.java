@@ -111,6 +111,7 @@ public class EnemigoConRango extends Enemigo {
     			setX(-1);
     			setY(-1);
     			getTimer().cancel();
+        		setTimer(null);
     			Gestor.getInstance().getTablero().sumarEnemigos(-1);
     			Gestor.getInstance().getTablero().comprobarVictoria();
     		}
@@ -152,7 +153,7 @@ public class EnemigoConRango extends Enemigo {
                     // Daño únicamente a Bomberman
                     if (Gestor.getInstance().getTablero().casillaIncluye(targetX, targetY, BomberMan.getMiBomberMan().getNombre())) {
                         Gestor.getInstance().getTablero().damage(targetX, targetY, 1, new String[]{BomberMan.getMiBomberMan().getNombre()});
-                        System.out.println("Enemigo inflige daño a Bomberman en la casilla (" + targetX + ", " + targetY + ").");
+                        //System.out.println("Enemigo inflige daño a Bomberman en la casilla (" + targetX + ", " + targetY + ").");
                     }
                 }
             }
